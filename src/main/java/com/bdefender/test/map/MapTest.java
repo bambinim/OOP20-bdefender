@@ -1,8 +1,11 @@
 package com.bdefender.test.map;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.shape.Circle;
@@ -17,9 +20,15 @@ public class MapTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Map");
-        Pane root = new Pane();
-        root.setMaxWidth(1280);
-        root.setMaxHeight(736);
+        GridPane root = new GridPane();
+        root.setAlignment(Pos.CENTER);
+        //Pane root = new Pane();
+        root.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+        //root.setPrefWidth(1280);
+       //root.setPrefHeight(736);
+        
+
+        
         Map map = MapLoader.getInstance().loadMap(Map.COUNTRYSIDE);
         Circle circle = new Circle();
         circle.setRadius(10.0);
@@ -45,6 +54,22 @@ public class MapTest extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            Double windowW = primaryStage.getWidth();
+            System.out.println("WindowW = " + windowW);
+            System.out.println("root.getScaleX = " + root.getScaleX());
+            root.setScaleX(windowW/1280);
+            System.out.println(1 + ( map.getScaleX()/windowW));
+            
+            
+       });
+
+       primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+    	   Double windowH = primaryStage.getHeight();
+    	   root.setScaleY(windowH/736);
+       });
+        
     }
 
     public static void run(String[] args) {
