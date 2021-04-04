@@ -3,6 +3,7 @@ package com.bdefender.test.map;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -20,15 +21,18 @@ public class MapTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Map");
-        GridPane root = new GridPane();
-        root.setAlignment(Pos.CENTER);
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
         //Pane root = new Pane();
-        root.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+        gridPane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         //root.setPrefWidth(1280);
        //root.setPrefHeight(736);
-        
+        AnchorPane root = new AnchorPane();
+        AnchorPane.setTopAnchor(gridPane, 0.0);
+        AnchorPane.setBottomAnchor(gridPane, 0.0);
+        AnchorPane.setLeftAnchor(gridPane, 0.0);
+        AnchorPane.setRightAnchor(gridPane, 0.0);
 
-        
         Map map = MapLoader.getInstance().loadMap(Map.COUNTRYSIDE);
         Circle circle = new Circle();
         circle.setRadius(10.0);
@@ -50,24 +54,20 @@ public class MapTest extends Application {
         transition.play();
         // END CREATE TRANSITION
         root.getChildren().addAll(map, path, circle);
+        gridPane.add(root, 0,0);
         primaryStage.setResizable(true);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
         primaryStage.show();
         
         primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
-            Double windowW = primaryStage.getWidth();
-            System.out.println("WindowW = " + windowW);
-            System.out.println("root.getScaleX = " + root.getScaleX());
-            root.setScaleX(windowW/1280);
-            System.out.println(1 + ( map.getScaleX()/windowW));
-            
-            
+            gridPane.setScaleX(primaryStage.getWidth() / 1280);
+            //primaryStage.setHeight(primaryStage.getWidth() / 1.73);
        });
 
        primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
-    	   Double windowH = primaryStage.getHeight();
-    	   root.setScaleY(windowH/736);
+    	   gridPane.setScaleY(primaryStage.getHeight() / 736);
+           //primaryStage.setWidth(primaryStage.getHeight() * 1.73);
        });
         
     }
