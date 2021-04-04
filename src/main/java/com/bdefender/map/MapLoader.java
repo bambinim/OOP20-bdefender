@@ -18,7 +18,8 @@ public class MapLoader {
 	
 	public Map loadMap(int map) {
 		Map res = new Map(this.loadMapImage(ClassLoader.getSystemResource(String.format("maps/%d/map.png", map))),
-				this.loadPath(ClassLoader.getSystemResource(String.format("maps/%d/path.txt", map))));
+				this.loadPath(ClassLoader.getSystemResource(String.format("maps/%d/path.txt", map))),
+				this.loadTowerBoxes(ClassLoader.getSystemResource(String.format("maps/%d/towerboxes.txt", map))));
 		return res;
 	}
 	
@@ -39,15 +40,29 @@ public class MapLoader {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(coordsFile.openStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				path.add(this.parsePathLine(line));
+				path.add(this.parseCoordinateLine(line));
 			}
 		} catch (Exception e) {
 			path = List.of();
 		}
 		return path;
 	}
+
+	private List<TowerBox> loadTowerBoxes(URL towerBoxesFile) {
+		List<TowerBox> towerBoxes = new ArrayList<TowerBox>();
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(towerBoxesFile.openStream()));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				towerBoxes.add(new TowerBox(this.parseCoordinateLine(line)));
+			}
+		} catch (Exception e) {
+			towerBoxes = List.of();
+		}
+		return towerBoxes;
+	}
 	
-	private Coordinates parsePathLine(String line) {
+	private Coordinates parseCoordinateLine(String line) {
 		String[] tmp = line.split("\\|");
 		return new Coordinates(Double.valueOf(tmp[0]), Double.valueOf(tmp[1]));
 	}
