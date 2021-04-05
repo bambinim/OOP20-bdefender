@@ -4,12 +4,12 @@ import com.bdefender.Pair;
 
 public class Coordinates extends Pair<Double, Double> {
 
-	public Coordinates(Double x, Double y) {
-		super(x, y);
+public Coordinates(final Double x, final Double y) {
+	super(x, y);
 	}
 
 	/**
-	 * Returns the number of the left pixel (X) of the coordinate square
+	 * Returns the number of the left pixel (X) of the coordinate square.
 	 * @return Pixel number
 	 */
 	public int getLeftPixel() {
@@ -17,7 +17,7 @@ public class Coordinates extends Pair<Double, Double> {
 	}
 
 	/**
-	 * Returns the number of the center pixel (X) of the coordinate square
+	 * Returns the number of the center pixel (X) of the coordinate square.
 	 * @return Pixel number
 	 */
 	public int getCenterPixelX() {
@@ -25,7 +25,7 @@ public class Coordinates extends Pair<Double, Double> {
 	}
 
 	/**
-	 * Returns the number of the right pixel (X) of the coordinate square
+	 * Returns the number of the right pixel (X) of the coordinate square.
 	 * @return Pixel number
 	 */
 	public int getRightPixel() {
@@ -33,7 +33,7 @@ public class Coordinates extends Pair<Double, Double> {
 	}
 
 	/**
-	 * Returns the number of the top pixel (Y) of the coordinate square
+	 * Returns the number of the top pixel (Y) of the coordinate square.
 	 * @return Pixel number
 	 */
 	public int getTopPixel() {
@@ -41,7 +41,7 @@ public class Coordinates extends Pair<Double, Double> {
 	}
 
 	/**
-	 * Returns the number of the center pixel (Y) of the coordinate square
+	 * Returns the number of the center pixel (Y) of the coordinate square.
 	 * @return Pixel number
 	 */
 	public int getCenterPixelY() {
@@ -49,7 +49,7 @@ public class Coordinates extends Pair<Double, Double> {
 	}
 
 	/**
-	 * Returns the number of the bottom pixel (Y) of the coordinate square
+	 * Returns the number of the bottom pixel (Y) of the coordinate square.
 	 * @return Pixel number
 	 */
 	public int getBottomPixel() {
