@@ -61,7 +61,7 @@ public class MapTest extends Application {
         gridPane.add(root, 0, 0);
         Scene scene = new Scene(gridPane);
         stage.setWidth(1280);
-        stage.setHeight(736);
+        stage.setHeight(760);
         stage.setTitle("Map");
         stage.setResizable(true);
         stage.setScene(scene);
@@ -71,7 +71,7 @@ public class MapTest extends Application {
             //primaryStage.setHeight(primaryStage.getWidth() / 1.73);
         });
         stage.heightProperty().addListener((obs, oldVal, newVal) -> {
-            gridPane.setScaleY(stage.getHeight() / 736);
+            gridPane.setScaleY(stage.getHeight() / 760);
             //primaryStage.setWidth(primaryStage.getHeight() * 1.73);
         });
         return root;
@@ -81,15 +81,15 @@ public class MapTest extends Application {
         List<Rectangle> res = new ArrayList<Rectangle>();
         map.getTowerBoxes().forEach((el) -> {
             Rectangle rec = new Rectangle();
-            rec.setWidth(64);
-            rec.setHeight(64);
-            rec.setX(el.getTopLeftCoord().getLeftPixel());
-            rec.setY(el.getTopLeftCoord().getTopPixel());
+            rec.setWidth(60);
+            rec.setHeight(60);
+            rec.setX(el.getTopLeftCoord().getLeftPixel() + 2);
+            rec.setY(el.getTopLeftCoord().getTopPixel() + 2);
             rec.setFill(Color.GRAY);
             rec.setOnMouseEntered(e -> rec.setFill(Color.GREEN));
             rec.setOnMouseExited(e -> rec.setFill(Color.GRAY));
             rec.setCursor(Cursor.HAND);
-            rec.opacityProperty().setValue(0.75);
+            rec.opacityProperty().setValue(0.7);
             res.add(rec);
         });
         return res;

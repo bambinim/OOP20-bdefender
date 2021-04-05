@@ -40,7 +40,7 @@ public class MapLoader {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(coordsFile.openStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				path.add(this.parseCoordinateLine(line));
+				path.add(this.parseCoordinate(line));
 			}
 		} catch (Exception e) {
 			path = List.of();
@@ -54,7 +54,18 @@ public class MapLoader {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(towerBoxesFile.openStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				towerBoxes.add(new TowerBox(this.parseCoordinateLine(line)));
+				String[] tmp = line.split("-");
+				if (tmp.length > 1) {
+					Coordinates start = this.parseCoordinate(tmp[0]);
+					Coordinates end = this.parseCoordinate(tmp[1]);
+					for (double i = start.getY(); i < end.getY(); i += 2) {
+						for (double j = start.getX(); j < end.getX(); j += 2) {
+							towerBoxes.add(new TowerBox(new Coordinates(j, i)));
+						}
+					}
+				} else {
+					towerBoxes.add(new TowerBox(this.parseCoordinate(tmp[0])));
+				}
 			}
 		} catch (Exception e) {
 			towerBoxes = List.of();
@@ -62,7 +73,7 @@ public class MapLoader {
 		return towerBoxes;
 	}
 	
-	private Coordinates parseCoordinateLine(String line) {
+	private Coordinates parseCoordinate(String line) {
 		String[] tmp = line.split("\\|");
 		return new Coordinates(Double.valueOf(tmp[0]), Double.valueOf(tmp[1]));
 	}
