@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapTest extends Application {
-    private static final int TOWER_AREA_DIMENSION = 60;
+    private static final int TOWER_AREA_SIZE = 60;
     private static final int DEFAULT_IMG_HEIGHT = 760;
     private static final int DEFAULT_IMG_WIDTH = 1280;
 
@@ -90,8 +90,8 @@ public class MapTest extends Application {
         final List<Rectangle> res = new ArrayList<>();
         map.getTowerBoxes().forEach((el) -> {
             final Rectangle rec = new Rectangle();
-            rec.setWidth(TOWER_AREA_DIMENSION);
-            rec.setHeight(TOWER_AREA_DIMENSION);
+            rec.setWidth(TOWER_AREA_SIZE);
+            rec.setHeight(TOWER_AREA_SIZE);
             rec.setX(el.getTopLeftCoord().getLeftPixel() + 2);
             rec.setY(el.getTopLeftCoord().getTopPixel() + 2);
             rec.setFill(Color.GRAY);
