@@ -110,7 +110,7 @@ public class MapTest extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         final AnchorPane root = this.createStageLayout(primaryStage);
-        final Map map = MapLoader.getInstance().loadMap(Map.COUNTRYSIDE);
+        final Map map = MapLoader.getInstance().loadMap(Map.ICE_PLAIN);
         final Circle circle = this.createCircle(map);
         final Path path = createPath(map);
         final PathTransition pathTransition = this.createTransition(circle, path);

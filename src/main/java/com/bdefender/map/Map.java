@@ -14,7 +14,7 @@ public class Map extends ImageView {
     /**
      * Map set in an icy plain.
      */
-    public static final  int SNOW = 1;
+    public static final  int ICE_PLAIN = 1;
 
     private final List<Coordinates> path;
     private final List<TowerBox> towerBoxes;
