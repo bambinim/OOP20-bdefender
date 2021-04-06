@@ -4,7 +4,7 @@ import com.bdefender.Pair;
 
 public class Coordinates extends Pair<Double, Double> {
 
-    private static final int TILE_DIMENSION = 32;
+    private static final int TILE_SIZE = 32;
 
     public Coordinates(final Double x, final Double y) {
         super(x, y);
@@ -15,7 +15,7 @@ public class Coordinates extends Pair<Double, Double> {
      * @return Pixel number
      */
     public int getLeftPixel() {
-        return (int) Math.round(super.getX() * TILE_DIMENSION);
+        return (int) Math.round(super.getX() * TILE_SIZE);
     }
 
     /**
@@ -23,7 +23,7 @@ public class Coordinates extends Pair<Double, Double> {
      * @return Pixel number
      */
     public int getCenterPixelX() {
-        return (int) Math.round(super.getX()) * TILE_DIMENSION + 16;
+        return (int) Math.round(super.getX()) * TILE_SIZE + TILE_SIZE / 2;
     }
 
     /**
@@ -31,7 +31,7 @@ public class Coordinates extends Pair<Double, Double> {
      * @return Pixel number
      */
     public int getRightPixel() {
-        return (int) Math.round(super.getX() * TILE_DIMENSION) + 32;
+        return (int) Math.round(super.getX() * TILE_SIZE) + TILE_SIZE;
     }
 
     /**
@@ -39,7 +39,7 @@ public class Coordinates extends Pair<Double, Double> {
      * @return Pixel number
      */
     public int getTopPixel() {
-        return (int) Math.round(super.getY() * TILE_DIMENSION);
+        return (int) Math.round(super.getY() * TILE_SIZE);
     }
 
     /**
@@ -47,7 +47,7 @@ public class Coordinates extends Pair<Double, Double> {
      * @return Pixel number
      */
     public int getCenterPixelY() {
-        return (int) Math.round(super.getY() * TILE_DIMENSION) + 16;
+        return (int) Math.round(super.getY() * TILE_SIZE) + TILE_SIZE / 2;
     }
 
     /**
@@ -55,7 +55,7 @@ public class Coordinates extends Pair<Double, Double> {
      * @return Pixel number
      */
     public int getBottomPixel() {
-        return (int) Math.round(super.getY() * TILE_DIMENSION) + 32;
+        return (int) Math.round(super.getY() * TILE_SIZE) + TILE_SIZE;
     }
 
 }

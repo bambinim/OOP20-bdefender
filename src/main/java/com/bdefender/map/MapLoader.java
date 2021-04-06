@@ -2,6 +2,7 @@ package com.bdefender.map;
 
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,6 +19,11 @@ public final class MapLoader {
         return MapLoader.MAP_LOADER;
     }
 
+    /**
+     * Loads specified map.
+     * @param map
+     * @return loaded map
+     */
     public Map loadMap(final int map) {
         return new Map(this.loadMapImage(ClassLoader.getSystemResource(String.format("maps/%d/map.png", map))),
                 this.loadPath(ClassLoader.getSystemResource(String.format("maps/%d/path.txt", map))),
@@ -28,7 +34,7 @@ public final class MapLoader {
         Image mapImage;
         try {
             mapImage = new Image(imageFile.openStream());
-        } catch (Exception e) {
+        } catch (IOException e) {
             mapImage = null;
         }
         return mapImage;
@@ -44,7 +50,7 @@ public final class MapLoader {
                 line = reader.readLine();
             }
             reader.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             path = List.of();
         }
         return path;
@@ -70,7 +76,8 @@ public final class MapLoader {
                 }
                 line = reader.readLine();
             }
-        } catch (Exception e) {
+            reader.close();
+        } catch (IOException e) {
             towerBoxes = List.of();
         }
         return towerBoxes;

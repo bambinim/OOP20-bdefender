@@ -25,10 +25,18 @@ public class Map extends ImageView {
         this.towerBoxes = towerBoxes;
     }
 
+    /**
+     * Returns the enemies' path.
+     * @return list of coordinates
+     */
     public final List<Coordinates> getPath() {
         return Collections.unmodifiableList(this.path);
     }
 
+    /**
+     * Return the tower boxes.
+     * @return list of tower boxes
+     */
     public final List<TowerBox> getTowerBoxes() {
         return Collections.unmodifiableList(this.towerBoxes);
     }

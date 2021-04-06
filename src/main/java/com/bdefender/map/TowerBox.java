@@ -9,6 +9,10 @@ public class TowerBox {
         this.topLeftCoord = topLeftCoord;
     }
 
+    /**
+     * Return the coordinates of the top left pixel of the box.
+     * @return
+     */
     public final Coordinates getTopLeftCoord() {
         return this.topLeftCoord;
     }
