@@ -1,4 +1,4 @@
-package com.bdefender.towers.controllers;
+package com.bdefender.tower.controller;
 
 
 import com.bdefender.Pair;

@@ -1,31 +1,31 @@
-package com.bdefender.towers;
+package com.bdefender.tower;
 import java.util.Map;
 import java.util.Set;
 
 import com.bdefender.Pair;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
-import com.bdefender.towers.controllers.EnemyControllerDirect;
-import com.bdefender.towers.controllers.EnemyControllerDirectImpl;
-import com.bdefender.towers.controllers.EnemyControllerZone;
-import com.bdefender.towers.controllers.EnemyControllerZoneImpl;
+import com.bdefender.tower.controller.EnemyControllerDirect;
+import com.bdefender.tower.controller.EnemyControllerDirectImpl;
+import com.bdefender.tower.controller.EnemyControllerZone;
+import com.bdefender.tower.controller.EnemyControllerZoneImpl;
 
 
 public class TowerFactory {
 	
-	public TowerBase getTowerZone1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+	public Tower getTowerZone1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
 		return this.towerZoneByParams(3.0, 5.0, 15.0, 2L, pool, pos);
 	}
 	
-	public TowerBase getTowerZone2(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+	public Tower getTowerZone2(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
 		return this.towerZoneByParams(5.0, 4.0, 10.0, 3L, pool, pos);
 	}
 	
-	public TowerBase getTowerDirect1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+	public Tower getTowerDirect1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
 		return this.towerDirectByParams(15.0, 15.0, 1L, pool, pos);
 	}
 	
-	private TowerBase towerZoneByParams(Double damage, Double damageAreaRadius, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos) {
-		return new TowerBase() {
+	private Tower towerZoneByParams(Double damage, Double damageAreaRadius, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos) {
+		return new Tower() {
 
 			final EnemyControllerZone enemiesCtrl = new EnemyControllerZoneImpl(pool);
 			
@@ -76,8 +76,8 @@ public class TowerFactory {
 		};
 	}
 	
-	private TowerBase towerDirectByParams(Double damage, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos) {
-		return new TowerBase() {
+	private Tower towerDirectByParams(Double damage, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos) {
+		return new Tower() {
 			
 			EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
 
