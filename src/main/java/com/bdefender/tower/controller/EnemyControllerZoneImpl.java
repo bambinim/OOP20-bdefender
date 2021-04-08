@@ -1,18 +1,18 @@
-package com.bdefender.towers.controllers;
+package com.bdefender.tower.controller;
+import com.bdefender.Pair;
+import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.bdefender.Pair;
-import com.bdefender.enemies.pool.EnemiesPoolInteractor;
-import com.bdefender.towers.controllers.EnemyControllerDirect;
 
-public class EnemyControllerDirectImpl implements EnemyControllerDirect {
+public class EnemyControllerZoneImpl implements EnemyControllerZone {
 	
 	private final EnemiesPoolInteractor enemiesPool ;
 	
-	public EnemyControllerDirectImpl(EnemiesPoolInteractor enemiesPool) {
+	public EnemyControllerZoneImpl(EnemiesPoolInteractor enemiesPool) {
 		this.enemiesPool = enemiesPool;
 	}
 
@@ -24,14 +24,18 @@ public class EnemyControllerDirectImpl implements EnemyControllerDirect {
 				//creo una mappa con key = indice e value = nemico corrispondente al valore
 				.collect(Collectors.toMap(i -> i,i -> this.enemiesPool.getEnemies().get(i))).entrySet().stream()
 				//controllo che la distanza dal centro sia minore dell raggio di azione
-				.filter(e -> Math.hypot(center.getY() - e.getValue().getPosition().getY(), center.getX() - e.getValue().getPosition().getX()) <= radius)
+				.filter(e -> Math.hypot(e.getValue().getPosition().getY() - center.getY(),e.getValue().getPosition().getX() - center.getX()) <= radius)
 				//creo una mappa con key = indice e value = posizione del nemico corrispondente all'indice
 				.collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().getPosition()));
 	}
 
 	@Override
-	public void applyDamageById(Integer id, Double damage) {
-		this.enemiesPool.applyDamageById(id, damage);
+	public Set<Integer> applyDamageByZone(double radius, Pair<Double, Double> center, Double damage) {
+		Set<Integer> enemiesId = getEnemiesInZone(radius,center).entrySet().stream().map(e -> e.getKey()).collect(Collectors.toSet());
+		for (Integer enemyId : enemiesId){
+			enemiesPool.applyDamageById(enemyId, damage);
+		}
+		return enemiesId;
 	}
 
 }

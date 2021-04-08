@@ -1,6 +1,4 @@
-package com.bdefender.towers.controllers;
-
-import com.bdefender.towers.controllers.EnemyController;
+package com.bdefender.tower.controller;
 
 public interface EnemyControllerDirect extends EnemyController {
 	
