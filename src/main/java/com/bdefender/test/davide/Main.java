@@ -9,9 +9,8 @@ import com.bdefender.enemies.view.EnemiesViewLoader;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 import com.bdefender.map.MapLoader;
-import com.bdefender.test.davide.MapInteractorImpl;
-import com.bdefender.towers.TowerBase;
-import com.bdefender.towers.TowerFactory;
+import com.bdefender.tower.Tower;
+import com.bdefender.tower.TowerFactory;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -46,8 +45,8 @@ public class Main extends Application {
 		pool.addEnemy(eFactory.getEnemy2(pool.getSpawnPoint()));
 
 		TowerFactory tFactory = new TowerFactory();
-		TowerBase tz1 = tFactory.getTowerZone1(pool, new Pair<>(5.0,5.0));
-		TowerBase tz2 = tFactory.getTowerZone2(pool, new Pair<>(15.0,0.0));
+		Tower tz1 = tFactory.getTowerZone1(pool, new Pair<>(5.0,5.0));
+		Tower tz2 = tFactory.getTowerZone2(pool, new Pair<>(15.0,0.0));
 
 		Thread eThread = new EnemiesThread(pool);
 		Thread tThread1 = new TowerThread(tz1);
@@ -95,7 +94,7 @@ public class Main extends Application {
 					HashMap<EnemyBase, Optional<Image>> enemiesImage = EnemiesViewLoader.GetEnemiesImages(enemies);
 					gc.clearRect(0, 0, 1280,1280);
 					for(EnemyBase enemy : enemies){
-						Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 2, enemy.getPosition().getY() - 2);
+						Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 1, enemy.getPosition().getY() - 1);
 						if(enemiesImage.get(enemy).isPresent()) {
 							gc.drawImage(enemiesImage.get(enemy).get(), enemyPos.getCenterPixelX(), enemyPos.getCenterPixelY());
 						}
@@ -131,10 +130,9 @@ public class Main extends Application {
 	 }
 	 
 	 static class TowerThread extends Thread {
+		 private final Tower tower;
 		 
-		 private final TowerBase tower;
-		 
-		 public TowerThread(TowerBase tower){
+		 public TowerThread(Tower tower){
 			 this.tower = tower;
 		 }
 		 
