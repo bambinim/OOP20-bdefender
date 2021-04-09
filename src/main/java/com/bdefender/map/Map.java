@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-public class Map extends ImageView {
+public class Map {
     /**
      * Map set in a countryside.
      */
@@ -18,11 +18,12 @@ public class Map extends ImageView {
 
     private final List<Coordinates> path;
     private final List<TowerBox> towerBoxes;
+    private final Image mapImage;
 
     protected Map(final Image mapImage, final List<Coordinates> path, final List<TowerBox> towerBoxes) {
-        super(mapImage);
         this.path = path;
         this.towerBoxes = towerBoxes;
+        this.mapImage = mapImage;
     }
 
     /**
@@ -39,6 +40,14 @@ public class Map extends ImageView {
      */
     public final List<TowerBox> getTowerBoxes() {
         return Collections.unmodifiableList(this.towerBoxes);
+    }
+
+    /**
+     * Return the backgroud image of the map.
+     * @return - Image object
+     */
+    public Image getMapImage() {
+        return this.mapImage;
     }
 
 }
