@@ -13,6 +13,7 @@ import com.bdefender.tower.controller.EnemyControllerZoneImpl;
 public class TowerFactory {
 	
 	public Tower getTowerZone1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+
 		return this.towerZoneByParams(3.0, 5.0, 15.0, 2L, pool, pos, 0);
 	}
 	
@@ -25,6 +26,7 @@ public class TowerFactory {
 	}
 	
 	private Tower towerZoneByParams(Double damage, Double damageAreaRadius, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos, int id) {
+
 		return new Tower() {
 
 			final EnemyControllerZone enemiesCtrl = new EnemyControllerZoneImpl(pool);
@@ -82,6 +84,7 @@ public class TowerFactory {
 	}
 	
 	private Tower towerDirectByParams(Double damage, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos, int id) {
+
 		return new Tower() {
 			
 			EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
@@ -131,7 +134,6 @@ public class TowerFactory {
 			public int getTowerId() {
 				return id;
 			}
-
 		};
 	}
 	

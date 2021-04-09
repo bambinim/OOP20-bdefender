@@ -31,5 +31,4 @@ public class TowerViewLoader {
     public static Optional<Image> GetTowerImage(Tower tower) {
         return Instance.towerImages.get(tower.getTowerId());
     }
-
 }

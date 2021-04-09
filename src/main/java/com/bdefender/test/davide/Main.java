@@ -130,7 +130,6 @@ public class Main extends Application {
 	 }
 	 
 	 static class TowerThread extends Thread {
-		 
 		 private final Tower tower;
 		 
 		 public TowerThread(Tower tower){
