@@ -1,4 +1,4 @@
-package com.bdefender.test.davide;
+/*package com.bdefender.test.davide;
 
 import com.bdefender.Pair;
 import com.bdefender.enemies.EnemyBase;
@@ -155,3 +155,4 @@ public class Main extends Application {
 	 }
 
 }
+*/
