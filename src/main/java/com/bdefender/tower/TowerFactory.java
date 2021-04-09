@@ -25,6 +25,7 @@ public class TowerFactory {
 	}
 	
 	private Tower towerZoneByParams(Double damage, Double damageAreaRadius, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos, int id) {
+
 		return new Tower() {
 
 			final EnemyControllerZone enemiesCtrl = new EnemyControllerZoneImpl(pool);
@@ -82,6 +83,7 @@ public class TowerFactory {
 	}
 	
 	private Tower towerDirectByParams(Double damage, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos, int id) {
+
 		return new Tower() {
 			
 			EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
@@ -131,7 +133,6 @@ public class TowerFactory {
 			public int getTowerId() {
 				return id;
 			}
-
 		};
 	}
 	

@@ -11,11 +11,13 @@ import com.bdefender.map.Map;
 import com.bdefender.map.MapLoader;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
+import com.bdefender.tower.view.TowerViewLoader;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -45,15 +47,23 @@ public class Main extends Application {
 		pool.addEnemy(eFactory.getEnemy2(pool.getSpawnPoint()));
 
 		TowerFactory tFactory = new TowerFactory();
-		Tower tz1 = tFactory.getTowerZone1(pool, new Pair<>(5.0,5.0));
+		Tower tz1 = tFactory.getTowerZone1(pool, new Pair<>(8.0,12.0));
 		Tower tz2 = tFactory.getTowerZone2(pool, new Pair<>(15.0,0.0));
+
+		ImageView tz1Image = new ImageView();
+		if (TowerViewLoader.GetTowerImage(tz1).isPresent()) {
+			tz1Image.setImage(TowerViewLoader.GetTowerImage(tz1).get());
+			Coordinates towerPos = new Coordinates(tz1.getPos().getX(),tz1.getPos().getY() );
+			tz1Image.setX(towerPos.getLeftPixel());
+			tz1Image.setY(towerPos.getTopPixel());
+		}
 
 		Thread eThread = new EnemiesThread(pool);
 		Thread tThread1 = new TowerThread(tz1);
 		Thread tThread2 = new TowerThread(tz2);
 
 		eThread.start();
-		//tThread1.start();
+		tThread1.start();
 		//tThread2.start();
 
 		primaryStage.setTitle("Map");
@@ -62,12 +72,7 @@ public class Main extends Application {
 		root.setMaxHeight(736);
 		Canvas canvas = new Canvas(1280,1280);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Path path = new Path();
-		path.getElements().add(new MoveTo(map.getPath().get(0).getLeftPixel(), map.getPath().get(0).getTopPixel()));
-		for (int i = 0; i < map.getPath().size(); i++) {
-			path.getElements().add(new LineTo(map.getPath().get(i).getLeftPixel(), map.getPath().get(i).getTopPixel()));
-		}
-		root.getChildren().addAll(map, path, canvas);
+		root.getChildren().addAll(map, canvas, tz1Image);
 		primaryStage.setResizable(true);
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
@@ -90,13 +95,13 @@ public class Main extends Application {
 		public void run(){
 	 		while (true){
 				try {
-					sleep(10L);
+					sleep(1L);
 					HashMap<EnemyBase, Optional<Image>> enemiesImage = EnemiesViewLoader.GetEnemiesImages(enemies);
 					gc.clearRect(0, 0, 1280,1280);
 					for(EnemyBase enemy : enemies){
 						Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 1, enemy.getPosition().getY() - 1);
 						if(enemiesImage.get(enemy).isPresent()) {
-							gc.drawImage(enemiesImage.get(enemy).get(), enemyPos.getCenterPixelX(), enemyPos.getCenterPixelY());
+							gc.drawImage(enemiesImage.get(enemy).get(), enemyPos.getLeftPixel(), enemyPos.getTopPixel());
 						}
 					}
 
@@ -120,7 +125,7 @@ public class Main extends Application {
 		 public void run(){
 			 while(true){
 				 try {
-					 sleep(10L);
+					 sleep(1L);
 					 mover.moveEnemies();
 				 } catch (InterruptedException ex) {
 					 System.out.println(ex.getMessage());

@@ -43,8 +43,8 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 	}
 
 	private Pair<Double, Double> getNextPos(Pair<Integer, Integer> dir, Pair<Double, Double> currPos, Pair<Double, Double> distance){
-		double newX = currPos.getX() + distance.getX() * dir.getX();
-		double newY = currPos.getY() + distance.getY() * dir.getY();
+		double newX = currPos.getX() + (distance.getX() * dir.getX());
+		double newY = currPos.getY() + (distance.getY() * dir.getY());
 		return new Pair<>(newX, newY);
 	}
 
@@ -60,13 +60,13 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
 	@Override
 	public void moveEnemies() {
+		ArrayList<Pair<Double, Double>> keyPoints = new ArrayList<>(this.mapInteractor.getKeyPoints());
 		//io suppongo che, per adesso, ci si possa muovere solo da destra a sinistra
 		for(int c = 0; c < enemies.size(); c++) {
 			EnemyBase enemy = enemies.get(c);
 			Pair<Integer, Integer> dir = enemy.getDirection();
 			Pair<Double, Double> currPos = enemy.getPosition();
-			Pair<Double, Double> nxtPos = getNextPos(dir, currPos, new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000));
-			ArrayList<Pair<Double, Double>> keyPoints = new ArrayList<>(this.mapInteractor.getKeyPoints());
+			Pair<Double, Double> nxtPos = getNextPos(dir, currPos, new Pair<>(enemy.getSpeed() / 10000, enemy.getSpeed() / 10000));
 			boolean dirChange = false;
 			for (Pair<Double, Double> keyPoint : keyPoints){
 				if(keyPointIsAfter(keyPoint,currPos,dir) && isAfterKeyPoint(nxtPos,keyPoint,dir)) {
@@ -91,7 +91,6 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 			}
 			if(!dirChange){
 				enemy.moveTo(nxtPos);
-				System.out.println("Moving on enemy " + c);
 			}
 		}
 	}

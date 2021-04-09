@@ -1,5 +1,7 @@
 package com.bdefender.tower;
 
+import com.bdefender.Pair;
+
 import java.util.Set;
 
 public interface Tower {
@@ -19,4 +21,7 @@ public interface Tower {
 	public long getShootSpeed();
 
 	public int getTowerId();
+
+	public Pair<Double, Double> getPos();
+
 }
