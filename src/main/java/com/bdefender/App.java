@@ -1,10 +1,9 @@
 package com.bdefender;
 
-import com.bdefender.test.map.MapTest;
+import com.bdefender.test.davide.Main;
 
 public class App {
-
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         MapTest.run(args);
     }
 }
