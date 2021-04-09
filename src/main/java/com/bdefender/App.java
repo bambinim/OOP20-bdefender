@@ -1,6 +1,5 @@
 package com.bdefender;
 
-import com.bdefender.test.davide.Main;
 import com.bdefender.test.map.MapTest;
 
 public class App {

@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.PathTransition;
 import com.bdefender.map.MapLoader;
+import com.bdefender.map.MapView;
 import com.bdefender.map.Map;
 
 import java.util.ArrayList;
@@ -56,19 +57,17 @@ public class MapTest extends Application {
         return circle;
     }
 
-    private AnchorPane createStageLayout(final Stage stage) {
+    private GridPane createStageLayout(final Stage stage) {
         // -- GRID PANE --
         final GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         // -- ANCHOR PANE --
-        final AnchorPane root = new AnchorPane();
         AnchorPane.setTopAnchor(gridPane, 0.0);
         AnchorPane.setBottomAnchor(gridPane, 0.0);
         AnchorPane.setLeftAnchor(gridPane, 0.0);
         AnchorPane.setRightAnchor(gridPane, 0.0);
         // -- SCENE AND STAGE --
-        gridPane.add(root, 0, 0);
         final Scene scene = new Scene(gridPane);
         stage.setWidth(DEFAULT_IMG_WIDTH);
         stage.setHeight(DEFAULT_IMG_HEIGHT);
@@ -82,7 +81,7 @@ public class MapTest extends Application {
         stage.heightProperty().addListener((obs, oldVal, newVal) -> {
             gridPane.setScaleY(stage.getHeight() / DEFAULT_IMG_HEIGHT);
         });
-        return root;
+        return gridPane;
     }
 
     private List<Rectangle> createTowerPositioningGrid(final Map map) {
@@ -109,13 +108,15 @@ public class MapTest extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final AnchorPane root = this.createStageLayout(primaryStage);
-        final Map map = MapLoader.getInstance().loadMap(Map.ICE_PLAIN);
+        final GridPane gridPane = this.createStageLayout(primaryStage);
+        final Map map = MapLoader.getInstance().loadMap(Map.COUNTRYSIDE);
+        final MapView root = new MapView(map);
         final Circle circle = this.createCircle(map);
         final Path path = createPath(map);
         final PathTransition pathTransition = this.createTransition(circle, path);
         final Rectangle rec = new Rectangle();
-        root.getChildren().addAll(map, circle, rec);
+        gridPane.getChildren().add(root);
+        root.getChildren().addAll(circle, rec);
         root.getChildren().addAll(this.createTowerPositioningGrid(map));
         pathTransition.play();
     }
