@@ -95,7 +95,7 @@ public class Main extends Application {
 		public void run(){
 	 		while (true){
 				try {
-					sleep(1L);
+					sleep(10L);
 					HashMap<EnemyBase, Optional<Image>> enemiesImage = EnemiesViewLoader.GetEnemiesImages(enemies);
 					gc.clearRect(0, 0, 1280,1280);
 					for(EnemyBase enemy : enemies){
@@ -125,7 +125,7 @@ public class Main extends Application {
 		 public void run(){
 			 while(true){
 				 try {
-					 sleep(1L);
+					 sleep(10L);
 					 mover.moveEnemies();
 				 } catch (InterruptedException ex) {
 					 System.out.println(ex.getMessage());

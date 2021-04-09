@@ -13,7 +13,7 @@ import com.bdefender.tower.controller.EnemyControllerZoneImpl;
 public class TowerFactory {
 	
 	public Tower getTowerZone1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
-		return this.towerZoneByParams(3.0, 5.0, 15.0, 2L, pool, pos, 0);
+		return this.towerZoneByParams(5.0, 5.0, 15.0, 2L, pool, pos, 0);
 	}
 	
 	public Tower getTowerZone2(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
@@ -79,6 +79,11 @@ public class TowerFactory {
 				return id;
 			}
 
+			@Override
+			public Pair<Double, Double> getPos() {
+				return pos;
+			}
+
 		};
 	}
 	
@@ -132,6 +137,11 @@ public class TowerFactory {
 			@Override
 			public int getTowerId() {
 				return id;
+			}
+
+			@Override
+			public Pair<Double, Double> getPos() {
+				return pos;
 			}
 		};
 	}
