@@ -1,7 +1,7 @@
 package com.bdefender;
 
 
-import com.bdefender.test.Guariglia.LaunchMenuTest;
+import com.bdefender.test.guariglia.LaunchMenuTest;
 
 
 

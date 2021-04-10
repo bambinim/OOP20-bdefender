@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:controller="LaunchMenuController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" >
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="startPlayBtn" layoutX="209.0" layoutY="175.0" mnemonicParsing="false" onAction="#play" prefHeight="25.0" prefWidth="153.0" text="NUOVA PARTITA" />
-      <Button fx:id="tutorialBtn" layoutX="369.0" layoutY="175.0" mnemonicParsing="false" onAction="#tutorialPopup" text="?" />
+      <Button fx:id="startPlayBtn" layoutX="209.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="153.0" text="NUOVA PARTITA" />
+      <Button fx:id="tutorialBtn" layoutX="369.0" layoutY="175.0" mnemonicParsing="false" text="?" />
       <MenuButton fx:id="mapSelectionBtn" layoutX="300.0" layoutY="217.0" mnemonicParsing="false" text="MenuButton">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
