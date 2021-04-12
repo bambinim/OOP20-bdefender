@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class TowerViewLoader {
 
-    private ArrayList<Optional<Image>> towerImages;
+    private ArrayList<Optional<Image>> towerImages = new ArrayList<>();;
     private static TowerViewLoader Instance;
     private static int N_TOWERS = 3;
 

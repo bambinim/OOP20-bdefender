@@ -5,6 +5,7 @@ import com.bdefender.enemies.EnemyBase;
 import com.bdefender.enemies.EnemyFactory;
 import com.bdefender.enemies.pool.EnemiesPoolImpl;
 import com.bdefender.enemies.pool.EnemiesPoolMover;
+import com.bdefender.enemies.pool.MapInteractorImpl;
 import com.bdefender.enemies.view.EnemiesViewLoader;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
@@ -16,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -67,7 +69,7 @@ public class Main extends Application {
 		for (int i = 0; i < map.getPath().size(); i++) {
 			path.getElements().add(new LineTo(map.getPath().get(i).getLeftPixel(), map.getPath().get(i).getTopPixel()));
 		}
-		root.getChildren().addAll(map, path, canvas);
+		root.getChildren().addAll(new ImageView(map.getMapImage()), path, canvas);
 		primaryStage.setResizable(true);
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
