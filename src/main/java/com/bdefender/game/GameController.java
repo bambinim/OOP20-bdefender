@@ -13,7 +13,13 @@ public interface GameController {
 
     /**
      * Set event handler to call when game finishes.
-     * @param handler - handler called when game finishes
+     * @param handler
      */
     void setOnGameFinish(EventHandler<GameEvent> handler);
+
+    /**
+     * Get event handler to call when game finishes.
+     * @return handler
+     */
+    EventHandler<GameEvent> getOnGameFinish();
 }

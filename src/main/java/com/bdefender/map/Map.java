@@ -2,6 +2,8 @@ package com.bdefender.map;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -39,11 +41,26 @@ public class Map {
      * @return list of tower boxes
      */
     public final List<TowerBox> getTowerBoxes() {
-        return Collections.unmodifiableList(this.towerBoxes);
+        return this.towerBoxes;
     }
 
     /**
-     * Return the backgroud image of the map.
+     * Return only tower boxes without towers inside.
+     * @return list of tower boxes
+     */
+    public final List<TowerBox> getEmptyTowerBoxes() {
+        return this.towerBoxes.stream().filter(el -> el.getTower().isEmpty()).collect(Collectors.toList());
+    }
+
+    /**
+     * @return number of empty boxes
+     */
+    public final int countEmpyTowerBoxes() {
+        return (int) this.towerBoxes.stream().filter(el -> el.getTower().isEmpty()).count();
+    }
+
+    /**
+     * Return the background image of the map.
      * @return - Image object
      */
     public Image getMapImage() {

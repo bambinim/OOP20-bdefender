@@ -21,7 +21,7 @@ public class AppView extends Application {
     private GameController gameController;
 
     private void startGame() {
-        this.gameController = new GameControllerImpl(Map.ICE_PLAIN);
+        this.gameController = new GameControllerImpl(Map.COUNTRYSIDE);
         this.setContent(this.gameController.getView());
     }
 
