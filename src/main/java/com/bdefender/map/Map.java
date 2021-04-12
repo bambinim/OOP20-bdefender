@@ -67,4 +67,12 @@ public class Map {
         return this.mapImage;
     }
 
+    /**
+     * Return the backgroud image of the map.
+     * @return - Image object
+     */
+    public Image getMapImage() {
+        return this.mapImage;
+    }
+
 }
