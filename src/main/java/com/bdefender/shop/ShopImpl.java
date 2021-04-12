@@ -52,7 +52,7 @@ public class ShopImpl implements Shop {
 
     //if is possible to buy the tower then return a new tower which has to be added to the map
     public final Optional<Tower> buyTowerZone1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos, final String twrName) {
-        int twrPrice = twrPrices.get(twrName);
+       final int twrPrice = twrPrices.get(twrName);
         return hasBoughtTower(twrPrice) ? Optional.of(tf.getTowerZone1(pool, pos)) : Optional.empty();
     }
 
