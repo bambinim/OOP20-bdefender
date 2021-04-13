@@ -39,4 +39,9 @@ public class WalletImpl implements Wallet {
 		return this.userMoney;
 	}
 
+    @Override
+    public void addMoney(final int value) {
+        this.userMoney = this.userMoney + value;
+    }
+
 }
