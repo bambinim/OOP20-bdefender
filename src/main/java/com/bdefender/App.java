@@ -1,10 +1,15 @@
 package com.bdefender;
 
-public final class App {
 
-    private App() { }
+import com.bdefender.test.guariglia.TestMenu;
+import com.bdefender.test.map.MapTest;
 
-    public static void main(final String[] args) {
-        AppView.run(args);
+
+public class App{
+
+    public static void main(String[] args) {
+        TestMenu.run(args);
+
     }
+
 }
