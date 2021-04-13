@@ -45,9 +45,9 @@ public class TowerBox {
     public void setTower(final Tower tower) {
         this.tower = Optional.of(tower);
     }
-    
+
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (object instanceof TowerBox) {
             TowerBox tmp = (TowerBox) object;
             return tmp.getTopLeftCoord().equals(this.getTopLeftCoord()) && tmp.getTower().equals(this.getTower());

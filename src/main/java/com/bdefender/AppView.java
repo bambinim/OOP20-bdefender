@@ -17,11 +17,11 @@ public class AppView extends Application {
     /**
      * Default stage HEIGHT.
      */
-    public static final int DEFAULT_IMG_HEIGHT = 760;
+    public static final int DEFAULT_HEIGHT = 760;
     /**
      * Default stage WIDTH.
      */
-    public static final int DEFAULT_IMG_WIDTH = 1280;
+    public static final int DEFAULT_WIDTH = 1280;
     private Stage primaryStage;
     private GameController gameController;
     private final GridPane root = new GridPane();
@@ -30,10 +30,10 @@ public class AppView extends Application {
         this.root.setAlignment(Pos.CENTER);
         this.root.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
         this.primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
-            this.root.setScaleX(this.primaryStage.getWidth() / AppView.DEFAULT_IMG_WIDTH);
+            this.root.setScaleX(this.primaryStage.getWidth() / AppView.DEFAULT_WIDTH);
         });
         this.primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
-            this.root.setScaleY(this.primaryStage.getHeight() / AppView.DEFAULT_IMG_HEIGHT);
+            this.root.setScaleY(this.primaryStage.getHeight() / AppView.DEFAULT_HEIGHT);
         });
         AnchorPane.setTopAnchor(this.root, 0.0);
         AnchorPane.setBottomAnchor(this.root, 0.0);
@@ -53,8 +53,8 @@ public class AppView extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        this.primaryStage.setWidth(DEFAULT_IMG_WIDTH);
-        this.primaryStage.setHeight(DEFAULT_IMG_HEIGHT);
+        this.primaryStage.setWidth(DEFAULT_WIDTH);
+        this.primaryStage.setHeight(DEFAULT_HEIGHT);
         this.primaryStage.setTitle("Base Defender");
         this.primaryStage.setResizable(true);
         this.primaryStage.show();
