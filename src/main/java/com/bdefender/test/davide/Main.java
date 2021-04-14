@@ -13,19 +13,21 @@ import com.bdefender.map.MapLoader;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import javafx.util.Duration;
+
+import java.util.*;
 
 public class Main extends Application {
 
@@ -50,12 +52,16 @@ public class Main extends Application {
 		Tower tz1 = tFactory.getTowerZone1(pool, new Pair<>(5.0,5.0));
 		Tower tz2 = tFactory.getTowerZone2(pool, new Pair<>(15.0,0.0));
 
-		Thread eThread = new EnemiesThread(pool);
-		Thread tThread1 = new TowerThread(tz1);
-		Thread tThread2 = new TowerThread(tz2);
+		ImageView tz1Image = new ImageView();
+		if (TowerViewLoader.GetTowerImage(tz1).isPresent()) {
+			tz1Image.setImage(TowerViewLoader.GetTowerImage(tz1).get());
+			Coordinates towerPos = new Coordinates(tz1.getPos().getX(),tz1.getPos().getY() );
+			tz1Image.setX(towerPos.getLeftPixel());
+			tz1Image.setY(towerPos.getTopPixel());
+		}
 
-		eThread.start();
-		//tThread1.start();
+		Thread eThread = new EnemiesThread(pool);
+		//Thread tThread2 = new TowerThread(tz2);
 		//tThread2.start();
 
 		primaryStage.setTitle("Map");
@@ -74,6 +80,10 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
+		Thread tThread1 = new TowerThread(tz1, root);
+		tThread1.start();
+		eThread.start();
 		EnemyViewThread eViewThread = new EnemyViewThread(pool.getEnemies(),gc);
 		eViewThread.start();
 	}
@@ -98,7 +108,7 @@ public class Main extends Application {
 					for(EnemyBase enemy : enemies){
 						Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 1, enemy.getPosition().getY() - 1);
 						if(enemiesImage.get(enemy).isPresent()) {
-							gc.drawImage(enemiesImage.get(enemy).get(), enemyPos.getCenterPixelX(), enemyPos.getCenterPixelY());
+							gc.drawImage(enemiesImage.get(enemy).get(), enemyPos.getLeftPixel(), enemyPos.getTopPixel());
 						}
 					}
 
@@ -136,6 +146,7 @@ public class Main extends Application {
 		 
 		 public TowerThread(Tower tower){
 			 this.tower = tower;
+			 this.root = root;
 		 }
 		 
 		 @Override
@@ -143,8 +154,26 @@ public class Main extends Application {
 			 while(true){
 				 try {
 					 sleep(1000L * tower.getShootSpeed());
-					 if (tower.shoot().isEmpty()) {
+					 ArrayList<Pair<Double, Double>> hitEnemiesPos = new ArrayList<>(tower.shoot());
+					 if (hitEnemiesPos.isEmpty()) {
 						 System.out.println("No more enemies around...");
+					 } else {
+						 final Circle circle = new Circle();
+						 circle.setRadius(10.0);
+						 circle.setCenterX((tower.getPos().getX() + 1) * 32);
+						 circle.setCenterY((tower.getPos().getY() + 1) * 32);
+						 final Path path = new Path();
+						 path.getElements().add(new MoveTo((tower.getPos().getX() + 1) * 32,(tower.getPos().getY() + 1) * 32));
+						 path.getElements().add(new LineTo((hitEnemiesPos.get(0).getX()) * 32,(hitEnemiesPos.get(0).getY()) * 32));
+						 final PathTransition pathTransition = new PathTransition();
+						 pathTransition.setPath(path);
+						 pathTransition.setDuration(Duration.millis(50));
+						 pathTransition.setNode(circle);
+						 pathTransition.setAutoReverse(false);
+						 pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+						 pathTransition.setCycleCount(1);
+						 Platform.runLater(() -> root.getChildren().add(circle));
+						 pathTransition.play();
 					 }
 				 } catch (Exception ex) {
 					 System.out.println(ex.getMessage());

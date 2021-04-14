@@ -1,6 +1,8 @@
 package com.bdefender.tower;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.bdefender.Pair;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
@@ -32,11 +34,12 @@ public class TowerFactory {
 			final EnemyControllerZone enemiesCtrl = new EnemyControllerZoneImpl(pool);
 			
 			@Override
-			public Set<Integer> shoot() {
+			public List<Pair<Double, Double>> shoot() {
 				try {
-					return this.enemiesCtrl.applyDamageByZone(damageAreaRadius, getOptimalTarget().getY(), damage);
+					Set<Integer> enemiesId = this.enemiesCtrl.applyDamageByZone(damageAreaRadius, getOptimalTarget().getY(), damage);
+					return enemiesId.stream().map(id -> pool.getEnemies().get(id).getPosition()).collect(Collectors.toList());
 				} catch (NoEnemiesAroundException ex){
-					return Set.of();
+					return List.of();
 				}
 			}
 
@@ -90,13 +93,13 @@ public class TowerFactory {
 			EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
 
 			@Override
-			public Set<Integer> shoot() {
+			public List<Pair<Double, Double>> shoot() {
 				try {
 					int targetId = this.getOptimalTarget();
-					this.enemiesCtrl.applyDamageById(this.getOptimalTarget(), damage);
-					return Set.of(targetId);
+					this.enemiesCtrl.applyDamageById(targetId, damage);
+					return List.of(pool.getEnemies().get(targetId).getPosition());
 				} catch (NoEnemiesAroundException ex) {
-					return Set.of();
+					return List.of();
 				}
 			}
 

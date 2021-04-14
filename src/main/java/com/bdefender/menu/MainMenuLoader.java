@@ -6,30 +6,33 @@ import java.io.IOException;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 
 public class MainMenuLoader {
-    private Scene scene;
-    private MenuController menuController;
+    private final MenuController menuController;
+    private final Parent contentLoaded;
 
     public MainMenuLoader(final EventHandler<MouseEvent> playEvent) throws IOException {
+        menuController = new MenuControllerImpl(playEvent);
         final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("menu/launchMenu.fxml"));
-        menuController = new MenuController(playEvent);
-        loader.setController(menuController);
-
-       // final Pane rootPane = loader.load(ClassLoader.getSystemResource("menu/launchMenu.fxml"));
-        
-        this.scene = new Scene(loader.load());
+        loader.setController(this.menuController);
+        contentLoaded = loader.load();
     }
 
     /**
-     * 
-     * @return scene
+     * Get the controller of the loaded GUI.
+     * @return menuController
      */
-    public Scene getScene() {
-        return this.scene;
+    public MenuController getController() {
+        return this.menuController;
+    }
+
+    /**
+     * @return Parent
+     */
+    public Parent getParent() {
+        return this.contentLoaded;
 
     }
 

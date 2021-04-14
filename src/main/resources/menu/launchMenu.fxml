@@ -1,27 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<Pane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="736.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="startPlayBtn" layoutX="209.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="153.0" text="NUOVA PARTITA" />
-      <Button fx:id="tutorialBtn" layoutX="369.0" layoutY="175.0" mnemonicParsing="false" text="?" />
-      <MenuButton fx:id="mapSelectionBtn" layoutX="300.0" layoutY="217.0" mnemonicParsing="false" text="MenuButton">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-      </MenuButton>
-      <Label layoutX="188.0" layoutY="221.0" prefHeight="17.0" prefWidth="98.0" text="Sceglia la mappa:" />
-      <Label fx:id="titleLable" layoutX="204.0" layoutY="61.0" text="Base Defender">
+      <ImageView fitHeight="781.0" fitWidth="1311.0" layoutX="-7.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/pathBackground.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="567.0" fitWidth="441.0" layoutX="427.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@img/parchment.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="startPlayBtn" layoutX="511.0" layoutY="252.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="259.0" style="-fx-background-color: transparent;" text="NUOVA PARTITA">
          <font>
-            <Font name="Arial Black" size="24.0" />
+            <Font name="MV Boli" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor></Button>
+      <Label layoutX="555.0" layoutY="373.0" prefHeight="53.0" prefWidth="169.0" text="SELEZIONA LA MAPPA:">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Label fx:id="titleLable" layoutX="516.0" layoutY="185.0" prefHeight="67.0" prefWidth="265.0" text="Base Defender">
+         <font>
+            <Font name="MV Boli" size="36.0" />
          </font>
       </Label>
+      <ChoiceBox fx:id="mapChoiceBox" layoutX="512.0" layoutY="423.0" prefHeight="34.0" prefWidth="259.0" style="-fx-background-color: #d9c07c;">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></ChoiceBox>
+      <Button fx:id="tutorialBtn" layoutX="512.0" layoutY="317.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="259.0" style="-fx-background-color: transparent;" text="TUTORIAL">
+         <font>
+            <Font name="MV Boli" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Button>
    </children>
-</Pane>
+</AnchorPane>
