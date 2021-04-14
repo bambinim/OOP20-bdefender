@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
 import com.bdefender.map.Map;
+import com.bdefender.map.MapType;
 
 public class AppView extends Application {
     /**
@@ -21,7 +22,7 @@ public class AppView extends Application {
     private GameController gameController;
 
     private void startGame() {
-        this.gameController = new GameControllerImpl(Map.COUNTRYSIDE);
+        this.gameController = new GameControllerImpl(MapType.COUNTRYSIDE.getMapNumber());
         this.setContent(this.gameController.getView());
     }
 
