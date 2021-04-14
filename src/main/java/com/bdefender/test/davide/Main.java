@@ -12,20 +12,23 @@ import com.bdefender.map.MapLoader;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.view.TowerViewLoader;
+import javafx.animation.PathTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import javafx.util.Duration;
+
+import java.util.*;
 
 public class Main extends Application {
 
@@ -59,11 +62,7 @@ public class Main extends Application {
 		}
 
 		Thread eThread = new EnemiesThread(pool);
-		Thread tThread1 = new TowerThread(tz1);
-		Thread tThread2 = new TowerThread(tz2);
-
-		eThread.start();
-		tThread1.start();
+		//Thread tThread2 = new TowerThread(tz2);
 		//tThread2.start();
 
 		primaryStage.setTitle("Map");
@@ -77,6 +76,10 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
+		Thread tThread1 = new TowerThread(tz1, root);
+		tThread1.start();
+		eThread.start();
 		EnemyViewThread eViewThread = new EnemyViewThread(pool.getEnemies(),gc);
 		eViewThread.start();
 	}
@@ -137,9 +140,11 @@ public class Main extends Application {
 	 static class TowerThread extends Thread {
 		 
 		 private final Tower tower;
+		 private final Pane root;
 		 
-		 public TowerThread(Tower tower){
+		 public TowerThread(Tower tower, Pane root){
 			 this.tower = tower;
+			 this.root = root;
 		 }
 		 
 		 @Override
@@ -147,8 +152,26 @@ public class Main extends Application {
 			 while(true){
 				 try {
 					 sleep(1000L * tower.getShootSpeed());
-					 if (tower.shoot().isEmpty()) {
+					 ArrayList<Pair<Double, Double>> hitEnemiesPos = new ArrayList<>(tower.shoot());
+					 if (hitEnemiesPos.isEmpty()) {
 						 System.out.println("No more enemies around...");
+					 } else {
+						 final Circle circle = new Circle();
+						 circle.setRadius(10.0);
+						 circle.setCenterX((tower.getPos().getX() + 1) * 32);
+						 circle.setCenterY((tower.getPos().getY() + 1) * 32);
+						 final Path path = new Path();
+						 path.getElements().add(new MoveTo((tower.getPos().getX() + 1) * 32,(tower.getPos().getY() + 1) * 32));
+						 path.getElements().add(new LineTo((hitEnemiesPos.get(0).getX()) * 32,(hitEnemiesPos.get(0).getY()) * 32));
+						 final PathTransition pathTransition = new PathTransition();
+						 pathTransition.setPath(path);
+						 pathTransition.setDuration(Duration.millis(50));
+						 pathTransition.setNode(circle);
+						 pathTransition.setAutoReverse(false);
+						 pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+						 pathTransition.setCycleCount(1);
+						 Platform.runLater(() -> root.getChildren().add(circle));
+						 pathTransition.play();
 					 }
 				 } catch (Exception ex) {
 					 System.out.println(ex.getMessage());

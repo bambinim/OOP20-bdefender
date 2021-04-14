@@ -2,6 +2,7 @@ package com.bdefender.tower;
 
 import com.bdefender.Pair;
 
+import java.util.List;
 import java.util.Set;
 
 public interface Tower {
@@ -14,7 +15,7 @@ public interface Tower {
 		}
 	}
 
-	public Set<Integer> shoot();
+	public List<Pair<Double, Double>> shoot();
 	
 	public void upgradeLevel();
 	
