@@ -1,6 +1,9 @@
 package com.bdefender.map;
 
 public enum MapType {
+    /**
+     * 
+     */
     COUNTRYSIDE(0, "Country Side"), ICEPLAIN(1, "Ice Plain");
     private int mapNumber;
     private String mapName;
@@ -12,7 +15,7 @@ public enum MapType {
         return this.mapName;
     }
 
-    MapType(final int mapNumber, String mapName) {
+    MapType(final int mapNumber, final String mapName) {
         this.mapNumber = mapNumber;
         this.mapName = mapName;
     }
