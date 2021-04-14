@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.PathTransition;
 import com.bdefender.map.MapLoader;
+import com.bdefender.map.MapType;
 import com.bdefender.map.MapView;
 import com.bdefender.map.Map;
 
@@ -109,7 +110,7 @@ public class MapTest extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         final GridPane gridPane = this.createStageLayout(primaryStage);
-        final Map map = MapLoader.getInstance().loadMap(Map.COUNTRYSIDE);
+        final Map map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE.getMapNumber());
         final MapView root = new MapView(map);
         final Circle circle = this.createCircle(map);
         final Path path = createPath(map);
