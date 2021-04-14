@@ -1,18 +1,17 @@
-package com.bdefender.test.davide;
+/*package com.bdefender.test.davide;
 
 import com.bdefender.Pair;
 import com.bdefender.enemies.EnemyBase;
 import com.bdefender.enemies.EnemyFactory;
 import com.bdefender.enemies.pool.EnemiesPoolImpl;
 import com.bdefender.enemies.pool.EnemiesPoolMover;
+import com.bdefender.enemies.pool.MapInteractorImpl;
 import com.bdefender.enemies.view.EnemiesViewLoader;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 import com.bdefender.map.MapLoader;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
-import com.bdefender.tower.view.TowerViewLoader;
-import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -50,7 +49,7 @@ public class Main extends Application {
 		pool.addEnemy(eFactory.getEnemy2(pool.getSpawnPoint()));
 
 		TowerFactory tFactory = new TowerFactory();
-		Tower tz1 = tFactory.getTowerZone1(pool, new Pair<>(8.0,12.0));
+		Tower tz1 = tFactory.getTowerZone1(pool, new Pair<>(5.0,5.0));
 		Tower tz2 = tFactory.getTowerZone2(pool, new Pair<>(15.0,0.0));
 
 		ImageView tz1Image = new ImageView();
@@ -71,7 +70,12 @@ public class Main extends Application {
 		root.setMaxHeight(736);
 		Canvas canvas = new Canvas(1280,1280);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		root.getChildren().addAll(map, canvas, tz1Image);
+		Path path = new Path();
+		path.getElements().add(new MoveTo(map.getPath().get(0).getLeftPixel(), map.getPath().get(0).getTopPixel()));
+		for (int i = 0; i < map.getPath().size(); i++) {
+			path.getElements().add(new LineTo(map.getPath().get(i).getLeftPixel(), map.getPath().get(i).getTopPixel()));
+		}
+		root.getChildren().addAll(new ImageView(map.getMapImage()), path, canvas);
 		primaryStage.setResizable(true);
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
@@ -138,11 +142,9 @@ public class Main extends Application {
 	 }
 	 
 	 static class TowerThread extends Thread {
-		 
 		 private final Tower tower;
-		 private final Pane root;
 		 
-		 public TowerThread(Tower tower, Pane root){
+		 public TowerThread(Tower tower){
 			 this.tower = tower;
 			 this.root = root;
 		 }
@@ -182,3 +184,4 @@ public class Main extends Application {
 	 }
 
 }
+*/
