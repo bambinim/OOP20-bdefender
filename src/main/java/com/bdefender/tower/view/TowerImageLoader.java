@@ -6,17 +6,17 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class TowerViewLoader {
+public class TowerImageLoader {
 
     private ArrayList<Optional<Image>> towerImages = new ArrayList<>();;
-    private static TowerViewLoader Instance;
+    private static TowerImageLoader Instance;
     private static int N_TOWERS = 3;
 
     static {
-        Instance = new TowerViewLoader(N_TOWERS);
+        Instance = new TowerImageLoader(N_TOWERS);
     }
 
-    public TowerViewLoader(int nTowers){
+    public TowerImageLoader(int nTowers){
         for (int i=0; i < nTowers; i++){
             Optional<Image> towerImage;
             try {

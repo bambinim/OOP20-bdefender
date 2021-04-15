@@ -1,7 +1,6 @@
 package com.bdefender.tower.view;
 
 import com.bdefender.Pair;
-import com.bdefender.map.Coordinates;
 
 public interface TowerView {
 

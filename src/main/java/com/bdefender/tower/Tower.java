@@ -25,4 +25,7 @@ public interface Tower {
 	public long getShootSpeed();
 
 	public int getTowerId();
+
+	public Pair<Double, Double> getPosition();
+
 }

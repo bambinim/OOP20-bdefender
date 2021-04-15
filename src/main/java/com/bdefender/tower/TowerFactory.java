@@ -76,6 +76,11 @@ public class TowerFactory {
 				return id;
 			}
 
+			@Override
+			public Pair<Double, Double> getPosition() {
+				return pos;
+			}
+
 		};
 	}
 	
@@ -129,6 +134,11 @@ public class TowerFactory {
 			@Override
 			public int getTowerId() {
 				return id;
+			}
+
+			@Override
+			public Pair<Double, Double> getPosition() {
+				return pos;
 			}
 		};
 	}

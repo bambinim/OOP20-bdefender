@@ -1,17 +1,18 @@
 package com.bdefender.test.davide;
 
-import com.bdefender.Pair;
 import com.bdefender.enemies.EnemyBase;
 import com.bdefender.enemies.EnemyFactory;
 import com.bdefender.enemies.pool.EnemiesPoolImpl;
 import com.bdefender.enemies.pool.EnemiesPoolMover;
 import com.bdefender.enemies.pool.MapInteractorImpl;
 import com.bdefender.enemies.view.EnemiesViewLoader;
+import com.bdefender.game.TowersController;
+import com.bdefender.game.TowersControllerImpl;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 import com.bdefender.map.MapLoader;
 import com.bdefender.tower.Tower;
-import com.bdefender.tower.TowerFactory;
+import com.bdefender.tower.view.TowerViewImpl;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -46,15 +47,9 @@ public class Main extends Application {
         pool.addEnemy(eFactory.getEnemy1(pool.getSpawnPoint()));
         pool.addEnemy(eFactory.getEnemy2(pool.getSpawnPoint()));
 
-        TowerFactory tFactory = new TowerFactory();
-        Tower tz1 = tFactory.getTowerZone1(pool, new Pair<>(5.0,5.0));
-
         Thread eThread = new EnemiesThread(pool);
-        Thread tThread1 = new TowerThread(tz1);
 
         eThread.start();
-        //tThread1.start();
-        //tThread2.start();
 
         primaryStage.setTitle("Map");
         Pane root = new Pane();
@@ -74,6 +69,10 @@ public class Main extends Application {
         primaryStage.show();
         EnemyViewThread eViewThread = new EnemyViewThread(pool.getEnemies(),gc);
         eViewThread.start();
+
+        TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t),pool);
+        ctrl.addTower(TowersController.TowerName.THUNDERBOLT,new Coordinates(8.0,8.0));
+
     }
 
     static class EnemyViewThread extends Thread {

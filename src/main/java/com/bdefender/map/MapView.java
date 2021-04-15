@@ -3,7 +3,7 @@ package com.bdefender.map;
 import java.util.stream.Collectors;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import com.bdefender.tower.view.TowerViewLoader;
+import com.bdefender.tower.view.TowerImageLoader;
 
 public class MapView extends AnchorPane {
 
@@ -23,7 +23,7 @@ public class MapView extends AnchorPane {
     public void reloadTowersView() {
         this.towersPane.getChildren().clear();
         this.towersPane.getChildren().addAll(this.map.getTowerBoxes().stream().filter(el -> el.getTower().isPresent()).map(el -> {
-               final ImageView tmp = new ImageView(TowerViewLoader.GetTowerImage(el.getTower().get()).get());
+               final ImageView tmp = new ImageView(TowerImageLoader.GetTowerImage(el.getTower().get()).get());
                tmp.setX(el.getTopLeftCoord().getLeftPixel() + 2);
                tmp.setY(el.getTopLeftCoord().getTopPixel() + 2);
                tmp.maxWidth(TOWER_WIDTH);
