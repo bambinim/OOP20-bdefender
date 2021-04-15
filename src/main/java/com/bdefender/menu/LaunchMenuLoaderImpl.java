@@ -9,11 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 
-public class MainMenuLoader {
+public class LaunchMenuLoaderImpl implements LaunchMenuLoader {
     private final MenuController menuController;
     private final Parent contentLoaded;
 
-    public MainMenuLoader(final EventHandler<MouseEvent> playEvent) throws IOException {
+    public LaunchMenuLoaderImpl(final EventHandler<MouseEvent> playEvent) throws IOException {
         menuController = new MenuControllerImpl(playEvent);
         final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("menu/launchMenu.fxml"));
         loader.setController(this.menuController);
@@ -29,6 +29,7 @@ public class MainMenuLoader {
     }
 
     /**
+     * return the FXML loaded in an AnchorPane.
      * @return Parent
      */
     public Parent getParent() {

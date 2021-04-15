@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+
+import java.io.IOException;
+
 import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
 import com.bdefender.map.Map;
@@ -18,6 +21,8 @@ import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
 import com.bdefender.map.Map;
 import com.bdefender.map.MapType;
+import com.bdefender.menu.LaunchMenuLoader;
+import com.bdefender.menu.LaunchMenuLoaderImpl;
 
 public class AppView extends Application {
     /**
@@ -30,7 +35,9 @@ public class AppView extends Application {
     public static final int DEFAULT_WIDTH = 1280;
     private Stage primaryStage;
     private GameController gameController;
+    private LaunchMenuLoader menuLoader;
     private final GridPane root = new GridPane();
+
 
     private void initializeView() {
         this.root.setAlignment(Pos.CENTER);
@@ -45,10 +52,11 @@ public class AppView extends Application {
         AnchorPane.setBottomAnchor(this.root, 0.0);
         AnchorPane.setLeftAnchor(this.root, 0.0);
         AnchorPane.setRightAnchor(this.root, 0.0);
+        this.primaryStage.setScene(new Scene(this.root));
     }
 
     private void startGame() {
-        this.gameController = new GameControllerImpl(MapType.COUNTRYSIDE.getMapNumber());
+        this.gameController = new GameControllerImpl(menuLoader.getController().getSelectedMap());
         this.setContent(this.gameController.getView());
     }
 
@@ -64,7 +72,16 @@ public class AppView extends Application {
         this.primaryStage.setResizable(true);
         this.primaryStage.show();
         this.initializeView();
-        this.startGame();
+        this.startMenu();
+    }
+
+    private void startMenu() {
+        try {
+            this.menuLoader = new LaunchMenuLoaderImpl((e) -> this.startGame());
+            this.setContent(this.menuLoader.getParent());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -74,8 +91,8 @@ public class AppView extends Application {
     public void setContent(final Parent parent) {
         this.root.getChildren().clear();
         this.root.getChildren().add(parent);
-        this.primaryStage.setScene(new Scene(this.root));
     }
+
 
     public static void run(final String[] args) {
         AppView.launch(args);
