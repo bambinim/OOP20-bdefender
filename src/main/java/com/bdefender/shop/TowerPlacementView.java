@@ -13,12 +13,13 @@ import javafx.scene.input.MouseEvent;
 public class TowerPlacementView extends AnchorPane {
 
     private static final int RECTANGLE_SIZE = 60;
+    private static final double RECTANGLE_OPACITY = 0.7;
     private EventHandler<MouseEvent> onBoxClick;
 
     public TowerPlacementView(final List<TowerBox> towerBoxes) {
         this.generateRectangles(towerBoxes);
     }
-    
+
     private void generateRectangles(final List<TowerBox> towerBoxes) {
         this.getChildren().addAll(towerBoxes.stream().map(el -> {
             final Rectangle rec = new Rectangle();
@@ -30,7 +31,7 @@ public class TowerPlacementView extends AnchorPane {
             rec.setOnMouseEntered(e -> rec.setFill(Color.GREEN));
             rec.setOnMouseExited(e -> rec.setFill(Color.GRAY));
             rec.setCursor(Cursor.HAND);
-            rec.opacityProperty().setValue(0.7);
+            rec.opacityProperty().setValue(RECTANGLE_OPACITY);
             rec.setOnMouseClicked(event -> {
                 this.onBoxClick.handle(event.copyFor(el, event.getTarget()));
             });
@@ -56,6 +57,7 @@ public class TowerPlacementView extends AnchorPane {
 
     /**
      * Reload tower boxes.
+     * @param towerBoxes
      */
     public void reload(final List<TowerBox> towerBoxes) {
         this.getChildren().clear();
