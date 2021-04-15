@@ -8,10 +8,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-
 import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
 import com.bdefender.map.Map;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import com.bdefender.game.GameController;
+import com.bdefender.game.GameControllerImpl;
+import com.bdefender.map.Map;
+import com.bdefender.map.MapType;
 
 public class AppView extends Application {
     /**
@@ -41,9 +47,8 @@ public class AppView extends Application {
         AnchorPane.setRightAnchor(this.root, 0.0);
     }
 
-    // TODO: move to controller
     private void startGame() {
-        this.gameController = new GameControllerImpl(Map.COUNTRYSIDE);
+        this.gameController = new GameControllerImpl(MapType.COUNTRYSIDE.getMapNumber());
         this.setContent(this.gameController.getView());
     }
 

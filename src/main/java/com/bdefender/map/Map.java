@@ -9,14 +9,7 @@ import javafx.scene.image.ImageView;
 
 
 public class Map {
-    /**
-     * Map set in a countryside.
-     */
-    public static final int COUNTRYSIDE = 0;
-    /**
-     * Map set in an icy plain.
-     */
-    public static final  int ICE_PLAIN = 1;
+
 
     private final List<Coordinates> path;
     private final List<TowerBox> towerBoxes;
@@ -66,5 +59,6 @@ public class Map {
     public Image getMapImage() {
         return this.mapImage;
     }
+
 
 }
