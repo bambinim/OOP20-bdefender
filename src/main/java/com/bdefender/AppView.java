@@ -17,7 +17,7 @@ public class AppView extends Application {
     /**
      * Default stage HEIGHT.
      */
-    public static final int DEFAULT_HEIGHT = 760;
+    public static final int DEFAULT_HEIGHT = 802;
     /**
      * Default stage WIDTH.
      */
