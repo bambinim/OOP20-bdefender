@@ -4,23 +4,20 @@ import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.map.Coordinates;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
-import com.bdefender.tower.view.TowerViewLoader;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import com.bdefender.tower.view.TowerView;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TowersControllerImpl implements TowersController{
 
-    private final Pane panel;
     private final Map<Integer, TowerData> towersData = new HashMap<>();
     private int towerCounter = 0;
     private final TowerFactory factory = new TowerFactory();
     private final EnemiesPoolInteractor pool;
+    private final TowerViewImplementation towerViewImplementation;
 
-    public TowersControllerImpl(Pane panel, EnemiesPoolInteractor enemyPool) {
-        this.panel = panel;
+    public TowersControllerImpl(TowerViewImplementation viewImplementation, EnemiesPoolInteractor enemyPool) {
+        this.towerViewImplementation = viewImplementation;
         this.pool = enemyPool;
     }
 
@@ -37,19 +34,18 @@ public class TowersControllerImpl implements TowersController{
     @Override
     public Integer addTower(TowerName name, Coordinates pos) {
         Tower tower = getTowerByTypeName(name, pos);
-        Image towerImage = TowerViewLoader.GetTowerImage(tower).get();
-        ImageView towerView = new ImageView(towerImage);
-        TowerThread thread = new TowerThread(tower,panel);
-        towersData.put(++towerCounter,new TowerData(towerView,thread));
-        this.panel.getChildren().add(towerView);
+        TowerView view = towerViewImplementation.getView(tower);
+        TowerThread thread = new TowerThread(tower,view);
+        towersData.put(++towerCounter,new TowerData(view,thread));
         thread.start();
+        view.addTowerToGameField();
         return towerCounter;
     }
 
     @Override
     public void removeTower(Integer towerId) {
         this.towersData.get(towerId).getThread().killTower();
-        this.panel.getChildren().remove(this.towersData.get(towerId).getView());
+        this.towersData.get(towerId).getView().removeTowerFromGameField();
         this.towersData.remove(towerId);
     }
 
@@ -60,14 +56,14 @@ public class TowersControllerImpl implements TowersController{
 }
 
 class TowerData {
-    private final ImageView towerView;
+    private final TowerView towerView;
     private final TowerThread thread;
-    public TowerData(ImageView towerView,TowerThread thread){
-        this.towerView = towerView;
+    public TowerData(TowerView view,TowerThread thread){
+        this.towerView = view;
         this.thread = thread;
     }
 
-    public ImageView getView(){
+    public TowerView getView(){
         return this.towerView;
     }
 
@@ -77,14 +73,19 @@ class TowerData {
 
 }
 
+@FunctionalInterface
+interface TowerViewImplementation {
+    TowerView getView(Tower tower);
+}
+
 class TowerThread extends Thread {
+    private final  TowerView view;
     private final Tower tower;
-    private final Pane panel;
     private boolean alive;
 
-    public TowerThread(Tower tower, Pane panel){
+    public TowerThread(Tower tower, TowerView view){
+        this.view = view;
         this.tower = tower;
-        this.panel = panel;
     }
 
     public void killTower(){
@@ -96,8 +97,11 @@ class TowerThread extends Thread {
         while(alive){
             try {
                 sleep(1000L * tower.getShootSpeed());
-                if (tower.shoot().isEmpty()) {
+                var shootTargetPos = tower.shoot();
+                if (shootTargetPos == null) {
                     System.out.println("No more enemies around...");
+                } else {
+                    view.startShootAnimation(shootTargetPos);
                 }
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());

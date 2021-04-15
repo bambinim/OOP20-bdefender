@@ -48,11 +48,9 @@ public class Main extends Application {
 
         TowerFactory tFactory = new TowerFactory();
         Tower tz1 = tFactory.getTowerZone1(pool, new Pair<>(5.0,5.0));
-        Tower tz2 = tFactory.getTowerZone2(pool, new Pair<>(15.0,0.0));
 
         Thread eThread = new EnemiesThread(pool);
         Thread tThread1 = new TowerThread(tz1);
-        Thread tThread2 = new TowerThread(tz2);
 
         eThread.start();
         //tThread1.start();
@@ -143,7 +141,7 @@ public class Main extends Application {
             while(true){
                 try {
                     sleep(1000L * tower.getShootSpeed());
-                    if (tower.shoot().isEmpty()) {
+                    if (tower.shoot() == null) {
                         System.out.println("No more enemies around...");
                     }
                 } catch (Exception ex) {
