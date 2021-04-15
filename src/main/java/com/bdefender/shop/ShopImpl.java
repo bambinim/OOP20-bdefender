@@ -43,6 +43,14 @@ public class ShopImpl implements Shop {
        return tower;
 
     }
+    /*
+     * @return the userWallet
+     * */
+
+    @Override
+    public Wallet getWallet() {
+        return this.wallet;
+    }
 
 
 }

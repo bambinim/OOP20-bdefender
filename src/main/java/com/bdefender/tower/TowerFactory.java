@@ -132,6 +132,12 @@ public class TowerFactory {
 			public int getTowerId() {
 				return id;
 			}
+
+            @Override
+            public Pair<Double, Double> getPos() {
+                // TODO Auto-generated method stub
+                return null;
+            }
 		};
 	}
 	

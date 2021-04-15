@@ -17,23 +17,20 @@ import javafx.stage.Stage;
 public class ShopLaunch extends Application{
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         // TODO Auto-generated method stub
         final int INITIAL_AMOUNT = 500;
-        
+
         Wallet wlt = new WalletImpl(INITIAL_AMOUNT);
         Shop shop = new ShopImpl(wlt);
-        
-      
-        ShopLoader shopLoader = new ShopLoader((e) -> System.out.println("ssd"));
+
+        ShopLoader shopLoader = new ShopLoader((e) -> System.out.println("ssd"), shop);
         final Parent parent = shopLoader.getParent();
         primaryStage.setScene(new Scene(parent));
         primaryStage.show();
-    
     }
     public static void run(final String[] args) {
         launch(args);
     }
-    
 
 }
