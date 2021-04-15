@@ -2,6 +2,8 @@ package com.bdefender.game;
 
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.map.Coordinates;
+import com.bdefender.tower.Tower;
+import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.view.TowerViewLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
