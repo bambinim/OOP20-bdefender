@@ -3,12 +3,6 @@ package com.bdefender.game;
 import com.bdefender.map.Coordinates;
 import javafx.scene.layout.Pane;
 
-enum TowerName {
-    FIRE_ARROW,
-    FIRE_BALL,
-    ROCK,
-    THUNDERBOLT
-}
 
 public interface TowersController {
 
@@ -31,5 +25,6 @@ public interface TowersController {
      * @return level after the upgrade
      */
     Integer upgradeTower(Integer towerId);
+
 
 }

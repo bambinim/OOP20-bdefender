@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,12 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-   <AnchorPane minHeight="10.0" prefHeight="428.0" prefWidth="145.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="10.0" prefHeight="428.0" prefWidth="145.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="478.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../sndPietra.png" />
+            <Image url="@0/sndPietra.png" />
          </image>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -26,10 +26,10 @@
                <children>
                   <ImageView fitHeight="27.0" fitWidth="25.0" layoutX="-11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../../../Downloads/barileMonete.png" />
+                        <Image url="@0/barileMonete.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lblMoney" layoutX="81.0" layoutY="3.0" text="MN">
+                  <Label id="lblMoney" fx:id="lblMoney" layoutX="81.0" layoutY="3.0" text="MN">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -40,7 +40,7 @@
                <children>
                   <ImageView fitHeight="54.0" fitWidth="116.0" layoutX="-10.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../../../Downloads/insegna.png" />
+                        <Image url="@0/insegna.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="20.0" layoutY="14.0" prefHeight="44.0" prefWidth="230.0" text="BShop" textFill="#000000b5">
@@ -54,7 +54,7 @@
                <children>
                   <ImageView fitHeight="51.0" fitWidth="91.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../5488618-block-guidelines-wood-cartoon-guide-board-png-and-vector-with-wood-cartoon-png-650_563_preview.png" />
+                        <Image url="@0/panelBack.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -62,20 +62,25 @@
                   </ImageView>
                   <ImageView fitHeight="46.0" fitWidth="60.0" layoutX="14.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../../../Downloads/stone-tower-game-assets/PNG/13.png" />
+                        <Image url="@../towers/0/tower.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
                   <Label layoutX="62.0" layoutY="28.0" text="CS" />
+                  <Button id="btnTower1" fx:id="btnTower1" layoutX="7.0" layoutY="1.0" mnemonicParsing="false" opacity="0.0" prefHeight="50.0" prefWidth="74.0">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="64.0" prefWidth="78.0">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="82.0" layoutX="7.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../5488618-block-guidelines-wood-cartoon-guide-board-png-and-vector-with-wood-cartoon-png-650_563_preview.png" />
+                        <Image url="@0/panelBack.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -84,45 +89,55 @@
                   <Label layoutX="61.0" layoutY="39.0" text="CS" />
                   <ImageView fitHeight="49.0" fitWidth="41.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../../../Downloads/stone-tower-game-assets/PNG/17.png" />
+                        <Image url="@../towers/1/tower.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
+                  <Button id="btnTower2" fx:id="btnTower2" layoutX="9.0" layoutY="13.0" mnemonicParsing="false" opacity="0.0" prefHeight="47.0" prefWidth="74.0">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="67.0" prefWidth="225.0">
                <children>
-                  <ImageView fitHeight="49.0" fitWidth="74.0" layoutX="7.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="49.0" fitWidth="77.0" layoutX="18.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../5488618-block-guidelines-wood-cartoon-guide-board-png-and-vector-with-wood-cartoon-png-650_563_preview.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="46.0" fitWidth="68.0" layoutX="18.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../../../../Downloads/stone-tower-game-assets/PNG/7.png" />
+                        <Image url="@0/panelBack.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="60.0" layoutY="41.0" text="CS" />
-                  <AnchorPane prefHeight="72.0" prefWidth="89.0">
+                  <Button id="btnTower3" fx:id="btnTower3" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" opacity="0.0" prefHeight="52.0" prefWidth="77.0">
                      <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
-                  </AnchorPane>
+                  </Button>
+                  <ImageView fitHeight="49.0" fitWidth="74.0" layoutX="18.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../towers/2/tower.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="81.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="81.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../5488618-block-guidelines-wood-cartoon-guide-board-png-and-vector-with-wood-cartoon-png-650_563_preview.png" />
+                        <Image url="@0/panelBack.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label layoutX="60.0" layoutY="25.0" text="CS" />
+                  <Label layoutX="64.0" layoutY="27.0" text="CS" />
+                  <Button fx:id="btnTower4" layoutX="14.0" layoutY="1.0" mnemonicParsing="false" opacity="0.0" prefHeight="47.0" prefWidth="74.0">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </AnchorPane>
          </children>
