@@ -1,5 +1,8 @@
 package com.bdefender.tower;
 
+import com.bdefender.Pair;
+
+import java.util.List;
 import java.util.Set;
 
 public interface Tower {
@@ -12,11 +15,18 @@ public interface Tower {
 		}
 	}
 
-	public Set<Integer> shoot();
+	/**
+	 *
+	 * @return center of the shoot.
+	 */
+	public Pair<Double, Double> shoot();
 	
 	public void upgradeLevel();
 	
 	public long getShootSpeed();
 
 	public int getTowerId();
+
+	public Pair<Double, Double> getPos();
+
 }

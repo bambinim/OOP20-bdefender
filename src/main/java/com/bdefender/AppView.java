@@ -9,9 +9,23 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
+<<<<<<< HEAD
+=======
+import java.io.IOException;
+
+>>>>>>> dev-Shop
 import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
 import com.bdefender.map.Map;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import com.bdefender.game.GameController;
+import com.bdefender.game.GameControllerImpl;
+import com.bdefender.map.Map;
+import com.bdefender.map.MapType;
+import com.bdefender.menu.LaunchMenuLoader;
+import com.bdefender.menu.LaunchMenuLoaderImpl;
 
 public class AppView extends Application {
     /**
@@ -24,7 +38,29 @@ public class AppView extends Application {
     public static final int DEFAULT_WIDTH = 1280;
     private Stage primaryStage;
     private GameController gameController;
+<<<<<<< HEAD
     private final GridPane root = new GridPane();
+=======
+    private LaunchMenuLoader menuLoader;
+    private final GridPane root = new GridPane();
+
+
+    private void initializeView() {
+        this.root.setAlignment(Pos.CENTER);
+        this.root.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+        this.primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            this.root.setScaleX(this.primaryStage.getWidth() / AppView.DEFAULT_WIDTH);
+        });
+        this.primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+            this.root.setScaleY(this.primaryStage.getHeight() / AppView.DEFAULT_HEIGHT);
+        });
+        AnchorPane.setTopAnchor(this.root, 0.0);
+        AnchorPane.setBottomAnchor(this.root, 0.0);
+        AnchorPane.setLeftAnchor(this.root, 0.0);
+        AnchorPane.setRightAnchor(this.root, 0.0);
+        this.primaryStage.setScene(new Scene(this.root));
+    }
+>>>>>>> dev-Shop
 
     private void initializeView() {
         this.root.setAlignment(Pos.CENTER);
@@ -43,7 +79,7 @@ public class AppView extends Application {
 
     // TODO: move to controller
     private void startGame() {
-        this.gameController = new GameControllerImpl(Map.COUNTRYSIDE);
+        this.gameController = new GameControllerImpl(menuLoader.getController().getSelectedMap());
         this.setContent(this.gameController.getView());
     }
 
@@ -59,7 +95,20 @@ public class AppView extends Application {
         this.primaryStage.setResizable(true);
         this.primaryStage.show();
         this.initializeView();
+<<<<<<< HEAD
         this.startGame();
+=======
+        this.startMenu();
+    }
+
+    private void startMenu() {
+        try {
+            this.menuLoader = new LaunchMenuLoaderImpl((e) -> this.startGame());
+            this.setContent(this.menuLoader.getParent());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+>>>>>>> dev-Shop
     }
 
     /**
@@ -69,8 +118,12 @@ public class AppView extends Application {
     public void setContent(final Parent parent) {
         this.root.getChildren().clear();
         this.root.getChildren().add(parent);
+<<<<<<< HEAD
         this.primaryStage.setScene(new Scene(this.root));
+=======
+>>>>>>> dev-Shop
     }
+
 
     public static void run(final String[] args) {
         AppView.launch(args);

@@ -1,0 +1,8 @@
+Lo scopo del gioco e' impedire ai nemici di percorrere tutta la mappa per evitare l'assedio. 
+Compra le torri da posizionare nello shop e posizionale in punti strategici sulla mappa. 
+Ogni torre sparera' ai nemici nel proorio raggio d'azione, ogni uccisione ti ricompensera' con delle monete che potrai spendere per potenziare le torri gia' presenti o comprarne di nuove.
+Ogni nemico che sopravvive all'intero percorso ti sottrae dei punti vita.
+Il gioco termina quando la tua vita arriva a 0.
+
+Soppravvivi il maggior numero di turni!
+Buona Fortuna.
