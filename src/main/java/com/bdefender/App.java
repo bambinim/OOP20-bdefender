@@ -1,6 +1,5 @@
 package com.bdefender;
 
-
 public final class App {
 
     private App() { }

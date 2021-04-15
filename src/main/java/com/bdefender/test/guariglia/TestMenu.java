@@ -13,7 +13,7 @@ public class TestMenu extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final MainMenuLoader mainMenuLoader = new MainMenuLoader((e) -> this.playAction());
+        final LaunchMenuLoaderImpl mainMenuLoader = new LaunchMenuLoaderImpl((e) -> this.playAction());
         final Parent parent = mainMenuLoader.getParent();
         primaryStage.setScene(new Scene(parent));
         primaryStage.show();

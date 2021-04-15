@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane prefHeight="736.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="781.0" fitWidth="1311.0" layoutX="-7.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
@@ -28,11 +29,13 @@
          </font>
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
-         </cursor></Button>
+         </cursor>
+      </Button>
       <Label layoutX="555.0" layoutY="373.0" prefHeight="53.0" prefWidth="169.0" text="SELEZIONA LA MAPPA:">
          <font>
             <Font size="16.0" />
-         </font></Label>
+         </font>
+      </Label>
       <Label fx:id="titleLable" layoutX="516.0" layoutY="185.0" prefHeight="67.0" prefWidth="265.0" text="Base Defender">
          <font>
             <Font name="MV Boli" size="36.0" />
@@ -41,7 +44,8 @@
       <ChoiceBox fx:id="mapChoiceBox" layoutX="512.0" layoutY="423.0" prefHeight="34.0" prefWidth="259.0" style="-fx-background-color: #d9c07c;">
          <opaqueInsets>
             <Insets />
-         </opaqueInsets></ChoiceBox>
+         </opaqueInsets>
+      </ChoiceBox>
       <Button fx:id="tutorialBtn" layoutX="512.0" layoutY="317.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="259.0" style="-fx-background-color: transparent;" text="TUTORIAL">
          <font>
             <Font name="MV Boli" size="18.0" />

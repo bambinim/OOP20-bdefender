@@ -15,7 +15,11 @@ public interface Tower {
 		}
 	}
 
-	public List<Pair<Double, Double>> shoot();
+	/**
+	 *
+	 * @return center of the shoot.
+	 */
+	public Pair<Double, Double> shoot();
 	
 	public void upgradeLevel();
 	
