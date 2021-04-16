@@ -8,7 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+
 import java.io.IOException;
+
 import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
 import com.bdefender.map.Map;
@@ -53,7 +55,6 @@ public class AppView extends Application {
         this.primaryStage.setScene(new Scene(this.root));
     }
 
-    // TODO: move to controller
     private void startGame() {
         this.gameController = new GameControllerImpl(menuLoader.getController().getSelectedMap());
         this.setContent(this.gameController.getView());
@@ -71,7 +72,6 @@ public class AppView extends Application {
         this.primaryStage.setResizable(true);
         this.primaryStage.show();
         this.initializeView();
-        this.startGame();
         this.startMenu();
     }
 
@@ -82,7 +82,6 @@ public class AppView extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -92,9 +91,6 @@ public class AppView extends Application {
     public void setContent(final Parent parent) {
         this.root.getChildren().clear();
         this.root.getChildren().add(parent);
-
-        this.primaryStage.setScene(new Scene(this.root));
-
     }
 
 
