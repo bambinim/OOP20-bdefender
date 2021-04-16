@@ -1,6 +1,8 @@
 package com.bdefender.tower;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.bdefender.Pair;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
@@ -136,6 +138,11 @@ public class TowerFactory {
 				return id;
 			}
 
+            @Override
+            public Pair<Double, Double> getPos() {
+                // TODO Auto-generated method stub
+                return null;
+            }
 			@Override
 			public Pair<Double, Double> getPosition() {
 				return pos;
