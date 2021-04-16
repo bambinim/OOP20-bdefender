@@ -23,6 +23,7 @@ public class TopMenuView extends AnchorPane {
     private static final int BUTTON_SIZE = 30;
     private final ImageButton playButton;
     private final ImageButton exitButton;
+    private final ImageButton shopButton;
 
     public TopMenuView() {
         final Rectangle rec = new Rectangle();
@@ -35,6 +36,7 @@ public class TopMenuView extends AnchorPane {
         this.playButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/play.png")));
         this.playButton.setDisabledImage(this.loadImage(ClassLoader.getSystemResource("game/play-grey.png")));
         this.exitButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/times.png")));
+        this.shopButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/shopping-cart.png")));
         this.positionButtons();
     }
 
@@ -47,7 +49,11 @@ public class TopMenuView extends AnchorPane {
         this.exitButton.setFitHeight(BUTTON_SIZE);
         this.exitButton.setX(1200);
         this.exitButton.setY(5);
-        this.getChildren().addAll(this.playButton, this.exitButton);
+        this.shopButton.setFitWidth(BUTTON_SIZE);
+        this.shopButton.setFitHeight(BUTTON_SIZE);
+        this.shopButton.setX(85);
+        this.shopButton.setY(5);
+        this.getChildren().addAll(this.playButton, this.exitButton, this.shopButton);
     }
 
     private Image loadImage(final URL imageFile) {
@@ -72,5 +78,12 @@ public class TopMenuView extends AnchorPane {
      */
     public ImageButton getExitButton() {
         return this.exitButton;
+    }
+
+    /**
+     * @return shop button
+     */
+    public ImageButton getShopButton() {
+        return this.shopButton;
     }
 }
