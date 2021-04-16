@@ -5,6 +5,8 @@ import com.bdefender.map.Coordinates;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.view.TowerView;
+import com.bdefender.tower.view.TowerViewImplementation;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +25,9 @@ public class TowersControllerImpl implements TowersController{
 
     private Tower getTowerByTypeName(TowerName name, Coordinates pos){
         switch (name) {
-            case ROCK: return factory.getTowerDirect1(this.pool,pos);
-            case FIRE_BALL: factory.getTowerDirect1(this.pool,pos);
-            case FIRE_ARROW: factory.getTowerDirect1(this.pool,pos);
-            case THUNDERBOLT: factory.getTowerDirect1(this.pool,pos);
+            case FIRE_BALL: return factory.getTowerZone1(this.pool,pos);
+            case FIRE_ARROW: return factory.getTowerDirect1(this.pool,pos);
+            case THUNDERBOLT: return factory.getTowerDirect2(this.pool,pos);
         }
         return null;
     }
@@ -71,11 +72,6 @@ class TowerData {
         return this.thread;
     }
 
-}
-
-@FunctionalInterface
-interface TowerViewImplementation {
-    TowerView getView(Tower tower);
 }
 
 class TowerThread extends Thread {

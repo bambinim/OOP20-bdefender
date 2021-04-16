@@ -78,6 +78,11 @@ public class TowerFactory {
 				return id;
 			}
 
+			@Override
+			public Pair<Double, Double> getPosition() {
+				return pos;
+			}
+
 		};
 	}
 	
@@ -138,6 +143,10 @@ public class TowerFactory {
                 // TODO Auto-generated method stub
                 return null;
             }
+			@Override
+			public Pair<Double, Double> getPosition() {
+				return pos;
+			}
 		};
 	}
 	

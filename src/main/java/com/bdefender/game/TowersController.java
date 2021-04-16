@@ -1,10 +1,16 @@
 package com.bdefender.game;
 
 import com.bdefender.map.Coordinates;
-import javafx.scene.layout.Pane;
 
 
 public interface TowersController {
+
+    enum TowerName {
+        FIRE_ARROW,
+        FIRE_BALL,
+        THUNDERBOLT
+    }
+
 
     /**
      * Creates the tower threads and add its view to the game panel.

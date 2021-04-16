@@ -27,6 +27,10 @@ public interface Tower {
 
 	public int getTowerId();
 
+
 	public Pair<Double, Double> getPos();
+
+	public Pair<Double, Double> getPosition();
+
 
 }
