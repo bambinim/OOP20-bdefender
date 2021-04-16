@@ -77,7 +77,7 @@ class TowerData {
 class TowerThread extends Thread {
     private final  TowerView view;
     private final Tower tower;
-    private boolean alive;
+    private boolean alive = true;
 
     public TowerThread(Tower tower, TowerView view){
         this.view = view;
@@ -98,11 +98,11 @@ class TowerThread extends Thread {
                     System.out.println("No more enemies around...");
                 } else {
                     view.startShootAnimation(shootTargetPos);
+                    System.out.println("shoot at " + shootTargetPos);
                 }
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         }
     }
-
 }

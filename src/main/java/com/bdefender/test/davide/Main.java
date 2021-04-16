@@ -30,8 +30,6 @@ import java.util.Optional;
 
 public class Main extends Application {
 
-
-
     public static void main(String[] args) {
         Application.launch();
     }
@@ -71,8 +69,10 @@ public class Main extends Application {
         eViewThread.start();
 
         TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t),pool);
+
         ctrl.addTower(TowersController.TowerName.THUNDERBOLT,new Coordinates(8.0,8.0));
 
+        ctrl.addTower(TowersController.TowerName.FIRE_ARROW,new Coordinates(18.0,8.0));
     }
 
     static class EnemyViewThread extends Thread {
@@ -126,29 +126,6 @@ public class Main extends Application {
                 }
             }
         }
-    }
-
-    static class TowerThread extends Thread {
-        private final Tower tower;
-
-        public TowerThread(Tower tower){
-            this.tower = tower;
-        }
-
-        @Override
-        public void run() {
-            while(true){
-                try {
-                    sleep(1000L * tower.getShootSpeed());
-                    if (tower.shoot() == null) {
-                        System.out.println("No more enemies around...");
-                    }
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-        }
-
     }
 
 }

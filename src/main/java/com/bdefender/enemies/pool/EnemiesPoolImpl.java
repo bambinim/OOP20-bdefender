@@ -91,7 +91,6 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 			}
 			if(!dirChange){
 				enemy.moveTo(nxtPos);
-				System.out.println("Moving on enemy " + c);
 			}
 		}
 	}
