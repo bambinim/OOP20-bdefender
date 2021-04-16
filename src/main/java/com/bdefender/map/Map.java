@@ -59,6 +59,6 @@ public class Map {
     public Image getMapImage() {
         return this.mapImage;
     }
+    }
 
 
-}

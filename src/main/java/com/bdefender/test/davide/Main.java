@@ -14,19 +14,21 @@ import com.bdefender.map.MapLoader;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.view.TowerViewImpl;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import javafx.util.Duration;
+
+import java.util.*;
 
 public class Main extends Application {
 
