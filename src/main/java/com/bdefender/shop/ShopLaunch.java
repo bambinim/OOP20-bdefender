@@ -1,20 +1,15 @@
-package com.bdefender.test.shola;
+package com.bdefender.shop;
 
 
-import com.bdefender.shop.Shop;
-import com.bdefender.shop.ShopImpl;
 import com.bdefender.wallet.Wallet;
 import com.bdefender.wallet.WalletImpl;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class ShopLaunch extends Application{
+public class ShopLaunch extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -24,7 +19,7 @@ public class ShopLaunch extends Application{
         Wallet wlt = new WalletImpl(INITIAL_AMOUNT);
         Shop shop = new ShopImpl(wlt);
 
-        ShopLoader shopLoader = new ShopLoader((e) -> System.out.println("ssd"), shop);
+        ShopLoader shopLoader = new ShopLoader(shop);
         final Parent parent = shopLoader.getParent();
         primaryStage.setScene(new Scene(parent));
         primaryStage.show();

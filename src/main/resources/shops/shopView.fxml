@@ -12,7 +12,12 @@
 
 <AnchorPane minHeight="10.0" prefHeight="428.0" prefWidth="145.0" style="-fx-background-image: 0\sndPietra.png;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox layoutX="7.0" layoutY="7.0" prefWidth="149.0">
+      <ImageView fitHeight="498.0" fitWidth="180.0" layoutX="-1.0" layoutY="-51.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@0/sndPietra.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="7.0" layoutY="7.0" prefWidth="149.0" style="-fx-background-image: 0\sndPietra.png;">
          <children>
             <AnchorPane>
                <children>
@@ -65,7 +70,7 @@
                         <Font name="Ebrima Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button id="FireArrow" fx:id="btnFireArrow" layoutX="15.0" layoutY="3.0" mnemonicParsing="false" opacity="0.0" prefHeight="50.0" prefWidth="74.0">
+                  <Button id="btnFireArrow" fx:id="btnFireArrow" layoutX="15.0" layoutY="3.0" mnemonicParsing="false" opacity="0.0" prefHeight="44.0" prefWidth="74.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -95,7 +100,7 @@
                         <Font name="Ebrima Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button id="btnFireBall" fx:id="btnFireBall" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" opacity="0.0" prefHeight="47.0" prefWidth="74.0">
+                  <Button id="btnFireBall" fx:id="btnFireBall" layoutX="19.0" layoutY="10.0" mnemonicParsing="false" opacity="0.0" prefHeight="44.0" prefWidth="66.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -118,7 +123,7 @@
                         <Image url="@../towers/2/tower.png" />
                      </image>
                   </ImageView>
-                  <Button id="Rock" fx:id="btnRock" layoutX="19.0" layoutY="-8.0" mnemonicParsing="false" opacity="0.0" prefHeight="52.0" prefWidth="77.0">
+                  <Button id="Rock" fx:id="btnRock" layoutX="27.0" layoutY="8.0" mnemonicParsing="false" opacity="0.0" prefHeight="50.0" prefWidth="66.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -139,12 +144,15 @@
                      <font>
                         <Font name="Ebrima" size="12.0" />
                      </font></Label>
-                  <Button fx:id="btnThunderBolt" layoutX="121.0" layoutY="3.0" mnemonicParsing="false" opacity="0.0" prefHeight="47.0" prefWidth="74.0">
+                  <Button fx:id="btnThunderBolt" layoutX="23.0" layoutY="1.0" mnemonicParsing="false" opacity="0.0" prefHeight="46.0" prefWidth="74.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <ImageView fitHeight="44.0" fitWidth="74.0" layoutX="24.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="44.0" fitWidth="74.0" layoutX="24.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="CLOSED_HAND" />
+                     </cursor></ImageView>
                </children>
             </AnchorPane>
          </children>
