@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 
 
 public class ShopLoader {
-    private final ShopViewController shopViewController;
+    private final ShopView shopViewController;
     private final Parent contentLoaded;
     private TowerName lastTower;
     public ShopLoader(Shop shop) throws IOException {

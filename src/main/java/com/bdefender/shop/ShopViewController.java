@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class ShopViewController {
+public class ShopViewController implements ShopView {
 
     private final Double OP_DISABLE = 0.5;
     private final Double OP_ENABLE = 0.0;
