@@ -2,8 +2,8 @@ package com.bdefender.game;
 
 import java.io.IOException;
 
-import com.bdefender.enemies.pool.EnemiesPoolImpl;
 import com.bdefender.enemies.pool.MapInteractorImpl;
+import com.bdefender.enemies.view.EnemiesPoolImpl;
 import com.bdefender.game.event.GameEvent;
 import com.bdefender.map.MapLoader;
 import com.bdefender.map.MapType;
