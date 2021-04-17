@@ -18,11 +18,13 @@ public class ShopLaunch extends Application {
 
         Wallet wlt = new WalletImpl(INITIAL_AMOUNT);
         Shop shop = new ShopImpl(wlt);
-
+        /*
         ShopLoader shopLoader = new ShopLoader(shop);
         final Parent parent = shopLoader.getParent();
         primaryStage.setScene(new Scene(parent));
         primaryStage.show();
+
+         */
     }
     public static void run(final String[] args) {
         launch(args);

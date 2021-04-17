@@ -1,6 +1,6 @@
 package com.bdefender.game;
 
-import com.bdefender.enemies.pool.EnemiesPoolImpl;
+import com.bdefender.enemies.view.EnemiesPoolImpl;
 import com.bdefender.enemies.pool.MapInteractorImpl;
 import com.bdefender.game.TowersController.TowerName;
 import com.bdefender.game.event.GameEvent;
@@ -11,11 +11,11 @@ import com.bdefender.map.TowerBox;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 import com.bdefender.tower.TowerFactory;
+import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
 import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.Wallet;
 
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 
 import com.bdefender.shop.ShopLoader;
 import com.bdefender.shop.TowerPlacementView;
@@ -40,7 +40,7 @@ public class GameControllerImpl implements GameController {
         this.mapView = new MapView(this.map);
         this.view = new GameView(this.mapView);
         //enemies and tower
-        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map));
+        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.view));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.view, t), this.pool);
         //click on map
         generatePlacementBoxLayer();
@@ -74,7 +74,7 @@ public class GameControllerImpl implements GameController {
     // TODO: remove after test
     private void generateTestTower() {
         final TowerFactory tFactory = new TowerFactory();
-        final EnemiesPoolImpl pool = new EnemiesPoolImpl(new MapInteractorImpl(map));
+        final EnemiesPoolImpl pool = new EnemiesPoolImpl(new MapInteractorImpl(map), new EnemyGraphicMoverImpl(this.view));
         final TowerPlacementView placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
         placementView.setOnBoxClick(event -> {
             final TowerBox box = (TowerBox) event.getSource();

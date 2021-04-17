@@ -4,21 +4,23 @@ package com.bdefender.enemies;
 import com.bdefender.Pair;
 
 public class EnemyFactory {
-	
-	public EnemyBase getEnemy1(Pair<Double, Double> pos) {
-		return this.enemyFromParams(40.0, 35.0, 30.0, pos, 0);
+
+	public Enemy getEnemy1(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
+		return this.enemyFromParams(40.0, 40.0, 30.0, pos, startDir, 0);
 	}
 	
-	public EnemyBase getEnemy2(Pair<Double, Double> pos) {
-		return this.enemyFromParams(45.0, 50.0, 25.0, pos, 1);
+	public Enemy getEnemy2(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
+		return this.enemyFromParams(45.0, 50.0, 25.0, pos, startDir, 1);
 	}
 	
-	private EnemyBase enemyFromParams(Double life, Double speed, Double damage, Pair<Double, Double> pos, Integer typeId) {
-		return new EnemyBase() {
+	private Enemy enemyFromParams(Double life, Double speed, Double damage, Pair<Double, Double> pos, Pair<Integer, Integer> startDir, Integer typeId) {
+		return new Enemy() {
 			
-			Pair<Double, Double> enemyPos = pos;
-			double enemyLife = life;
-			Pair<Integer, Integer> enemyDirection = new Pair<>(0, 0); 
+			private Pair<Double, Double> enemyPos = pos;
+			private double enemyLife = life;
+			private Pair<Integer, Integer> enemyDirection = startDir;
+			private EnemyStateChanged onDead;
+			private boolean arrived = false;
 			
 			@Override
 			public Pair<Double, Double> getPosition() {
@@ -27,12 +29,25 @@ public class EnemyFactory {
 
 			@Override
 			public void takeDamage(Double damage) {
-				enemyLife -= damage; 		
+				enemyLife -= damage;
+				if (enemyLife <= 0){
+					onDead.StateChanged();
+				}
 			}
 
 			@Override
 			public boolean isAlive() {
 				return enemyLife > 0;
+			}
+
+			@Override
+			public boolean isArrived() {
+				return this.arrived;
+			}
+
+			@Override
+			public void setArrived(boolean arrived) {
+				this.arrived = arrived;
 			}
 
 			@Override
@@ -48,6 +63,11 @@ public class EnemyFactory {
 			@Override
 			public double getLife() {
 				return this.enemyLife;
+			}
+
+			@Override
+			public void setOnDeadAction(EnemyStateChanged onDead) {
+				this.onDead = onDead;
 			}
 
 			@Override

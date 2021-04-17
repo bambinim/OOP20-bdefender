@@ -9,6 +9,7 @@ import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 
 public class EnemyControllerDirectImpl implements EnemyControllerDirect {
 
+
     private final EnemiesPoolInteractor enemiesPool;
 
     public EnemyControllerDirectImpl(final EnemiesPoolInteractor enemiesPool) {
@@ -20,10 +21,8 @@ public class EnemyControllerDirectImpl implements EnemyControllerDirect {
      */
     @Override
     public Map<Integer, Pair<Double, Double>> getEnemiesInZone(final double radius, final Pair<Double, Double> center) {
-        return IntStream.range(0, this.enemiesPool.getEnemies().size()).boxed()
-                .collect(Collectors.toMap(i -> i, i -> this.enemiesPool.getEnemies().get(i))).entrySet().stream()
-                .filter(e -> Math.hypot(center.getY() - e.getValue().getPosition().getY(), center.getX() - e.getValue().getPosition().getX()) <= radius)
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().getPosition()));
+        return this.enemiesPool.getEnemies(true).entrySet().stream().filter(e -> Math.hypot(center.getY() - e.getValue().getPosition().getY(), center.getX() - e.getValue().getPosition().getX()) <= radius)
+				.collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getPosition()));
     }
 
     /**
@@ -31,7 +30,7 @@ public class EnemyControllerDirectImpl implements EnemyControllerDirect {
      */
     @Override
     public Pair<Double, Double> getEnemyPosByID(final Integer id) {
-        return enemiesPool.getEnemies().get(id).getPosition();
+        return enemiesPool.getEnemies(false).get(id).getPosition();
     }
 
     /**
@@ -43,5 +42,6 @@ public class EnemyControllerDirectImpl implements EnemyControllerDirect {
     public void applyDamageById(final Integer id, final Double damage) {
         this.enemiesPool.applyDamageById(id, damage);
     }
+
 
 }

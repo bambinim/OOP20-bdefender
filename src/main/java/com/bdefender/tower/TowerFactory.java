@@ -1,14 +1,10 @@
 package com.bdefender.tower;
-
 import java.util.Map;
-import java.util.Random;
 
 import com.bdefender.Pair;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.tower.controller.EnemyControllerDirect;
 import com.bdefender.tower.controller.EnemyControllerDirectImpl;
-import com.bdefender.tower.controller.EnemyControllerZone;
-import com.bdefender.tower.controller.EnemyControllerZoneImpl;
 
 
 public class TowerFactory {
@@ -76,100 +72,69 @@ public class TowerFactory {
                 // TODO			
             }
 
-            public Pair<Double, Double> getOptimalTarget() throws NoEnemiesAroundException {
+	public Tower getTowerDirect1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+		return this.towerDirectByParams(20.0, 8.5, 1L, pool, pos, 0);
+	}
 
-                final Map<Integer, Pair<Double, Double>> enemiesInRange = this.enemiesCtrl.getEnemiesInZone(rangeRadius, pos);
+	public Tower getTowerDirect2(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+		return this.towerDirectByParams(15.0, 9.0, 2L, pool, pos, 1);
+	}
 
-                if (enemiesInRange.isEmpty()) {
-                    throw new NoEnemiesAroundException("No enemies around this tower");
-                }
+	public Tower getTowerDirect3(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+		return this.towerDirectByParams(10.0, 12.0, 2L, pool, pos, 2);
+	}
 
-                Pair<Integer, Integer> mostEnemiesAround = new Pair<>(0, 0); // la prima cifra(X) rappresenta l'id, la seconda(Y) i nemici che ha attorno
+	
+	private Tower towerDirectByParams(Double damage, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos, int id) {
 
-                for (final var enemy : enemiesInRange.entrySet()) {
-                    final int enemiesAround = this.enemiesCtrl.getEnemiesInZone(damageAreaRadius, enemy.getValue()).size();
-                    if (mostEnemiesAround.getY() <= enemiesAround) {
-                        mostEnemiesAround = new Pair<>(enemy.getKey(), enemiesAround);
-                    }
-                }
+		return new Tower() {
+			
+			EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
 
-                return enemiesInRange.get(mostEnemiesAround.getX());
-            }
+			@Override
+			public Pair<Double, Double> shoot() {
+				try {
+					int targetId = this.getOptimalTarget();
+					this.enemiesCtrl.applyDamageById(targetId, damage);
+					return this.enemiesCtrl.getEnemyPosByID(targetId);
+				} catch (NoEnemiesAroundException ex) {
+					return null;
+				}
+			}
 
-            @Override
-            public long getShootSpeed() {
-                return shootSpeed;
-            }
+			@Override
+			public void upgradeLevel() {
+				// TODO Auto-generated method stub
+			}
 
-            @Override
-            public int getTowerId() {
-                return id;
-            }
+			public Integer getOptimalTarget() throws NoEnemiesAroundException {
+				Map<Integer, Pair<Double, Double>> enemiesInRange = this.enemiesCtrl.getEnemiesInZone(rangeRadius, pos);
+				
+				if (enemiesInRange.isEmpty()) {
+					throw new NoEnemiesAroundException("No enemies around this tower");
+				}
+				
+				Pair<Integer, Double> closerEnemy = new Pair<>(0, rangeRadius + 1);
+				
+				for ( var enemy : enemiesInRange.entrySet()) {
+					double distance = Math.sqrt(Math.pow(enemy.getValue().getX() - pos.getX(), 2) + Math.pow(enemy.getValue().getY() - pos.getY(), 2));
+					if (distance <= closerEnemy.getY() ) {
+						closerEnemy = new Pair<>(enemy.getKey(), distance);
+					}
+				}
+				
+				return closerEnemy.getX();
+			}
 
-            @Override
-            public Pair<Double, Double> getPos() {
-                return pos;
-            }
+			@Override
+			public long getShootSpeed() {
+				return shootSpeed;
+			}
 
-            @Override
-            public Pair<Double, Double> getPosition() {
-                return pos;
-            }
-
-        };
-    }
-
-    private Tower towerDirectByParams(final Double damage, final Double rangeRadius, final Long shootSpeed, final EnemiesPoolInteractor pool, final Pair<Double, Double> pos, final int id) {
-
-        return new Tower() {
-
-            private EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
-
-            @Override
-            public Pair<Double, Double> shoot() {
-                try {
-                    final int targetId = this.getOptimalTarget();
-                    this.enemiesCtrl.applyDamageById(targetId, damage);
-                    return this.enemiesCtrl.getEnemyPosByID(targetId);
-                } catch (NoEnemiesAroundException ex) {
-                    return null;
-                }
-            }
-
-            @Override
-            public void upgradeLevel() {
-                // TODO Auto-generated method stub
-
-            }
-
-            public Integer getOptimalTarget() throws NoEnemiesAroundException {
-                final Map<Integer, Pair<Double, Double>> enemiesInRange = this.enemiesCtrl.getEnemiesInZone(rangeRadius, pos);
-
-                if (enemiesInRange.isEmpty()) {
-                    throw new NoEnemiesAroundException("No enemies around this tower");
-                }
-
-                Pair<Integer, Double> closerEnemy = new Pair<>(0, rangeRadius + 1);
-
-                for (final var enemy : enemiesInRange.entrySet()) {
-                    final double distance = Math.sqrt(Math.pow(enemy.getValue().getX() - pos.getX(), 2) + Math.pow(enemy.getValue().getY() - pos.getY(), 2));
-                    if (distance <= closerEnemy.getY()) {
-                        closerEnemy = new Pair<>(enemy.getKey(), distance);
-                    }
-                }
-
-                return closerEnemy.getX();
-            }
-
-            @Override
-            public long getShootSpeed() {
-                return shootSpeed;
-            }
-
-            @Override
-            public int getTowerId() {
-                return id;
-            }
+			@Override
+			public int getTowerId() {
+				return id;
+			}
 
             @Override
             public Pair<Double, Double> getPos() {
