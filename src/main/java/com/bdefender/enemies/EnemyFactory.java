@@ -2,29 +2,30 @@ package com.bdefender.enemies;
 
 
 import com.bdefender.Pair;
+import com.bdefender.enemies.event.EnemyEvent;
+import javafx.event.EventHandler;
 
 public class EnemyFactory {
 
-	public Enemy getEnemy1(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
-		return this.enemyFromParams(40.0, 40.0, 30.0, pos, startDir, 0);
+	public Enemy getEnemy1(Pair<Double, Double> pos, Pair<Integer, Integer> startDir,EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+		return this.enemyFromParams(40.0, 40.0, 30.0, pos, startDir, 0, onDeath,onReachedEnd);
 	}
 	
-	public Enemy getEnemy2(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
-		return this.enemyFromParams(45.0, 50.0, 25.0, pos, startDir, 1);
+	public Enemy getEnemy2(Pair<Double, Double> pos, Pair<Integer, Integer> startDir, EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+		return this.enemyFromParams(45.0, 50.0, 25.0, pos, startDir, 1, onDeath, onReachedEnd);
 	}
 
 
-	public Enemy getEnemy3(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
-		return this.enemyFromParams(80.0, 30.0, 30.0, pos, startDir, 2);
+	public Enemy getEnemy3(Pair<Double, Double> pos, Pair<Integer, Integer> startDir,  EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+		return this.enemyFromParams(80.0, 30.0, 30.0, pos, startDir, 2, onDeath, onReachedEnd);
 	}
 	
-	private Enemy enemyFromParams(Double life, Double speed, Double damage, Pair<Double, Double> pos, Pair<Integer, Integer> startDir, Integer typeId) {
+	private Enemy enemyFromParams(Double life, Double speed, Double damage, Pair<Double, Double> pos, Pair<Integer, Integer> startDir, Integer typeId, EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
 		return new Enemy() {
 			
 			private Pair<Double, Double> enemyPos = pos;
 			private double enemyLife = life;
 			private Pair<Integer, Integer> enemyDirection = startDir;
-			private EnemyStateChanged onDead;
 			private boolean arrived = false;
 			
 			@Override
@@ -36,7 +37,7 @@ public class EnemyFactory {
 			public void takeDamage(Double damage) {
 				enemyLife -= damage;
 				if (enemyLife <= 0){
-					onDead.StateChanged();
+					onDeath.handle(new EnemyEvent(EnemyEvent.ENEMY_KILLED, this));
 				}
 			}
 
@@ -71,8 +72,9 @@ public class EnemyFactory {
 			}
 
 			@Override
-			public void setOnDeadAction(EnemyStateChanged onDead) {
-				this.onDead = onDead;
+			public void doDamage() {
+				var death = new EnemyEvent(EnemyEvent.ENEMY_REACHED_END, this);
+				onReachedEnd.handle(death);
 			}
 
 			@Override

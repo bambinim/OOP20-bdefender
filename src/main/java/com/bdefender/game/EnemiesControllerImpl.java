@@ -2,11 +2,12 @@ package com.bdefender.game;
 
 import com.bdefender.enemies.Enemy;
 import com.bdefender.enemies.EnemyFactory;
+import com.bdefender.enemies.event.EnemyEvent;
 import com.bdefender.enemies.pool.*;
 import com.bdefender.enemies.view.EnemiesPoolImpl;
-import com.bdefender.enemies.view.EnemyView;
 import com.bdefender.map.Map;
 import com.bdefender.enemies.view.EnemyGraphicMover;
+import javafx.event.EventHandler;
 
 import java.util.Random;
 
@@ -14,17 +15,17 @@ import java.util.Random;
 public class EnemiesControllerImpl implements EnemiesController{
 
     private EnemiesPoolImpl pool;
-    private EnemyViewImplementation viewImpl;
+    private EnemyMoverThread moverThread;
 
-    public EnemiesControllerImpl(Map map, EnemyViewImplementation viewImpl, EnemyGraphicMover graphicMover){
+    public EnemiesControllerImpl(Map map,EnemyGraphicMover graphicMover){
         this.pool = new EnemiesPoolImpl(new MapInteractorImpl(map),graphicMover);
-        this.viewImpl = viewImpl;
+        this.moverThread = new EnemyMoverThread(this.pool);
     }
 
     @Override
-    public void startGenerate(int intensity, int totEnemies) {
+    public void startGenerate(int intensity, int totEnemies, EventHandler<EnemyEvent> onDead, EventHandler<EnemyEvent> onReachedEnd) {
         EnemyMoverThread moverThread = new EnemyMoverThread(this.pool);
-        EnemySpawnerThread spawnerThread = new EnemySpawnerThread(intensity, totEnemies, pool, viewImpl);
+        EnemySpawnerThread spawnerThread = new EnemySpawnerThread(intensity, totEnemies, pool, onDead, onReachedEnd);
         moverThread.start();
         spawnerThread.start();
     }
@@ -37,31 +38,27 @@ public class EnemiesControllerImpl implements EnemiesController{
 
 class EnemySpawnerThread extends Thread {
 
-    @FunctionalInterface
-
-    interface FinishOperation {
-        void onFinish();
-    }
-
     private final int intensity;
     private final int totEnemies;
     private static final long TEN_SEC = 10000;
     private final EnemiesPoolSpawner spawner;
     private final EnemyFactory factory = new EnemyFactory();
-    private final EnemiesControllerImpl.EnemyViewImplementation viewImpl;
+    private final EventHandler<EnemyEvent> onDead;
+    private final EventHandler<EnemyEvent> onReachedEnd;
 
-    public EnemySpawnerThread(int intensity, int totEnemies, EnemiesPoolSpawner spawner, EnemiesControllerImpl.EnemyViewImplementation viewImpl) {
+    public EnemySpawnerThread(int intensity, int totEnemies, EnemiesPoolSpawner spawner, EventHandler<EnemyEvent> onDead, EventHandler<EnemyEvent> onReachedEnd) {
         this.intensity = intensity;
         this.totEnemies = totEnemies;
         this.spawner = spawner;
-        this.viewImpl = viewImpl;
+        this.onDead = onDead;
+        this.onReachedEnd = onReachedEnd;
     }
 
     public Enemy getEnemyByType(int enemyCod){
         switch (enemyCod){
-            case 0: return factory.getEnemy1(this.spawner.getSpawnPoint(), this.spawner.getSpawnDir());
-            case 1: return factory.getEnemy2(this.spawner.getSpawnPoint(), this.spawner.getSpawnDir());
-            case 2: return factory.getEnemy3(this.spawner.getSpawnPoint(), this.spawner.getSpawnDir());
+            case 0: return factory.getEnemy1(this.spawner.getSpawnPoint(), this.spawner.getSpawnDir(),this.onDead, this.onReachedEnd);
+            case 1: return factory.getEnemy2(this.spawner.getSpawnPoint(), this.spawner.getSpawnDir(),this.onDead, this.onReachedEnd);
+            case 2: return factory.getEnemy3(this.spawner.getSpawnPoint(), this.spawner.getSpawnDir(),this.onDead, this.onReachedEnd);
             default: return null;
         }
     }
@@ -74,8 +71,6 @@ class EnemySpawnerThread extends Thread {
                 Random random = new Random();
                 Enemy enemy = getEnemyByType(random.nextInt(2));
                 spawner.addEnemy(enemy);
-                EnemyView view = this.viewImpl.getView(enemy);
-                enemy.setOnDeadAction(view::removeEnemyFromGameField);
             } catch (InterruptedException ex){
                 System.out.println(ex.getMessage());
             }

@@ -2,7 +2,6 @@
 package com.bdefender.test.davide;
 
 import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
-import com.bdefender.enemies.view.EnemyViewImpl;
 import com.bdefender.game.*;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
@@ -33,10 +32,10 @@ public class Main extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
 
-    EnemiesController enemiesController = new EnemiesControllerImpl(map, e -> new EnemyViewImpl(root, e),new EnemyGraphicMoverImpl(root));
+    EnemiesController enemiesController = new EnemiesControllerImpl(map, new EnemyGraphicMoverImpl(root));
 
     TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t),enemiesController.getEnemiesPool());
-    enemiesController.startGenerate(5, 10);
+    enemiesController.startGenerate(5, 10, e -> {System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOO");}, event -> {System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");});
     ctrl.addTower(TowerName.THUNDERBOLT,new Coordinates(10.0,8.0));
 
     ctrl.addTower(TowerName.FIRE_ARROW,new Coordinates(28.0,8.0)); }

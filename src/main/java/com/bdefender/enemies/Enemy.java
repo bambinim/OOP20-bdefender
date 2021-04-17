@@ -29,7 +29,7 @@ public interface Enemy {
 	
 	double getLife();
 
-	void setOnDeadAction(EnemyStateChanged onDead);
+	void doDamage();
 
 	Integer getTypeId();
 	

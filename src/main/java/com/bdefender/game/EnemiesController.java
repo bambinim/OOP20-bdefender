@@ -1,17 +1,12 @@
 package com.bdefender.game;
 
-import com.bdefender.enemies.Enemy;
+import com.bdefender.enemies.event.EnemyEvent;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
-import com.bdefender.enemies.view.EnemyView;
+import javafx.event.EventHandler;
 
 public interface EnemiesController {
 
-    @FunctionalInterface
-    interface EnemyViewImplementation {
-        public EnemyView getView(Enemy enemy);
-    }
-
-    void startGenerate(int intensity, int totEnemies);
+    void startGenerate(int intensity, int totEnemies, EventHandler<EnemyEvent> onDead, EventHandler<EnemyEvent> onReachedEnd);
 
     EnemiesPoolInteractor getEnemiesPool();
 
