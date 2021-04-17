@@ -44,9 +44,9 @@ public class Main extends Application {
 
         enemiesController.startGenerate(5, 10);
 
-        ctrl.addTower(TowersController.TowerName.THUNDERBOLT,new Coordinates(8.0,8.0));
+        ctrl.addTower(TowersController.TowerName.THUNDERBOLT,new Coordinates(10.0,8.0));
 
-        ctrl.addTower(TowersController.TowerName.FIRE_ARROW,new Coordinates(18.0,8.0));
+        ctrl.addTower(TowersController.TowerName.FIRE_ARROW,new Coordinates(28.0,8.0));
     }
 
 

@@ -1,6 +1,6 @@
 package com.bdefender.enemies.view;
 import com.bdefender.Pair;
-import com.bdefender.enemies.EnemyBase;
+import com.bdefender.enemies.Enemy;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.enemies.pool.EnemiesPoolMover;
 import com.bdefender.enemies.pool.EnemiesPoolSpawner;
@@ -8,12 +8,15 @@ import com.bdefender.enemies.pool.MapInteractor;
 import com.bdefender.map.Coordinates;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
 	
-	private final ArrayList<EnemyBase> enemies = new ArrayList<>();
+	private final Map<Integer,Enemy> enemies = new HashMap<>();
+	private int counter = 0;
 	private final MapInteractor mapInteractor;
 	private final EnemyGraphicMover graphicMover;
 	
@@ -23,18 +26,18 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 	}
 	
 	@Override
-	public ArrayList<EnemyBase> getEnemies(){
-		return this.enemies;
+	public Map<Integer, Enemy> getEnemies(boolean alive){
+		return alive ? this.getAliveEnemies() : this.enemies;
 	}
 
-	public ArrayList<EnemyBase> getAliveEnemies(){
-		return this.enemies.stream().filter(EnemyBase::isAlive).collect(Collectors.toCollection(ArrayList::new));
+	private Map<Integer,Enemy> getAliveEnemies(){
+		return this.enemies.entrySet().stream().filter(e -> e.getValue().isAlive() && !e.getValue().isArrived()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 	}
 	
 	@Override
-	public void addEnemy(EnemyBase enemy) {
+	public void addEnemy(Enemy enemy) {
 		enemy.setDirection(this.mapInteractor.getStartingDirection());
-		enemies.add(enemy);
+		enemies.put(counter++,enemy);
 	}
 
 	@Override
@@ -49,7 +52,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
 	@Override
 	public void applyDamageById(final int id, Double damage) {
-		enemies.get(id).takeDamage(damage);
+		this.enemies.get(id).takeDamage(damage);
 		System.out.println("Enemy " + id + " got damaged");
 		if (!enemies.get(id).isAlive()) {
 			System.out.println("Enemy " + id + " died");
@@ -77,8 +80,8 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 		ArrayList<Pair<Double, Double>> keyPoints = new ArrayList<>(this.mapInteractor.getKeyPoints());
 		//io suppongo che, per adesso, ci si possa muovere solo da destra a sinistra
 		for(int c = 0; c < enemies.size(); c++) {
-			EnemyBase enemy = enemies.get(c);
-			if (enemy.isAlive()) {
+			Enemy enemy = enemies.get(c);
+			if (enemy.isAlive() && !enemy.isArrived()) {
 				Pair<Integer, Integer> dir = enemy.getDirection();
 				Pair<Double, Double> currPos = enemy.getPosition();
 				Pair<Double, Double> nxtPos = getNextPos(dir, currPos, new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000));
@@ -89,7 +92,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 						int nextYDir = 0;
 						if (keyPoints.indexOf(keyPoint) + 1 == keyPoints.size()) {
 							System.out.println("Enemy " + c + " Reached the end");
-							this.enemies.remove(c);
+							this.enemies.get(c).setArrived(true);
 							//applicare danno al giocatore
 						} else {
 							Double nextKeyPointY = keyPoints.get(keyPoints.indexOf(keyPoint) + 1).getY();
@@ -109,7 +112,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 				}
 			}
 		}
-		this.graphicMover.moveEnemies(this.getAliveEnemies());
+		this.graphicMover.moveEnemies(new ArrayList<>(this.getAliveEnemies().values()));
 	}
 
 }

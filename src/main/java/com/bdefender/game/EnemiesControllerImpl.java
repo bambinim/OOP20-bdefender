@@ -1,6 +1,6 @@
 package com.bdefender.game;
 
-import com.bdefender.enemies.EnemyBase;
+import com.bdefender.enemies.Enemy;
 import com.bdefender.enemies.EnemyFactory;
 import com.bdefender.enemies.pool.*;
 import com.bdefender.enemies.view.EnemiesPoolImpl;
@@ -58,7 +58,7 @@ class EnemySpawnerThread extends Thread {
         for (int i = 0; i < totEnemies; i++ ){
             try {
                 sleep(TEN_SEC / intensity);
-                EnemyBase enemy = factory.getEnemy1(this.spawner.getSpawnPoint(), this.spawner.getSpawnDir());
+                Enemy enemy = factory.getEnemy1(this.spawner.getSpawnPoint(), this.spawner.getSpawnDir());
                 spawner.addEnemy(enemy);
                 EnemyView view = this.viewImpl.getView(enemy);
                 enemy.setOnDeadAction(view::removeEnemyFromGameField);

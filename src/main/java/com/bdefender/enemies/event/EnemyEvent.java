@@ -1,7 +1,6 @@
 package com.bdefender.enemies.event;
 
-import com.bdefender.enemies.EnemyBase;
-import com.bdefender.game.event.GameEvent;
+import com.bdefender.enemies.Enemy;
 import javafx.event.Event;
 import javafx.event.EventType;
 
@@ -15,9 +14,9 @@ public class EnemyEvent extends Event {
     public static final EventType<EnemyEvent> ENEMY_SPAWNED = new EventType<>("Enemy Killed");
     public static final EventType<EnemyEvent> ENEMY_REACHED_END = new EventType<>("Enemy Killed");
 
-    private final EnemyBase source;
+    private final Enemy source;
 
-    public EnemyEvent(final EventType<? extends Event> eventType, final EnemyBase source) {
+    public EnemyEvent(final EventType<? extends Event> eventType, final Enemy source) {
         super(eventType);
         this.source = source;
     }
@@ -25,7 +24,7 @@ public class EnemyEvent extends Event {
     /**
      * @return enemy
      */
-    public EnemyBase getSource() {
+    public Enemy getSource() {
         return this.source;
     }
 

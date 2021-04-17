@@ -1,6 +1,6 @@
 package com.bdefender.enemies.view;
 
-import com.bdefender.enemies.EnemyBase;
+import com.bdefender.enemies.Enemy;
 import com.bdefender.map.Coordinates;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,10 +22,10 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
     }
 
     @Override
-    public void moveEnemies(ArrayList<EnemyBase> enemies) {
-        HashMap<EnemyBase, Optional<Image>> enemiesImage = EnemiesViewLoader.GetEnemiesImages(enemies);
+    public void moveEnemies(ArrayList<Enemy> enemies) {
+        HashMap<Enemy, Optional<Image>> enemiesImage = EnemiesViewLoader.GetEnemiesImages(enemies);
         gc.clearRect(0, 0, 1280,1280);
-        for(EnemyBase enemy : enemies){
+        for(Enemy enemy : enemies){
             Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 1, enemy.getPosition().getY() - 1);
             if(enemiesImage.get(enemy).isPresent()) {
                 gc.drawImage(enemiesImage.get(enemy).get(), enemyPos.getLeftPixel(), enemyPos.getTopPixel());

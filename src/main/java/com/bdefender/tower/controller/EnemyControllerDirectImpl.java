@@ -17,15 +17,13 @@ public class EnemyControllerDirectImpl implements EnemyControllerDirect {
 
 	@Override
 	public Map<Integer, Pair<Double, Double>> getEnemiesInZone(double radius, Pair<Double, Double> center) {
-		return IntStream.range(0, this.enemiesPool.getEnemies().size()).boxed()
-				.collect(Collectors.toMap(i -> i,i -> this.enemiesPool.getEnemies().get(i))).entrySet().stream()
-				.filter(e -> Math.hypot(center.getY() - e.getValue().getPosition().getY(), center.getX() - e.getValue().getPosition().getX()) <= radius)
-				.collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().getPosition()));
+		return this.enemiesPool.getEnemies(true).entrySet().stream().filter(e -> Math.hypot(center.getY() - e.getValue().getPosition().getY(), center.getX() - e.getValue().getPosition().getX()) <= radius)
+				.collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getPosition()));
 	}
 
 	@Override
 	public Pair<Double, Double> getEnemyPosByID(Integer id) {
-		return enemiesPool.getEnemies().get(id).getPosition();
+		return enemiesPool.getEnemies(false).get(id).getPosition();
 	}
 
 	@Override

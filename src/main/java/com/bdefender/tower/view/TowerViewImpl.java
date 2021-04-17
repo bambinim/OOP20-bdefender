@@ -34,6 +34,7 @@ public class TowerViewImpl implements TowerView{
         ImageView towerShoot = new ImageView(TowerImageLoader.GetTowerShootImage(tower).get());
         Platform.runLater(() -> {
             var shootAnimation = createTransition(towerShoot,new Coordinates(target.getX(), target.getY()));
+            shootAnimation.setOnFinished(e -> panel.getChildren().remove(towerShoot));
             panel.getChildren().add(towerShoot);
             shootAnimation.play();
         });
@@ -41,12 +42,12 @@ public class TowerViewImpl implements TowerView{
 
     @Override
     public void addTowerToGameField() {
-        //panel.getChildren().add(towerImage);
+        panel.getChildren().add(towerImage);
     }
 
     @Override
     public void removeTowerFromGameField() {
-        //panel.getChildren().remove(towerImage);
+        panel.getChildren().remove(towerImage);
     }
 
     private Coordinates getTowerCoordinates(){
@@ -60,7 +61,7 @@ public class TowerViewImpl implements TowerView{
         path.getElements().add(new MoveTo(towerPos.getLeftPixel(), towerPos.getTopPixel()));
         path.getElements().add(new LineTo(target.getLeftPixel(), target.getTopPixel()));
         pathTransition.setPath(path);
-        pathTransition.setDuration(Duration.millis(100));
+        pathTransition.setDuration(Duration.millis(200));
         pathTransition.setNode(node);
         pathTransition.setAutoReverse(false);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);

@@ -1,15 +1,15 @@
 package com.bdefender.enemies.view;
 
-import com.bdefender.enemies.EnemyBase;
+import com.bdefender.enemies.Enemy;
 import com.bdefender.map.Coordinates;
 import javafx.scene.layout.AnchorPane;
 
 public class EnemyViewImpl implements EnemyView{
 
     private AnchorPane panel;
-    private EnemyBase enemy;
+    private Enemy enemy;
 
-    public EnemyViewImpl(AnchorPane panel, EnemyBase enemy) {
+    public EnemyViewImpl(AnchorPane panel, Enemy enemy) {
         this.panel = panel;
         this.enemy = enemy;
     }

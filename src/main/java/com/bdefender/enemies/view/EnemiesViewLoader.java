@@ -1,9 +1,8 @@
 package com.bdefender.enemies.view;
 
-import com.bdefender.enemies.EnemyBase;
+import com.bdefender.enemies.Enemy;
 import javafx.scene.image.Image;
 
-import java.io.FileInputStream;
 import java.util.*;
 
 public class EnemiesViewLoader {
@@ -28,9 +27,9 @@ public class EnemiesViewLoader {
         }
     }
 
-    public static HashMap<EnemyBase, Optional<Image>> GetEnemiesImages(List<EnemyBase> enemies){
-        HashMap<EnemyBase, Optional<Image>> enemiesImages = new HashMap<>();
-        for (EnemyBase enemy : enemies) {
+    public static HashMap<Enemy, Optional<Image>> GetEnemiesImages(List<Enemy> enemies){
+        HashMap<Enemy, Optional<Image>> enemiesImages = new HashMap<>();
+        for (Enemy enemy : enemies) {
             enemiesImages.put(enemy, Instance.enemyImages.get(enemy.getTypeId()));
         }
         return  enemiesImages;
