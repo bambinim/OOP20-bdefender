@@ -10,46 +10,46 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="10.0" prefHeight="428.0" prefWidth="145.0" style="-fx-background-image: 0\sndPietra.png;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="10.0" prefHeight="736.0" prefWidth="183.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="498.0" fitWidth="180.0" layoutX="-1.0" layoutY="-51.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="736.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@0/sndPietra.png" />
+            <Image url="@0/sfondoPietra.png" />
          </image>
       </ImageView>
-      <VBox layoutX="7.0" layoutY="7.0" prefWidth="149.0" style="-fx-background-image: 0\sndPietra.png;">
+      <VBox layoutX="7.0" layoutY="7.0" prefHeight="702.0" prefWidth="162.0" style="-fx-background-image: 0\sndPietra.png;">
          <children>
             <AnchorPane>
                <children>
-                  <ImageView fitHeight="29.0" fitWidth="93.0" layoutX="-11.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="29.0" fitWidth="93.0" layoutX="-11.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@0/barileMonete.png" />
                      </image>
                   </ImageView>
-                  <Label id="lblMoney" fx:id="lblMoney" layoutX="91.0" layoutY="2.0" text="MN">
+                  <Label id="lblMoney" fx:id="lblMoney" layoutX="100.0" layoutY="30.0" text="MN">
                      <font>
                         <Font name="Ebrima Bold" size="20.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="74.0" prefWidth="308.0">
+            <AnchorPane prefHeight="113.0" prefWidth="348.0">
                <children>
-                  <ImageView fitHeight="64.0" fitWidth="137.0" layoutX="-21.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="82.0" fitWidth="267.0" layoutX="-24.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@0/insegna.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="18.0" prefHeight="44.0" prefWidth="230.0" text="BShop" textFill="#130000b5">
+                  <Label layoutX="23.0" layoutY="29.0" prefHeight="44.0" prefWidth="230.0" text="BShop" textFill="#000000b5">
                      <font>
-                        <Font name="Ebrima Bold" size="18.0" />
+                        <Font name="Ebrima Bold" size="23.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="54.0" prefWidth="82.0">
+            <AnchorPane prefHeight="118.0" prefWidth="348.0">
                <children>
-                  <ImageView fitHeight="51.0" fitWidth="91.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="67.0" fitWidth="110.0" layoutX="15.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@0/panelBack.png" />
                      </image>
@@ -57,7 +57,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fitHeight="46.0" fitWidth="60.0" layoutX="21.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="46.0" fitWidth="60.0" layoutX="27.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../towers/0/tower.png" />
                      </image>
@@ -65,21 +65,21 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblFireArrow" layoutX="60.0" layoutY="28.0" text="CS">
+                  <Label fx:id="lblFireArrow" layoutX="86.0" layoutY="61.0" text="CS">
                      <font>
                         <Font name="Ebrima Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button id="btnFireArrow" fx:id="btnFireArrow" layoutX="15.0" layoutY="3.0" mnemonicParsing="false" opacity="0.0" prefHeight="44.0" prefWidth="74.0" style="-fx-background-color: grey;">
+                  <Button id="btnFireArrow" fx:id="btnFireArrow" layoutX="18.0" layoutY="23.0" mnemonicParsing="false" opacity="0.0" prefHeight="67.0" prefWidth="94.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="64.0" prefWidth="78.0">
+            <AnchorPane prefHeight="105.0" prefWidth="348.0">
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="82.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="67.0" fitWidth="101.0" layoutX="17.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@0/panelBack.png" />
                      </image>
@@ -87,7 +87,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <ImageView fitHeight="49.0" fitWidth="41.0" layoutX="24.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="49.0" fitWidth="41.0" layoutX="27.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../towers/1/tower.png" />
                      </image>
@@ -95,12 +95,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblFireBall" layoutX="66.0" layoutY="35.0" text="CS">
+                  <Label fx:id="lblFireBall" layoutX="90.0" layoutY="47.0" text="CS">
                      <font>
                         <Font name="Ebrima Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button id="btnFireBall" fx:id="btnFireBall" layoutX="19.0" layoutY="10.0" mnemonicParsing="false" opacity="0.0" prefHeight="44.0" prefWidth="66.0" style="-fx-background-color: grey;">
+                  <Button id="btnFireBall" fx:id="btnFireBall" layoutX="15.0" layoutY="4.0" mnemonicParsing="false" opacity="0.0" prefHeight="67.0" prefWidth="101.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -109,21 +109,21 @@
             </AnchorPane>
             <AnchorPane prefHeight="67.0" prefWidth="225.0">
                <children>
-                  <ImageView fitHeight="49.0" fitWidth="77.0" layoutX="21.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="74.0" fitWidth="101.0" layoutX="18.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@0/panelBack.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lblRock" layoutX="69.0" layoutY="38.0" text="CS">
+                  <Label fx:id="lblRock" layoutX="91.0" layoutY="58.0" text="CS">
                      <font>
                         <Font name="Ebrima Bold" size="12.0" />
                      </font></Label>
-                  <ImageView fitHeight="49.0" fitWidth="74.0" layoutX="26.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="49.0" fitWidth="74.0" layoutX="29.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../towers/2/tower.png" />
                      </image>
                   </ImageView>
-                  <Button id="Rock" fx:id="btnRock" layoutX="27.0" layoutY="8.0" mnemonicParsing="false" opacity="0.0" prefHeight="50.0" prefWidth="66.0" style="-fx-background-color: grey;">
+                  <Button id="Rock" fx:id="btnRock" layoutX="17.0" layoutY="23.0" mnemonicParsing="false" opacity="0.0" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -132,7 +132,7 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="81.0" layoutX="23.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="67.0" fitWidth="102.0" layoutX="21.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@0/panelBack.png" />
                      </image>
@@ -140,19 +140,20 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblThunderBolt" layoutX="73.0" layoutY="27.0" text="CS">
+                  <Label fx:id="lblThunderBolt" layoutX="94.0" layoutY="96.0" text="CS">
                      <font>
-                        <Font name="Ebrima" size="12.0" />
+                        <Font name="Ebrima Bold" size="12.0" />
                      </font></Label>
-                  <Button fx:id="btnThunderBolt" layoutX="23.0" layoutY="1.0" mnemonicParsing="false" opacity="0.0" prefHeight="46.0" prefWidth="74.0" style="-fx-background-color: grey;">
+                  <ImageView fitHeight="47.0" fitWidth="53.0" layoutX="33.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@0/upgrade.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnThunderBolt" layoutX="23.0" layoutY="61.0" mnemonicParsing="false" opacity="0.0" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <ImageView fitHeight="44.0" fitWidth="74.0" layoutX="24.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                     <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
-                     </cursor></ImageView>
                </children>
             </AnchorPane>
          </children>
