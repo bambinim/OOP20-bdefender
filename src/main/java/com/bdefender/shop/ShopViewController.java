@@ -20,6 +20,7 @@ public class ShopViewController implements ShopView {
     private final Shop shop;
     private Map<Button, TowerName> towers = new HashMap<>();
     private TowerName lastTower = null;
+    private EventHandler<MouseEvent> closeShop;
     @FXML
     private Label lblMoney;
 
@@ -47,9 +48,9 @@ public class ShopViewController implements ShopView {
     @FXML
     private Button btnThunderBolt;
  
-    public ShopViewController(final Shop shop) {
+    public ShopViewController(final Shop shop, EventHandler<MouseEvent> closeShop) {
         this.shop = shop;
-
+        this.closeShop = closeShop;
     }
 
     public final void initialize() {
@@ -57,11 +58,13 @@ public class ShopViewController implements ShopView {
        initializeButton();
        initializeLabel();
        updMoneyVal();
-       towers.forEach((k, v) -> k.setOnMouseClicked(e -> {
-           buyTower((Button) e.getSource());
-       }));
+       towers.forEach((k, v) -> {
+           k.setOnMousePressed((e) -> {
+           buyTower(((Button) e.getSource()));
+             closeShop.handle(e);
+             });
+       });
 
-        System.out.println("clicked");
     }
 
     /*
@@ -72,6 +75,7 @@ public class ShopViewController implements ShopView {
         shop.buyTower(towers.get(btn));
         updMoneyVal();
         this.lastTower = towers.get(btn);
+    
     }
 
    /*
@@ -102,7 +106,7 @@ public class ShopViewController implements ShopView {
   }
 
   public final TowerName getLastTower() {
-      return this.getLastTower();
+      return this.lastTower;
   }
 
 

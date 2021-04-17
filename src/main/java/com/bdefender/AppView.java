@@ -23,12 +23,13 @@ import com.bdefender.map.Map;
 import com.bdefender.map.MapType;
 import com.bdefender.menu.LaunchMenuLoader;
 import com.bdefender.menu.LaunchMenuLoaderImpl;
+import com.bdefender.wallet.Wallet;
 
 public class AppView extends Application {
     /**
      * Default stage HEIGHT.
      */
-    public static final int DEFAULT_HEIGHT = 802;
+    public static final int DEFAULT_HEIGHT = 760;
     /**
      * Default stage WIDTH.
      */
@@ -36,6 +37,8 @@ public class AppView extends Application {
     private Stage primaryStage;
     private GameController gameController;
     private LaunchMenuLoader menuLoader;
+ 
+   
     private final GridPane root = new GridPane();
 
 
@@ -55,7 +58,7 @@ public class AppView extends Application {
         this.primaryStage.setScene(new Scene(this.root));
     }
 
-    private void startGame() {
+    private void startGame() throws IOException {
         this.gameController = new GameControllerImpl(menuLoader.getController().getSelectedMap());
         this.setContent(this.gameController.getView());
     }
@@ -77,7 +80,14 @@ public class AppView extends Application {
 
     private void startMenu() {
         try {
-            this.menuLoader = new LaunchMenuLoaderImpl((e) -> this.startGame());
+            this.menuLoader = new LaunchMenuLoaderImpl((e) -> {
+                try {
+                    this.startGame();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            });
             this.setContent(this.menuLoader.getParent());
         } catch (IOException e) {
             e.printStackTrace();
