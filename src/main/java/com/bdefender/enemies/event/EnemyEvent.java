@@ -11,8 +11,8 @@ public class EnemyEvent extends Event {
      */
     private static final long serialVersionUID = -6175312624802207211L;
     public static final EventType<EnemyEvent> ENEMY_KILLED = new EventType<>("Enemy Killed");
-    public static final EventType<EnemyEvent> ENEMY_SPAWNED = new EventType<>("Enemy Killed");
-    public static final EventType<EnemyEvent> ENEMY_REACHED_END = new EventType<>("Enemy Killed");
+    public static final EventType<EnemyEvent> ENEMY_SPAWNED = new EventType<>("Enemy Spawned");
+    public static final EventType<EnemyEvent> ENEMY_REACHED_END = new EventType<>("Enemy Reached End");
 
     private final Enemy source;
 
