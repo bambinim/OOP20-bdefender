@@ -2,7 +2,8 @@ package com.bdefender.game;
 
 import java.io.IOException;
 
-import com.bdefender.enemies.pool.EnemiesPoolImpl;
+
+import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.enemies.pool.MapInteractorImpl;
 import com.bdefender.game.event.GameEvent;
 import com.bdefender.map.MapLoader;
@@ -15,6 +16,7 @@ import com.bdefender.tower.TowerFactory;
 import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
 import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.Wallet;
+import com.bdefender.enemies.view.EnemiesPoolImpl;
 import com.bdefender.wallet.WalletImpl;
 
 import javafx.event.EventHandler;
@@ -32,7 +34,7 @@ public class GameControllerImpl implements GameController {
     private final MapView mapView;
     //enemies and tower
     private TowersController towerController;
-    private EnemiesPoolImpl pool;
+    private EnemiesPoolInteractor pool;
     //economy and shop
     private final ShopLoader shopLoader;
     private final Shop shop;
@@ -52,7 +54,7 @@ public class GameControllerImpl implements GameController {
         this.shopLoader = new ShopLoader(shop, (e) -> this.closeShop());
         this.openShop();
         //enemies and tower
-        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.view));
+        this.pool = new com.bdefender.enemies.view.EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.view));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.view, t), this.pool);
         //click on map
         generatePlacementBoxLayer();
@@ -89,7 +91,7 @@ public class GameControllerImpl implements GameController {
     // TODO: remove after test
     private void generateTestTower() {
         final TowerFactory tFactory = new TowerFactory();
-        final EnemiesPoolImpl pool = new EnemiesPoolImpl(new MapInteractorImpl(map), new EnemyGraphicMoverImpl(this.view));
+        final EnemiesPoolInteractor pool = new EnemiesPoolImpl(new MapInteractorImpl(map), new EnemyGraphicMoverImpl(this.view));
         final TowerPlacementView placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
         placementView.setOnBoxClick(event -> {
             final TowerBox box = (TowerBox) event.getSource();
