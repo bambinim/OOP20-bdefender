@@ -11,6 +11,7 @@ import com.bdefender.game.TowersControllerImpl;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 import com.bdefender.map.MapLoader;
+import com.bdefender.map.MapType;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.view.TowerViewImpl;
 import javafx.application.Application;
@@ -39,7 +40,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Map map = MapLoader.getInstance().loadMap(0);
+        Map map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
         EnemiesPoolImpl pool = new EnemiesPoolImpl(new MapInteractorImpl(map));
 
         EnemyFactory eFactory = new EnemyFactory();

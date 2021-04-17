@@ -110,7 +110,7 @@ public class MapTest extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         final GridPane gridPane = this.createStageLayout(primaryStage);
-        final Map map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE.getMapNumber());
+        final Map map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
         final MapView root = new MapView(map);
         final Circle circle = this.createCircle(map);
         final Path path = createPath(map);
