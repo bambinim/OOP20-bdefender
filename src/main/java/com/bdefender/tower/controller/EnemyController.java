@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface EnemyController {
 
-		public Map<Integer, Pair<Double, Double>> getEnemiesInZone(double radius, Pair<Double, Double> center);
+    Map<Integer, Pair<Double, Double>> getEnemiesInZone(double radius, Pair<Double, Double> center);
 
-		Pair<Double, Double> getEnemyPosByID(Integer id);
+    Pair<Double, Double> getEnemyPosByID(Integer id);
 }

@@ -2,34 +2,32 @@ package com.bdefender.tower;
 
 import com.bdefender.Pair;
 
-import java.util.List;
-import java.util.Set;
 
 public interface Tower {
-	
-	public class NoEnemiesAroundException extends Exception {
-		private static final long serialVersionUID = 1L;
-		
-		public NoEnemiesAroundException(String errorMessage) {
-			super(errorMessage);
-		}
-	}
 
-	/**
-	 *
-	 * @return center of the shoot.
-	 */
-	public Pair<Double, Double> shoot();
-	
-	public void upgradeLevel();
-	
-	public long getShootSpeed();
+    class NoEnemiesAroundException extends Exception {
+        private static final long serialVersionUID = 1L;
 
-	public int getTowerId();
+        public NoEnemiesAroundException(final String errorMessage) {
+            super(errorMessage);
+        }
+    }
 
-	public Pair<Double, Double> getPos();
+    /**
+     *
+     * @return center of the shoot.
+     */
+    Pair<Double, Double> shoot();
 
-	public Pair<Double, Double> getPosition();
+    void upgradeLevel();
+
+    long getShootSpeed();
+
+    int getTowerId();
+
+    Pair<Double, Double> getPos();
+
+    Pair<Double, Double> getPosition();
 
 
 }
