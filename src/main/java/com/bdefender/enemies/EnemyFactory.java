@@ -12,6 +12,11 @@ public class EnemyFactory {
 	public Enemy getEnemy2(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
 		return this.enemyFromParams(45.0, 50.0, 25.0, pos, startDir, 1);
 	}
+
+
+	public Enemy getEnemy3(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
+		return this.enemyFromParams(80.0, 30.0, 30.0, pos, startDir, 2);
+	}
 	
 	private Enemy enemyFromParams(Double life, Double speed, Double damage, Pair<Double, Double> pos, Pair<Integer, Integer> startDir, Integer typeId) {
 		return new Enemy() {

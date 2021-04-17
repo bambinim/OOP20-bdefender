@@ -8,6 +8,69 @@ import com.bdefender.tower.controller.EnemyControllerDirectImpl;
 
 
 public class TowerFactory {
+    /**
+     * Generate a direct shot tower.
+     * @param pool
+     * @param pos
+     * @return Tower
+     */
+    public Tower getTowerDirect1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+        final Double damage = 15.0;
+        final Double rangeRadius = 15.0;
+        final Long shootSpeed = 1L;
+        final int id = 0;
+        return this.towerDirectByParams(damage, rangeRadius, shootSpeed, pool, pos, id);
+    }
+
+    /**
+     * Generate a direct shot tower.
+     * @param pool
+     * @param pos
+     * @return Tower
+     */
+    public Tower getTowerDirect2(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+        final Double damage = 10.0;
+        final Double rangeRadius = 12.0;
+        final Long shootSpeed = 2L;
+        final int id = 1;
+        return this.towerDirectByParams(damage, rangeRadius, shootSpeed, pool, pos, id);
+    }
+    /**
+     * Generate a zone damage tower.
+     * @param pool
+     * @param pos
+     * @return Tower
+     */
+    public Tower getTowerZone1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+        final Double damage = 3.0;
+        final Double damageAreaRadius = 5.0;
+        final Double rangeRadius = 15.0;
+        final Long shootSpeed = 2L;
+        final int id = 2;
+        return this.towerZoneByParams(damage, damageAreaRadius, rangeRadius, shootSpeed, pool, pos, id);
+    }
+
+    private Tower towerZoneByParams(final Double damage, final Double damageAreaRadius, final Double rangeRadius, final Long shootSpeed, final EnemiesPoolInteractor pool, final Pair<Double, Double> pos, final int id) {
+
+        return new Tower() {
+
+            private final EnemyControllerZone enemiesCtrl = new EnemyControllerZoneImpl(pool);
+
+            @Override
+            public Pair<Double, Double> shoot() {
+                try {
+                    final var shootCenter = getOptimalTarget();
+                    this.enemiesCtrl.applyDamageByZone(damageAreaRadius, shootCenter, damage);
+                    return shootCenter;
+                } catch (NoEnemiesAroundException ex) {
+                    return null;
+                }
+            }
+
+            @Override
+            public void upgradeLevel() {
+                // TODO			
+            }
 
 	public Tower getTowerDirect1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
 		return this.towerDirectByParams(20.0, 8.5, 1L, pool, pos, 0);
@@ -78,11 +141,11 @@ public class TowerFactory {
                 // TODO Auto-generated method stub
                 return null;
             }
-			@Override
-			public Pair<Double, Double> getPosition() {
-				return pos;
-			}
-		};
-	}
-	
+            @Override
+            public Pair<Double, Double> getPosition() {
+                return pos;
+            }
+        };
+    }
+
 }
