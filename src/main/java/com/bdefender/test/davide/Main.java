@@ -1,10 +1,7 @@
 package com.bdefender.test.davide;
 
 import com.bdefender.enemies.view.EnemyViewImpl;
-import com.bdefender.game.EnemiesController;
-import com.bdefender.game.EnemiesControllerImpl;
-import com.bdefender.game.TowersController;
-import com.bdefender.game.TowersControllerImpl;
+import com.bdefender.game.*;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 import com.bdefender.map.MapLoader;
@@ -44,9 +41,9 @@ public class Main extends Application {
 
         enemiesController.startGenerate(5, 10);
 
-        ctrl.addTower(TowersController.TowerName.THUNDERBOLT,new Coordinates(10.0,8.0));
+        ctrl.addTower(TowerName.THUNDERBOLT,new Coordinates(10.0,8.0));
 
-        ctrl.addTower(TowersController.TowerName.FIRE_ARROW,new Coordinates(28.0,8.0));
+        ctrl.addTower(TowerName.FIRE_ARROW,new Coordinates(28.0,8.0));
     }
 
 
