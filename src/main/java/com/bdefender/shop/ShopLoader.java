@@ -1,6 +1,7 @@
 package com.bdefender.shop;
 
 import com.bdefender.game.TowerName;
+import com.bdefender.wallet.Wallet;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +12,9 @@ import javafx.scene.Parent;
 public class ShopLoader {
     private final ShopView shopViewController;
     private final Parent contentLoaded;
-    private TowerName lastTower;
-    public ShopLoader(Shop shop) throws IOException {
+    private final Shop shop;
+    public ShopLoader(final Wallet wallet) throws IOException {
+        this.shop = new ShopImpl(wallet);
         this.shopViewController = new ShopViewController(shop);
         final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("shops/shopView.fxml"));
         loader.setController(this.shopViewController);
@@ -21,11 +23,8 @@ public class ShopLoader {
     public final Parent getParent() {
         return this.contentLoaded;
     }
-     public final TowerName getLastTwr() {
-         return this.lastTower;
-     }
-    public final void setLastTwr(final TowerName lastTwr) {
-        this.lastTower = lastTwr;
-        System.out.println(this.lastTower.getName().toString());
+
+    public final ShopView getShopView(){
+        return this.shopViewController;
     }
 }
