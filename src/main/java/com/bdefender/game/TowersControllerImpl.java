@@ -1,16 +1,21 @@
 package com.bdefender.game;
 
+import com.bdefender.Pair;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.map.Coordinates;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.view.TowerView;
-import com.bdefender.tower.view.TowerViewImplementation;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TowersControllerImpl implements TowersController{
+
+    @FunctionalInterface
+    public interface TowerViewImplementation {
+        TowerView getView(Tower tower);
+    }
 
     private final Map<Integer, TowerData> towersData = new HashMap<>();
     private int towerCounter = 0;
@@ -25,7 +30,7 @@ public class TowersControllerImpl implements TowersController{
 
     private Tower getTowerByTypeName(TowerName name, Coordinates pos){
         switch (name) {
-            case FIRE_BALL: return factory.getTowerZone1(this.pool,pos);
+            case FIRE_BALL: return factory.getTowerDirect3(this.pool,pos);
             case FIRE_ARROW: return factory.getTowerDirect1(this.pool,pos);
             case THUNDERBOLT: return factory.getTowerDirect2(this.pool,pos);
         }
@@ -97,7 +102,7 @@ class TowerThread extends Thread {
                 if (shootTargetPos == null) {
                     System.out.println("No more enemies around...");
                 } else {
-                    view.startShootAnimation(shootTargetPos);
+                    view.startShootAnimation(new Pair<>(shootTargetPos.getX(), shootTargetPos.getY()));
                     System.out.println("shoot at " + shootTargetPos);
                 }
             } catch (Exception ex) {

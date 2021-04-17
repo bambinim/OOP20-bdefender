@@ -7,6 +7,7 @@ import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -19,7 +20,7 @@ public class TowerViewImpl implements TowerView{
     private final Tower tower;
     private final ImageView towerImage;
 
-    public TowerViewImpl(Pane panel, Tower tower){
+    public TowerViewImpl(AnchorPane panel, Tower tower){
         this.tower = tower;
         this.panel = panel;
         towerImage = new ImageView(TowerImageLoader.GetTowerImage(this.tower).get());
@@ -33,6 +34,7 @@ public class TowerViewImpl implements TowerView{
         ImageView towerShoot = new ImageView(TowerImageLoader.GetTowerShootImage(tower).get());
         Platform.runLater(() -> {
             var shootAnimation = createTransition(towerShoot,new Coordinates(target.getX(), target.getY()));
+            shootAnimation.setOnFinished(e -> panel.getChildren().remove(towerShoot));
             panel.getChildren().add(towerShoot);
             shootAnimation.play();
         });
@@ -59,7 +61,7 @@ public class TowerViewImpl implements TowerView{
         path.getElements().add(new MoveTo(towerPos.getLeftPixel(), towerPos.getTopPixel()));
         path.getElements().add(new LineTo(target.getLeftPixel(), target.getTopPixel()));
         pathTransition.setPath(path);
-        pathTransition.setDuration(Duration.millis(100));
+        pathTransition.setDuration(Duration.millis(200));
         pathTransition.setNode(node);
         pathTransition.setAutoReverse(false);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);

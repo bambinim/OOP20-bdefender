@@ -11,10 +11,11 @@ public class MapView extends AnchorPane {
     private static final int TOWER_HEIGHT = 60;
     private final Map map;
     private final AnchorPane towersPane = new AnchorPane();
+    private final AnchorPane enemiesPane = new AnchorPane();
 
     public MapView(final Map map) {
         this.map = map;
-        this.getChildren().addAll(new ImageView(this.map.getMapImage()), this.towersPane);
+        this.getChildren().addAll(new ImageView(this.map.getMapImage()), this.towersPane, this.enemiesPane);
     }
 
     /**
@@ -33,5 +34,12 @@ public class MapView extends AnchorPane {
                return tmp;
             }).collect(Collectors.toList())
         );
+    }
+
+    /**
+     * @return AnchorPane where enemies must be rendered
+     */
+    public AnchorPane getEnemiesPane() {
+        return this.enemiesPane;
     }
 }
