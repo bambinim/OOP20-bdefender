@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 
 public class MenuControllerImpl implements Initializable, MenuController {
     //Countryside default loaded 
-    private int selectedMap = MapType.COUNTRYSIDE.getMapNumber(); 
+    private MapType selectedMap = MapType.COUNTRYSIDE; 
     private final EventHandler<MouseEvent> onPlayClick;
     @FXML
     private Button startPlayBtn;
@@ -65,7 +65,7 @@ public class MenuControllerImpl implements Initializable, MenuController {
         }
 
         mapChoiceBox.setOnAction((event) -> {
-            this.selectedMap = mapIDbyName(mapChoiceBox.getSelectionModel().getSelectedItem());
+            this.selectedMap = getMapByName(mapChoiceBox.getSelectionModel().getSelectedItem());
             System.out.println("Ora vale = " + this.selectedMap);
         });
 
@@ -110,18 +110,18 @@ public class MenuControllerImpl implements Initializable, MenuController {
      * @return intMapNumber
      */
     @Override
-    public int getSelectedMap() {
+    public MapType getSelectedMap() {
         return this.selectedMap;
     }
 
 
-    private int mapIDbyName(final String mapName) {
+    private MapType getMapByName(final String mapName) {
         for (final MapType mapType : MapType.values()) {
             if (mapType.getMapName().equals(mapName)) {
-                return mapType.getMapNumber();
+                return mapType;
             }
         }
-        return -1;
+        return MapType.COUNTRYSIDE;
     }
 
 

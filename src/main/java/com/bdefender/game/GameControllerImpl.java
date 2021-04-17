@@ -5,6 +5,7 @@ import com.bdefender.enemies.pool.MapInteractorImpl;
 import com.bdefender.game.TowersController.TowerName;
 import com.bdefender.game.event.GameEvent;
 import com.bdefender.map.MapLoader;
+import com.bdefender.map.MapType;
 import com.bdefender.map.MapView;
 import com.bdefender.map.TowerBox;
 import com.bdefender.map.Coordinates;
@@ -34,8 +35,8 @@ public class GameControllerImpl implements GameController {
     
     private EventHandler<GameEvent> onGameFinish;
 
-    public GameControllerImpl(final int mapID) {
-        this.map = MapLoader.getInstance().loadMap(mapID);
+    public GameControllerImpl(final MapType mapType) {
+        this.map = MapLoader.getInstance().loadMap(mapType);
         this.mapView = new MapView(this.map);
         this.view = new GameView(this.mapView);
         //enemies and tower
