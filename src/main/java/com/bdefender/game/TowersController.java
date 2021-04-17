@@ -5,19 +5,14 @@ import com.bdefender.map.Coordinates;
 
 public interface TowersController {
 
-    enum TowerName {
-        FIRE_ARROW,
-        FIRE_BALL,
-        THUNDERBOLT
-    }
 
 
     /**
      * Creates the tower threads and add its view to the game panel.
-     * @param tower tower type identification code.
+     * @param towerName tower type identification code.
      * @return created tower ID.
      */
-    Integer addTower(TowerName tower, Coordinates pos);
+    Integer addTower(TowerName towerName, Coordinates pos);
 
     /**
      * Removes the tower from prompted panel and interrupts its life thread.
