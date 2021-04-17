@@ -5,12 +5,16 @@ import com.bdefender.map.Coordinates;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.view.TowerView;
-import com.bdefender.tower.view.TowerViewImplementation;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TowersControllerImpl implements TowersController{
+
+    @FunctionalInterface
+    public interface TowerViewImplementation {
+        TowerView getView(Tower tower);
+    }
 
     private final Map<Integer, TowerData> towersData = new HashMap<>();
     private int towerCounter = 0;

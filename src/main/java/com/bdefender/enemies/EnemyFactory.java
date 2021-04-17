@@ -4,21 +4,22 @@ package com.bdefender.enemies;
 import com.bdefender.Pair;
 
 public class EnemyFactory {
-	
-	public EnemyBase getEnemy1(Pair<Double, Double> pos) {
-		return this.enemyFromParams(40.0, 35.0, 30.0, pos, 0);
+
+	public EnemyBase getEnemy1(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
+		return this.enemyFromParams(40.0, 35.0, 30.0, pos, startDir, 0);
 	}
 	
-	public EnemyBase getEnemy2(Pair<Double, Double> pos) {
-		return this.enemyFromParams(45.0, 50.0, 25.0, pos, 1);
+	public EnemyBase getEnemy2(Pair<Double, Double> pos, Pair<Integer, Integer> startDir) {
+		return this.enemyFromParams(45.0, 50.0, 25.0, pos, startDir, 1);
 	}
 	
-	private EnemyBase enemyFromParams(Double life, Double speed, Double damage, Pair<Double, Double> pos, Integer typeId) {
+	private EnemyBase enemyFromParams(Double life, Double speed, Double damage, Pair<Double, Double> pos,Pair<Integer, Integer> startDir,Integer typeId) {
 		return new EnemyBase() {
 			
-			Pair<Double, Double> enemyPos = pos;
-			double enemyLife = life;
-			Pair<Integer, Integer> enemyDirection = new Pair<>(0, 0); 
+			private Pair<Double, Double> enemyPos = pos;
+			private double enemyLife = life;
+			private Pair<Integer, Integer> enemyDirection = startDir;
+			private EnemyStateChanged onDead;
 			
 			@Override
 			public Pair<Double, Double> getPosition() {
@@ -27,7 +28,10 @@ public class EnemyFactory {
 
 			@Override
 			public void takeDamage(Double damage) {
-				enemyLife -= damage; 		
+				enemyLife -= damage;
+				if (enemyLife <= 0){
+					onDead.StateChanged();
+				}
 			}
 
 			@Override
@@ -48,6 +52,11 @@ public class EnemyFactory {
 			@Override
 			public double getLife() {
 				return this.enemyLife;
+			}
+
+			@Override
+			public void setOnDeadAction(EnemyStateChanged onDead) {
+				this.onDead = onDead;
 			}
 
 			@Override

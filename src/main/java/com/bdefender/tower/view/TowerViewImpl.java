@@ -7,6 +7,7 @@ import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -19,7 +20,7 @@ public class TowerViewImpl implements TowerView{
     private final Tower tower;
     private final ImageView towerImage;
 
-    public TowerViewImpl(Pane panel, Tower tower){
+    public TowerViewImpl(AnchorPane panel, Tower tower){
         this.tower = tower;
         this.panel = panel;
         towerImage = new ImageView(TowerImageLoader.GetTowerImage(this.tower).get());
@@ -40,12 +41,12 @@ public class TowerViewImpl implements TowerView{
 
     @Override
     public void addTowerToGameField() {
-        panel.getChildren().add(towerImage);
+        //panel.getChildren().add(towerImage);
     }
 
     @Override
     public void removeTowerFromGameField() {
-        panel.getChildren().remove(towerImage);
+        //panel.getChildren().remove(towerImage);
     }
 
     private Coordinates getTowerCoordinates(){
