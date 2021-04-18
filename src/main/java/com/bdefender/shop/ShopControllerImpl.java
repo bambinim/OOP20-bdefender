@@ -13,10 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class ShopViewController implements ShopView {
+public class ShopControllerImpl implements ShopController {
 
-    private final Double OP_DISABLE = 0.5;
-    private final Double OP_ENABLE = 0.0;
+
     private final Shop shop;
     private Map<Button, TowerName> towers = new HashMap<>();
     private TowerName lastTower = null;
@@ -49,7 +48,7 @@ public class ShopViewController implements ShopView {
     private Button btnUpgrade;
 
  
-    public ShopViewController(final Shop shop, EventHandler<MouseEvent> closeShop) {
+    public ShopControllerImpl(final Shop shop, EventHandler<MouseEvent> closeShop) {
         this.shop = shop;
         this.closeShop = closeShop;
     }

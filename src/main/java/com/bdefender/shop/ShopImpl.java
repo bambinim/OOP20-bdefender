@@ -6,8 +6,7 @@ import com.bdefender.wallet.Wallet;
 
 public class ShopImpl implements Shop {
     private Wallet wallet; //to manage the money that the user has
-    final int UPGRADE_PRICE = 200;
-
+    
     public ShopImpl(final Wallet wallet) {
         this.wallet = wallet;
     }
@@ -38,8 +37,8 @@ public class ShopImpl implements Shop {
 
     @Override
     public final Tower buyUpgrade(final Tower tower) {
-       tower.upgradeLevel();
-       wallet.subtractMoney(UPGRADE_PRICE);
+       //tower.upgradeLevel();
+       //wallet.subtractMoney(tower.getUpgCost());
        return tower;
 
     }

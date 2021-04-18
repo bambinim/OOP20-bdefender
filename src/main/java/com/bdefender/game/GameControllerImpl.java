@@ -2,7 +2,7 @@ package com.bdefender.game;
 
 import java.io.IOException;
 
-
+import com.bdefender.component.ImageButton;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.enemies.pool.MapInteractorImpl;
 import com.bdefender.enemies.view.EnemiesPoolImpl;
@@ -20,11 +20,12 @@ import com.bdefender.wallet.Wallet;
 import com.bdefender.enemies.view.EnemiesPoolImpl;
 import com.bdefender.wallet.WalletImpl;
 
+
 import javafx.event.EventHandler;
 
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
-import com.bdefender.shop.ShopLoader;
+import com.bdefender.shop.ShopManager;
 import com.bdefender.shop.TowerPlacementView;
 
 public class GameControllerImpl implements GameController {
@@ -37,30 +38,29 @@ public class GameControllerImpl implements GameController {
     private TowersController towerController;
     private EnemiesPoolInteractor pool;
     //economy and shop
-    private final ShopLoader shopLoader;
+    private final ShopManager shopManager;
     private final Shop shop;
     TowerPlacementView placementView;
     private final int INITIAL_AMOUNT = 1000;
+   
     
     private EventHandler<GameEvent> onGameFinish;
 
     public GameControllerImpl(final MapType mapType) throws IOException {
         this.map = MapLoader.getInstance().loadMap(mapType);
-        
         this.mapView = new MapView(this.map);
-        this.view = new GameView(this.mapView);
-        
         //shop
         this.shop = new ShopImpl(new WalletImpl(INITIAL_AMOUNT));
-        this.shopLoader = new ShopLoader(shop, (e) -> this.closeShop());
-        this.openShop();
+        this.shopManager = new ShopManager(shop, (e) -> this.closeShop());
+        this.view = new GameView(this.mapView, this.shopManager.getShopView());
+         //topBar
+        this.view.setActionTopM((e) -> this.openShop(), (e) -> System.exit(1));
+        
         //enemies and tower
-        this.pool = new com.bdefender.enemies.view.EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.view));
+        this.pool = new com.bdefender.enemies.view.EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.view, t), this.pool);
         //click on map
         generatePlacementBoxLayer();
-        
-        
 
     }
 
@@ -71,7 +71,7 @@ public class GameControllerImpl implements GameController {
         placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
         placementView.setOnBoxClick((e) -> {
             final TowerBox boxClicked = (TowerBox) e.getSource();
-            final TowerName choosedTower = this.shopLoader.getShopView().getLastTower();
+            final TowerName choosedTower = this.shopManager.getShopController().getLastTower();
             //Prendo dallo shop l'utima torre cliccata.
             addTower(choosedTower, boxClicked.getTopLeftCoord());
         });
@@ -135,10 +135,16 @@ public class GameControllerImpl implements GameController {
     }
     
     private void closeShop(){
-        this.view.getChildren().remove(shopLoader.getParent());
+        this.view.getChildren().remove(shopManager.getShopView());
+        this.generatePlacementBoxLayer();
     }
     
     private void openShop() {
-        this.view.getChildren().add(this.shopLoader.getParent());
+        this.view.getChildren().add(this.shopManager.getShopView());
+        this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
+        
     }
+
+    
+    
 }
