@@ -151,7 +151,10 @@ public class GameControllerImpl implements GameController {
 
         this.placementView.setOnBoxClick((e) -> {
             final TowerBox boxClicked = (TowerBox) (e.getSource());
+            this.shopManager.getShopController().setTowerToUpg(boxClicked.getTower().get());
             System.out.println("Clicco per potenziare la torre in -> " + boxClicked.getTower().get().getPosition());
+            this.openShop();
+            shopManager.getShopController().setBtnUpgradeOn();
         });
         this.view.getChildren().add(this.placementView);
     }

@@ -70,7 +70,10 @@ public class ShopControllerImpl implements ShopController {
              closeShop.handle(e);
              });
        });
-       btnUpgrade.setOnMouseClicked((e) -> this.buyUpgrade());
+       btnUpgrade.setOnMouseClicked((e) -> {
+           this.buyUpgrade();
+           this.setBtnUpgradeOff();
+       });
 
     }
 

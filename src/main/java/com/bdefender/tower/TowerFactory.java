@@ -67,6 +67,7 @@ public class TowerFactory {
             @Override
             public void upgradeLevel() {
                 // TODO Auto-generated method stub
+                System.out.println("UPGRADE");
             }
 
             public Integer getOptimalTarget() throws NoEnemiesAroundException {
