@@ -42,7 +42,7 @@ public class TowerFactory {
         final Double damage = 10.0;
         final Double rangeRadius = 12.0;
         final Long shootSpeed = 2L;
-        final int id = 1;
+        final int id = 2;
         return this.towerDirectByParams(damage, rangeRadius, shootSpeed, pool, pos, id);
     }
 

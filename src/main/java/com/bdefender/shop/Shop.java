@@ -7,6 +7,6 @@ import com.bdefender.game.TowerName;
 public interface Shop {
     boolean canBuyTower(TowerName tower);
     void buyTower(TowerName tower);
-    Tower buyUpgrade(Tower tower);
+    void buyUpgrade(Tower tower);
     Wallet getWallet();
 }
