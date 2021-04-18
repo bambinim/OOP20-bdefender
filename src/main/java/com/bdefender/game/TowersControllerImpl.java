@@ -38,14 +38,14 @@ public class TowersControllerImpl implements TowersController{
     }
 
     @Override
-    public Integer addTower(TowerName name, Coordinates pos) {
+    public Tower addTower(TowerName name, Coordinates pos) {
         Tower tower = getTowerByTypeName(name, pos);
         TowerView view = towerViewImplementation.getView(tower);
         TowerThread thread = new TowerThread(tower,view);
         towersData.put(++towerCounter,new TowerData(view,thread));
         thread.start();
         view.addTowerToGameField();
-        return towerCounter;
+        return tower;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.bdefender.game;
 
 import com.bdefender.map.Coordinates;
+import com.bdefender.tower.Tower;
 
 
 public interface TowersController {
@@ -12,7 +13,7 @@ public interface TowersController {
      * @param towerName tower type identification code.
      * @return created tower ID.
      */
-    Integer addTower(TowerName towerName, Coordinates pos);
+    Tower addTower(TowerName towerName, Coordinates pos);
 
     /**
      * Removes the tower from prompted panel and interrupts its life thread.
