@@ -114,7 +114,7 @@
                         <Image url="@0/panelBack.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lblRock" layoutX="91.0" layoutY="58.0" text="CS">
+                  <Label id="lblThunderBolt" fx:id="lblThunderbolt" layoutX="91.0" layoutY="58.0" text="CS">
                      <font>
                         <Font name="Ebrima Bold" size="12.0" />
                      </font></Label>
@@ -123,7 +123,7 @@
                         <Image url="@../towers/2/tower.png" />
                      </image>
                   </ImageView>
-                  <Button id="Rock" fx:id="btnRock" layoutX="17.0" layoutY="23.0" mnemonicParsing="false" opacity="0.0" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: grey;">
+                  <Button id="btnThunderbolt" fx:id="btnThunderbolt" layoutX="17.0" layoutY="23.0" mnemonicParsing="false" opacity="0.0" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: grey;">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -140,7 +140,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblThunderBolt" layoutX="94.0" layoutY="96.0" text="CS">
+                  <Label fx:id="lblUpgrade" layoutX="94.0" layoutY="96.0" text="CS">
                      <font>
                         <Font name="Ebrima Bold" size="12.0" />
                      </font></Label>
@@ -149,9 +149,9 @@
                         <Image url="@0/upgrade.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnThunderBolt" layoutX="23.0" layoutY="61.0" mnemonicParsing="false" opacity="0.0" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: grey;">
+                  <Button fx:id="btnUpgrade" layoutX="24.0" layoutY="61.0" mnemonicParsing="false" opacity="0.0" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: grey;">
                      <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
+                        <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
                   </Button>
                </children>

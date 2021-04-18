@@ -37,16 +37,17 @@ public class ShopViewController implements ShopView {
     private Button btnFireBall;
 
     @FXML
-    private Label lblRock;
+    private Label lblThunderbolt;
 
     @FXML
-    private Button btnRock;
+    private Button btnThunderbolt;
 
     @FXML
-    private Label lblThunderBolt;
+    private Label lblUpgrade;
 
     @FXML
-    private Button btnThunderBolt;
+    private Button btnUpgrade;
+
  
     public ShopViewController(final Shop shop, EventHandler<MouseEvent> closeShop) {
         this.shop = shop;
@@ -92,8 +93,7 @@ public class ShopViewController implements ShopView {
   private void initializeButton() {
       towers.put(btnFireArrow, TowerName.FIRE_ARROW);
       towers.put(btnFireBall, TowerName.FIRE_BALL);
-      towers.put(btnRock, TowerName.ROCK);
-      towers.put(btnThunderBolt, TowerName.THUNDERBOLT);
+      towers.put(btnThunderbolt, TowerName.THUNDERBOLT);
   }
 
   /*set in the labels the prices of the towers
@@ -101,8 +101,7 @@ public class ShopViewController implements ShopView {
   private void initializeLabel() {
       lblFireArrow.setText(TowerName.FIRE_ARROW.getPrice().toString());
       lblFireBall.setText(TowerName.FIRE_BALL.getPrice().toString());
-      lblRock.setText(TowerName.ROCK.getPrice().toString());
-      lblThunderBolt.setText(TowerName.THUNDERBOLT.getPrice().toString());
+      lblThunderbolt.setText(TowerName.THUNDERBOLT.getPrice().toString());
   }
 
   public final TowerName getLastTower() {
