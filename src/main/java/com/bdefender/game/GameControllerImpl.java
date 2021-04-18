@@ -13,6 +13,7 @@ import com.bdefender.map.MapView;
 import com.bdefender.map.TowerBox;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
+import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
 import com.bdefender.tower.view.TowerViewImpl;
@@ -22,6 +23,7 @@ import com.bdefender.wallet.WalletImpl;
 
 
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
@@ -29,8 +31,8 @@ import com.bdefender.shop.ShopManager;
 import com.bdefender.shop.TowerPlacementView;
 
 public class GameControllerImpl implements GameController {
-    
-   
+
+
     private final GameView view;
     private final Map map;
     private final MapView mapView;
@@ -42,8 +44,8 @@ public class GameControllerImpl implements GameController {
     private final Shop shop;
     TowerPlacementView placementView;
     private final int INITIAL_AMOUNT = 1000;
-   
-    
+
+
     private EventHandler<GameEvent> onGameFinish;
 
     public GameControllerImpl(final MapType mapType) throws IOException {
@@ -53,42 +55,18 @@ public class GameControllerImpl implements GameController {
         this.shop = new ShopImpl(new WalletImpl(INITIAL_AMOUNT));
         this.shopManager = new ShopManager(shop, (e) -> this.closeShop());
         this.view = new GameView(this.mapView, this.shopManager.getShopView());
-         //topBar
+        //topBar
         this.view.setActionTopM((e) -> this.openShop(), (e) -> System.exit(1));
-        
+
         //enemies and tower
-        this.pool = new com.bdefender.enemies.view.EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView));
+        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.view, t), this.pool);
         //click on map
-        generatePlacementBoxLayer();
+        //generatePlacementBoxLayer();
 
     }
 
-    /*
-     * Genera la le posizioni cliccabili sulla mappa. 
-     */
-    private void generatePlacementBoxLayer() {
-        placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
-        placementView.setOnBoxClick((e) -> {
-            final TowerBox boxClicked = (TowerBox) e.getSource();
-            final TowerName choosedTower = this.shopManager.getShopController().getLastTower();
-            //Prendo dallo shop l'utima torre cliccata.
-            addTower(choosedTower, boxClicked.getTopLeftCoord());
-        });
-        this.mapView.getChildren().add(placementView);
-    }
-
-    /**
-     * Add a tower to the tower controller and to the view.
-     * @param towerName
-     * @param coordinate
-     */
-    public void addTower(final TowerName towerName, final Coordinates coordinate) {
-        this.towerController.addTower(towerName, coordinate);
-        //toglie la griglia
-        this.mapView.getChildren().remove(this.placementView);
-    }
-
+    
     // TODO: remove after test
     private void generateTestTower() {
         final TowerFactory tFactory = new TowerFactory();
@@ -107,6 +85,7 @@ public class GameControllerImpl implements GameController {
         });
         this.mapView.getChildren().add(placementView);
     }
+
 
     /**
      * Returns the main view of the game.
@@ -133,18 +112,64 @@ public class GameControllerImpl implements GameController {
     public EventHandler<GameEvent> getOnGameFinish() {
         return this.onGameFinish;
     }
-    
-    private void closeShop(){
+
+    /**
+     * Add a tower to the tower controller to the view.
+     * @param MouseEvent
+     */
+    private void addTower(final MouseEvent event) {
+        final TowerBox boxClicked = (TowerBox) event.getSource();
+        final TowerName choosedTower = this.shopManager.getShopController().getLastTower();
+        final Tower tower = this.towerController.addTower(choosedTower, boxClicked.getTopLeftCoord());
+        boxClicked.setTower(tower);
+
+        this.removeBoxLayer();
+        this.generatedUpgradeBoxLayer();
+    }
+
+    /*
+     * Genera le posizioni cliccabili sulla mappa per posizionare una torre. 
+     */
+    private void generatePlacementBoxLayer() {
+        placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
+        placementView.setOnBoxClick((e) -> this.addTower(e));
+        this.mapView.getChildren().add(placementView);
+    }
+
+    private void removeBoxLayer() {
+        try {
+            this.mapView.getChildren().remove(this.placementView);
+        } catch (Exception e) {
+        }
+    }
+
+    /*
+     * Genera le poszioni cliccabili per potenziare le torri
+     */
+    private void generatedUpgradeBoxLayer() {
+        this.placementView = new TowerPlacementView(this.map.getOccupiedTowerBoxes());
+
+        this.placementView.setOnBoxClick((e) -> {
+            final TowerBox boxClicked = (TowerBox) (e.getSource());
+            System.out.println("Clicco per potenziare la torre in -> " + boxClicked.getTower().get().getPosition());
+        });
+        this.view.getChildren().add(this.placementView);
+    }
+
+    private void closeShop() {
         this.view.getChildren().remove(shopManager.getShopView());
         this.generatePlacementBoxLayer();
     }
-    
+
     private void openShop() {
         this.view.getChildren().add(this.shopManager.getShopView());
         this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
-        
+        //toglie la griglia di posizionamento
+        removeBoxLayer();
+
+
     }
 
-    
-    
+
+
 }
