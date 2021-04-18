@@ -44,6 +44,14 @@ public class Map {
     public final List<TowerBox> getEmptyTowerBoxes() {
         return this.towerBoxes.stream().filter(el -> el.getTower().isEmpty()).collect(Collectors.toList());
     }
+    
+    /**
+     * Return tower boxes with towers inside.
+     * @return list of tower boxes
+     */
+    public final List<TowerBox> getOccupiedTowerBoxes() {
+        return this.towerBoxes.stream().filter((tb) -> tb.getTower().isPresent()).collect(Collectors.toList());
+    }
 
     /**
      * @return number of empty boxes

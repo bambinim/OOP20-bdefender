@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 public class TowerPlacementView extends AnchorPane {
 
     private static final int RECTANGLE_SIZE = 60;
-    private static final double RECTANGLE_OPACITY = 0.7;
+    private static final double RECTANGLE_OPACITY = 0.5;
     private EventHandler<MouseEvent> onBoxClick;
 
     public TowerPlacementView(final List<TowerBox> towerBoxes) {
