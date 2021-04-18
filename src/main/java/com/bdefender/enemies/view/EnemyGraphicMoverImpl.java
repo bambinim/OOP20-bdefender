@@ -1,5 +1,6 @@
 package com.bdefender.enemies.view;
 
+import com.bdefender.AppView;
 import com.bdefender.enemies.Enemy;
 import com.bdefender.map.Coordinates;
 import javafx.scene.canvas.Canvas;
@@ -16,7 +17,7 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
     private GraphicsContext gc;
 
     public EnemyGraphicMoverImpl(AnchorPane pane) {
-        Canvas canvas = new Canvas(1280,1280);
+        Canvas canvas = new Canvas(AppView.DEFAULT_WIDTH, AppView.DEFAULT_HEIGHT);
         this.gc = canvas.getGraphicsContext2D();
         pane.getChildren().add(canvas);
     }
