@@ -58,7 +58,6 @@ public class GameControllerImpl implements GameController {
         this.view = new GameView(this.mapView, this.shopManager.getShopView());
         //topBar
         this.view.setActionTopM((e) -> this.openShop(), (e) -> System.exit(1));
-
         //enemies and tower
         this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView.getEnemiesPane()));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(new AnchorPane(), t), this.pool);
@@ -67,7 +66,6 @@ public class GameControllerImpl implements GameController {
 
     }
 
-    
     // TODO: remove after test
     private void generateTestTower() {
         final TowerFactory tFactory = new TowerFactory();

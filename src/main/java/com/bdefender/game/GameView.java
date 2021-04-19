@@ -13,7 +13,9 @@ public class GameView extends AnchorPane {
 
     private final TopMenuView topMenuView;
     private final Parent shopView;
-    
+    private ImageButton btnShop;
+    private ImageButton btnExit;
+    private ImageButton btnPlay;
     
 
     public GameView(final MapView mapView, final Parent shopView) {
@@ -21,6 +23,9 @@ public class GameView extends AnchorPane {
         this.shopView = shopView;
         mapView.setLayoutY(TopMenuView.HEIGHT);
         this.shopView.setLayoutY(TopMenuView.HEIGHT);
+        this.btnShop = this.topMenuView.getShopButton();
+        this.btnExit = this.topMenuView.getExitButton();
+        this.btnPlay = this.topMenuView.getPlayButton();
         this.getChildren().addAll(this.topMenuView, mapView, this.shopView);
     }
 
@@ -31,13 +36,23 @@ public class GameView extends AnchorPane {
         return this.topMenuView;
     }
 
-   
-    public void setActionTopM(EventHandler<MouseEvent> openShop, EventHandler<MouseEvent> backMenu) {
-        ImageButton btnShop = this.topMenuView.getShopButton();
-        ImageButton btnExit = this.topMenuView.getExitButton();
+   /**
+    * Set Action on the top bar button, to Open Shop, Start the match and go back to the menu.
+    * @param openShop action we want to associate to the button Shop
+    * @param backMenu action we want to associate to the button BackMenu
+    */
+    public final void setActionTopM(final EventHandler<MouseEvent> openShop, final EventHandler<MouseEvent> backMenu) {
         btnShop.setOnMouseClick(openShop);
         btnExit.setOnMouseClick(backMenu);
-        
     }
     
+    /**
+     * @param flag true if we need to set all the button Off false if we need to set all the buttons on.
+     * */
+
+    public final void setAllButtonDisable(final boolean flag) {
+       this.btnShop.setDisable(flag);
+       this.btnExit.setDisable(flag);
+       this.btnPlay.setDisable(flag);
+    }
 }

@@ -3,10 +3,12 @@ package com.bdefender.shop;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import com.bdefender.game.TowerName;
 import com.bdefender.tower.Tower;
 import com.bdefender.wallet.Wallet;
+import com.sun.source.doctree.AttributeTree.ValueKind;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -82,9 +84,10 @@ public class ShopControllerImpl implements ShopController {
      * */
 
     private void buyTower(final Button btn) {
-        shop.buyTower(towers.get(btn));
-        updMoneyVal();
-        this.lastTower = towers.get(btn);
+            shop.buyTower(towers.get(btn));
+            updMoneyVal();
+            this.lastTower = towers.get(btn);
+            this.refreshToweBtn();
     }
     /** when the button upgrade is clicked prooced subctract the money.
      * @param the tower need to be updated
@@ -99,8 +102,7 @@ public class ShopControllerImpl implements ShopController {
     private void updMoneyVal() {
         lblMoney.setText("" + shop.getWallet().getMoney());
     }
-
-
+    
   /*
    * Fill the map with the button and the towerName it is linked with
    * */
@@ -119,6 +121,15 @@ public class ShopControllerImpl implements ShopController {
       lblThunderbolt.setText(TowerName.THUNDERBOLT.getPrice().toString());
   }
 
+  public final void refreshToweBtn() {
+      towers.forEach((k, v) -> {
+        if (shop.canBuyTower(v)) {
+            enableButton(k);
+        } else {
+            disableButton(k);
+        }
+      });
+  }
   /**Enable all other buttons and set upgradeBtn disabled. 
    */
   public void setBtnUpgradeOn() {

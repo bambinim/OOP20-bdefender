@@ -31,7 +31,7 @@ public class TopMenuView extends AnchorPane {
         rec.setY(0);
         rec.setWidth(AppView.DEFAULT_WIDTH);
         rec.setHeight(HEIGHT);
-        rec.setFill(Color.rgb(100, 70, 36));
+        rec.setFill(Color.rgb(107, 86, 60));
         this.getChildren().add(rec);
         this.playButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/play.png")));
         this.playButton.setDisabledImage(this.loadImage(ClassLoader.getSystemResource("game/play-grey.png")));
