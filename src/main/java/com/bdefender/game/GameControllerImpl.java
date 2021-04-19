@@ -39,7 +39,7 @@ public class GameControllerImpl implements GameController {
     private final MapView mapView;
     //enemies and tower
     private TowersController towerController;
-    private EnemiesPoolInteractor pool;
+    //private EnemiesPoolInteractor pool;
     //economy and shop
     private final ShopManager shopManager;
     private final Shop shop;
@@ -59,13 +59,15 @@ public class GameControllerImpl implements GameController {
         //topBar
         this.view.setActionTopM((e) -> this.openShop(), (e) -> System.exit(1));
         //enemies and tower
-        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView.getEnemiesPane()));
-        this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(new AnchorPane(), t), this.pool);
-        //click on map
-        //generatePlacementBoxLayer();
+        //this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView.getEnemiesPane()));
+        EnemiesController enemies = new EnemiesControllerImpl(this.map, new EnemyGraphicMoverImpl(this.mapView));
+        this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(new AnchorPane(), t), enemies.getEnemiesPool());
 
+        enemies.startGenerate(5, 10, (e) -> this.prova(), (e) -> this.prova());
     }
-
+    private void prova() {
+        System.out.println("ciao");
+    }
     // TODO: remove after test
     private void generateTestTower() {
         final TowerFactory tFactory = new TowerFactory();
@@ -124,7 +126,7 @@ public class GameControllerImpl implements GameController {
 
         this.removeBoxLayer();
         this.mapView.reloadTowersView();
-        //this.generatedUpgradeBoxLayer();
+        this.generatedUpgradeBoxLayer();
     }
 
     /*
@@ -152,11 +154,10 @@ public class GameControllerImpl implements GameController {
         this.placementView.setOnBoxClick((e) -> {
             final TowerBox boxClicked = (TowerBox) (e.getSource());
             this.shopManager.getShopController().setTowerToUpg(boxClicked.getTower().get());
-            System.out.println("Clicco per potenziare la torre in -> " + boxClicked.getTower().get().getPosition());
             this.openShop();
             shopManager.getShopController().setBtnUpgradeOn();
         });
-        this.view.getChildren().add(this.placementView);
+        this.mapView.getChildren().add(this.placementView);
     }
 
     private void closeShop() {

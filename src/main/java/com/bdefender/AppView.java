@@ -68,11 +68,11 @@ public class AppView extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        this.primaryStage.setWidth(DEFAULT_WIDTH);
-        this.primaryStage.setHeight(DEFAULT_HEIGHT);
         this.primaryStage.setTitle("Base Defender");
         this.primaryStage.setResizable(true);
         this.primaryStage.show();
+        this.primaryStage.setWidth(DEFAULT_WIDTH);
+        this.primaryStage.setHeight(DEFAULT_HEIGHT);
         this.initializeView();
         this.startMenu();
     }
