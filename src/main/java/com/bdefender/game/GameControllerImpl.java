@@ -24,6 +24,7 @@ import com.bdefender.wallet.WalletImpl;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
@@ -59,8 +60,8 @@ public class GameControllerImpl implements GameController {
         this.view.setActionTopM((e) -> this.openShop(), (e) -> System.exit(1));
 
         //enemies and tower
-        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView));
-        this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.view, t), this.pool);
+        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView.getEnemiesPane()));
+        this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(new AnchorPane(), t), this.pool);
         //click on map
         //generatePlacementBoxLayer();
 
@@ -120,11 +121,12 @@ public class GameControllerImpl implements GameController {
     private void addTower(final MouseEvent event) {
         final TowerBox boxClicked = (TowerBox) event.getSource();
         final TowerName choosedTower = this.shopManager.getShopController().getLastTower();
-        final Tower tower = this.towerController.addTower(choosedTower, boxClicked.getTopLeftCoord());
+        final Tower tower = this.towerController.addTower(choosedTower, boxClicked.getCentralCoordinate());
         boxClicked.setTower(tower);
 
         this.removeBoxLayer();
-        this.generatedUpgradeBoxLayer();
+        this.mapView.reloadTowersView();
+        //this.generatedUpgradeBoxLayer();
     }
 
     /*

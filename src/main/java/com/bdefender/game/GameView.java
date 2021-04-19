@@ -20,8 +20,8 @@ public class GameView extends AnchorPane {
         this.topMenuView = new TopMenuView();
         this.shopView = shopView;
         mapView.setLayoutY(TopMenuView.HEIGHT);
-        this.getChildren().addAll(mapView, this.shopView, this.topMenuView);
-       
+        this.shopView.setLayoutY(TopMenuView.HEIGHT);
+        this.getChildren().addAll(this.topMenuView, mapView, this.shopView);
     }
 
     /**

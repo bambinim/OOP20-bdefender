@@ -29,7 +29,7 @@ public class AppView extends Application {
     /**
      * Default stage HEIGHT.
      */
-    public static final int DEFAULT_HEIGHT = 760;
+    public static final int DEFAULT_HEIGHT = 802;
     /**
      * Default stage WIDTH.
      */
@@ -38,7 +38,6 @@ public class AppView extends Application {
     private GameController gameController;
     private LaunchMenuLoader menuLoader;
  
-   
     private final GridPane root = new GridPane();
 
 

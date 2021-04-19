@@ -9,6 +9,8 @@ public class MapView extends AnchorPane {
 
     private static final int TOWER_WIDTH = 60;
     private static final int TOWER_HEIGHT = 60;
+    public static final int MAP_WIDTH = 1280;
+    public static final int MAP_HEIGHT = 736;
     private final Map map;
     private final AnchorPane towersPane = new AnchorPane();
     private final AnchorPane enemiesPane = new AnchorPane();

@@ -17,7 +17,7 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
     private GraphicsContext gc;
 
     public EnemyGraphicMoverImpl(AnchorPane pane) {
-        Canvas canvas = new Canvas(AppView.DEFAULT_WIDTH, AppView.DEFAULT_HEIGHT);
+        Canvas canvas = new Canvas(AppView.DEFAULT_WIDTH, com.bdefender.map.MapView.MAP_HEIGHT);
         this.gc = canvas.getGraphicsContext2D();
         pane.getChildren().add(canvas);
     }
