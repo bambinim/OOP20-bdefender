@@ -1,10 +1,11 @@
-package com.bdefender.enemies.view;
+package com.bdefender.enemies.pool;
 import com.bdefender.Pair;
 import com.bdefender.enemies.Enemy;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.enemies.pool.EnemiesPoolMover;
 import com.bdefender.enemies.pool.EnemiesPoolSpawner;
 import com.bdefender.enemies.pool.MapInteractor;
+import com.bdefender.enemies.view.EnemyGraphicMover;
 import com.bdefender.map.Coordinates;
 
 import java.util.ArrayList;
@@ -14,6 +15,10 @@ import java.util.stream.Collectors;
 
 
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
+
+	static class EnemyReachedEndException extends Exception{}
+
+
 	
 	private final Map<Integer,Enemy> enemies = new HashMap<>();
 	private int counter = 0;
@@ -36,18 +41,9 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 	
 	@Override
 	public void addEnemy(Enemy enemy) {
+		enemy.moveTo(mapInteractor.getSpawnPoint());
 		enemy.setDirection(this.mapInteractor.getStartingDirection());
 		enemies.put(counter++,enemy);
-	}
-
-	@Override
-	public Coordinates getSpawnPoint() {
-		return mapInteractor.getSpawnPoint();
-	}
-
-	@Override
-	public Pair<Integer, Integer> getSpawnDir() {
-		return mapInteractor.getStartingDirection();
 	}
 
 	@Override
@@ -75,40 +71,40 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 		return (p1.getX() >= p2.getX()) && (p1.getY() - p2.getY()) * dir.getY() >= 0;
 	}
 
-	@Override
-	public void moveEnemies() {
+	private Pair<Double, Double> getNextValidPos(Pair<Double, Double> nextPosSimple, Enemy enemy) throws EnemyReachedEndException{
 		ArrayList<Pair<Double, Double>> keyPoints = new ArrayList<>(this.mapInteractor.getKeyPoints());
-		//io suppongo che, per adesso, ci si possa muovere solo da destra a sinistra
-		for(int c = 0; c < enemies.size(); c++) {
-			Enemy enemy = enemies.get(c);
-			if (enemy.isAlive() && !enemy.isArrived()) {
-				Pair<Integer, Integer> dir = enemy.getDirection();
-				Pair<Double, Double> currPos = enemy.getPosition();
-				Pair<Double, Double> nxtPos = getNextPos(dir, currPos, new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000));
-				boolean dirChange = false;
-				for (Pair<Double, Double> keyPoint : keyPoints) {
-					if (keyPointIsAfter(keyPoint, currPos, dir) && isAfterKeyPoint(nxtPos, keyPoint, dir)) {
-						int nextXDir = dir.getX() == 0 ? 1 : 0;
-						int nextYDir = 0;
-						if (keyPoints.indexOf(keyPoint) + 1 == keyPoints.size()) {
-							System.out.println("Enemy " + c + " Reached the end");
-							this.enemies.get(c).setArrived(true);
-							//applicare danno al giocatore
-						} else {
-							Double nextKeyPointY = keyPoints.get(keyPoints.indexOf(keyPoint) + 1).getY();
-							if (!nextKeyPointY.equals(keyPoint.getY())) {
-								nextYDir = nextKeyPointY > keyPoint.getY() ? 1 : -1;
-							}
-							enemy.setDirection(new Pair<>(nextXDir, nextYDir));
-							enemy.moveTo(getNextPos(enemy.getDirection(), keyPoint, new Pair<>(Math.abs(nxtPos.getY() - keyPoint.getY()), Math.abs(nxtPos.getX() - keyPoint.getX()))));
-							System.out.println("Enemy " + c + " changed direction at " + currPos.toString());
-						}
-						dirChange = true;
-						break;
+		Pair<Integer, Integer> dir = enemy.getDirection();
+		Pair<Double, Double> currPos = enemy.getPosition();
+		Pair<Double, Double> nxtPos = nextPosSimple;
+		for (Pair<Double, Double> keyPoint : keyPoints) {
+			if (keyPointIsAfter(keyPoint, currPos, dir) && isAfterKeyPoint(nxtPos, keyPoint, dir)) {
+				int nextXDir = dir.getX() == 0 ? 1 : 0;
+				int nextYDir = 0;
+				if (keyPoints.indexOf(keyPoint) + 1 == keyPoints.size()) {
+					throw new EnemyReachedEndException();
+				} else {
+					Double nextKeyPointY = keyPoints.get(keyPoints.indexOf(keyPoint) + 1).getY();
+					if (!nextKeyPointY.equals(keyPoint.getY())) {
+						nextYDir = nextKeyPointY > keyPoint.getY() ? 1 : -1;
 					}
+					enemy.setDirection(new Pair<>(nextXDir, nextYDir));
+					nxtPos = getNextPos(enemy.getDirection(), keyPoint, new Pair<>(Math.abs(nxtPos.getY() - keyPoint.getY()), Math.abs(nxtPos.getX() - keyPoint.getX())));
 				}
-				if (!dirChange) {
-					enemy.moveTo(nxtPos);
+				break;
+			}
+		}
+		return nxtPos;
+	}
+
+	@Override
+	public void moveEnemies () {
+		for (Enemy enemy : this.enemies.values()) {
+			if (enemy.isAlive() && !enemy.isArrived()) {
+				try {
+					enemy.moveTo(getNextValidPos(getNextPos(enemy.getDirection(), enemy.getPosition(), new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000)), enemy));
+				} catch (EnemyReachedEndException ex) {
+					enemy.setArrived(true);
+					enemy.doDamage();
 				}
 			}
 		}

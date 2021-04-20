@@ -3,23 +3,19 @@ package com.bdefender.game;
 import java.io.IOException;
 import java.util.Optional;
 
-import com.bdefender.component.ImageButton;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.enemies.pool.MapInteractorImpl;
-import com.bdefender.enemies.view.EnemiesPoolImpl;
+import com.bdefender.enemies.pool.EnemiesPoolImpl;
 import com.bdefender.game.event.GameEvent;
 import com.bdefender.map.MapLoader;
 import com.bdefender.map.MapType;
 import com.bdefender.map.MapView;
 import com.bdefender.map.TowerBox;
-import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
 import com.bdefender.tower.view.TowerViewImpl;
-import com.bdefender.wallet.Wallet;
-import com.bdefender.enemies.view.EnemiesPoolImpl;
 import com.bdefender.wallet.WalletImpl;
 
 import javafx.application.Platform;

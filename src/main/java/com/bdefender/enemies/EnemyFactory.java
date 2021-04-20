@@ -7,25 +7,25 @@ import javafx.event.EventHandler;
 
 public class EnemyFactory {
 
-	public Enemy getEnemy1(Pair<Double, Double> pos, Pair<Integer, Integer> startDir,EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
-		return this.enemyFromParams(40.0, 40.0, 30.0, pos, startDir, 0, onDeath,onReachedEnd);
+	public Enemy getEnemy1(EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+		return this.enemyFromParams(40.0, 40.0, 30.0, 0, onDeath,onReachedEnd);
 	}
 	
-	public Enemy getEnemy2(Pair<Double, Double> pos, Pair<Integer, Integer> startDir, EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
-		return this.enemyFromParams(45.0, 50.0, 25.0, pos, startDir, 1, onDeath, onReachedEnd);
+	public Enemy getEnemy2(EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+		return this.enemyFromParams(45.0, 50.0, 25.0, 1, onDeath, onReachedEnd);
 	}
 
 
-	public Enemy getEnemy3(Pair<Double, Double> pos, Pair<Integer, Integer> startDir,  EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
-		return this.enemyFromParams(80.0, 30.0, 30.0, pos, startDir, 2, onDeath, onReachedEnd);
+	public Enemy getEnemy3( EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+		return this.enemyFromParams(80.0, 30.0, 30.0, 2, onDeath, onReachedEnd);
 	}
 	
-	private Enemy enemyFromParams(Double life, Double speed, Double damage, Pair<Double, Double> pos, Pair<Integer, Integer> startDir, Integer typeId, EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+	private Enemy enemyFromParams(Double life, Double speed, Double damage, Integer typeId, EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
 		return new Enemy() {
 			
-			private Pair<Double, Double> enemyPos = pos;
+			private Pair<Double, Double> enemyPos;
 			private double enemyLife = life;
-			private Pair<Integer, Integer> enemyDirection = startDir;
+			private Pair<Integer, Integer> enemyDirection;
 			private boolean arrived = false;
 			
 			@Override
@@ -64,11 +64,6 @@ public class EnemyFactory {
 			@Override
 			public double getSpeed() {
 				return speed;
-			}
-
-			@Override
-			public double getLife() {
-				return this.enemyLife;
 			}
 
 			@Override

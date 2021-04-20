@@ -12,21 +12,33 @@ public interface Tower {
             super(errorMessage);
         }
     }
-
     /**
      *
      * @return center of the shoot.
      */
     Pair<Double, Double> shoot();
 
-    void upgradeLevel();
+    /**
+     *
+     * @return level before the upgrade.
+     */
+    int upgradeLevel();
 
+    /**
+     *
+     * @return number of shoot every 10 seconds
+     */
     long getShootSpeed();
 
-    int getTowerId();
+    /**
+     * return tower type ID
+     */
+    int getTowerTypeId();
 
-    Pair<Double, Double> getPos();
-
+    /**
+     *
+     * @return tower position
+     */
     Pair<Double, Double> getPosition();
 
 

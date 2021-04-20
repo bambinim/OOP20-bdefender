@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public class TowerImageLoader {
 
-    private ArrayList<Optional<Image>> towerImages = new ArrayList<>();
-    private ArrayList<Optional<Image>> towerShootImages = new ArrayList<>();
-    private static TowerImageLoader Instance;
-    private static int N_TOWERS = 3;
+    private final ArrayList<Optional<Image>> towerImages = new ArrayList<>();
+    private final ArrayList<Optional<Image>> towerShootImages = new ArrayList<>();
+    private static final TowerImageLoader Instance;
+    private static final int N_TOWERS = 3;
 
     static {
         Instance = new TowerImageLoader(N_TOWERS);
@@ -37,9 +37,9 @@ public class TowerImageLoader {
     }
 
     public static Optional<Image> GetTowerImage(Tower tower) {
-        return Instance.towerImages.get(tower.getTowerId());
+        return Instance.towerImages.get(tower.getTowerTypeId());
     }
     public static Optional<Image> GetTowerShootImage(Tower tower) {
-        return Instance.towerShootImages.get(tower.getTowerId());
+        return Instance.towerShootImages.get(tower.getTowerTypeId());
     }
 }

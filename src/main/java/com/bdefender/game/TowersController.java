@@ -17,16 +17,16 @@ public interface TowersController {
 
     /**
      * Removes the tower from prompted panel and interrupts its life thread.
-     * @param towerId tower ID.
+     * @param tower tower you want to remove.
      */
     void removeTower(Tower tower);
 
     /**
      * Upgrade the tower to the next level.
-     * @param towerId tower ID.
+     * @param tower tower you want to update.
      * @return level after the upgrade
      */
-    Integer upgradeTower(Integer towerId);
+    Integer upgradeTower(Tower tower);
 
 
 }

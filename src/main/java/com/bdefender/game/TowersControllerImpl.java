@@ -55,8 +55,8 @@ public class TowersControllerImpl implements TowersController{
     }
 
     @Override
-    public Integer upgradeTower(Integer towerId) {
-        return null;
+    public Integer upgradeTower(Tower tower) {
+        return tower.upgradeLevel();
     }
 }
 
@@ -96,7 +96,7 @@ class TowerThread extends Thread {
     public void run() {
         while(alive){
             try {
-                sleep(1000L * tower.getShootSpeed());
+                sleep(10000L / tower.getShootSpeed());
                 var shootTargetPos = tower.shoot();
                 if (shootTargetPos == null) {
                     System.out.println("No more enemies around...");

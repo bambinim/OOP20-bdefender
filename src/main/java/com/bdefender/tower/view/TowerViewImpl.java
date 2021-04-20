@@ -61,7 +61,7 @@ public class TowerViewImpl implements TowerView{
         path.getElements().add(new MoveTo(towerPos.getLeftPixel(), towerPos.getTopPixel()));
         path.getElements().add(new LineTo(target.getLeftPixel(), target.getTopPixel()));
         pathTransition.setPath(path);
-        pathTransition.setDuration(Duration.millis(200));
+        pathTransition.setDuration(Duration.millis(100));
         pathTransition.setNode(node);
         pathTransition.setAutoReverse(false);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);

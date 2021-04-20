@@ -1,14 +1,15 @@
 package com.bdefender.enemies.pool;
 
-
-import com.bdefender.Pair;
 import com.bdefender.enemies.Enemy;
-import com.bdefender.map.Coordinates;
+
 
 public interface EnemiesPoolSpawner {
+	/**
+	 * add an enemy to the pool.
+	 * @param enemy enemy to add.
+	 */
 	void addEnemy(Enemy enemy);
-	Coordinates getSpawnPoint();
-	Pair<Integer, Integer> getSpawnDir();
+
 }
 
 
