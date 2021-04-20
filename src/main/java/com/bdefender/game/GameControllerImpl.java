@@ -19,7 +19,9 @@ import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.WalletImpl;
 
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -30,27 +32,29 @@ import com.bdefender.shop.TowerPlacementView;
 
 public class GameControllerImpl implements GameController {
 
-
+    //game GUI
     private final GameView view;
     private final Map map;
     private final MapView mapView;
+    private TowerPlacementView placementView;
+
     //enemies and tower
-    private TowersController towerController;
-    private EnemiesController enemies;
-    //private EnemiesPoolInteractor pool;
+    private final TowersController towerController;
+    private final EnemiesController enemies;
+
     //economy and shop
     private final ShopManager shopManager;
     private final Shop shop;
-    TowerPlacementView placementView;
-    Optional <TowerName> choosedTower = Optional.empty();
-    private final int INITIAL_AMOUNT = 1000;
-    
+    private Optional<TowerName> choosedTower = Optional.empty();
+    private static final  int INITIAL_AMOUNT = 1000;
+
     //game Managment 
-    private Integer round = 0;
-    private final Integer DEAD_MONEY = 20;
-    private Integer enemiesOffGame = 0;
-    private Integer enemiesToSpawn = 10;
-    private Integer frequencyEnemies = 5;
+    private int lifePoint = 100;
+    private int round = 0;
+    private static final int DEAD_MONEY = 20;
+    private int enemiesOffGame = 0;
+    private int enemiesToSpawn = 10;
+    private static final int FREQUENCY_ENEMIES= 5;
 
 
     private EventHandler<GameEvent> onGameFinish;
@@ -63,14 +67,14 @@ public class GameControllerImpl implements GameController {
         this.shopManager = new ShopManager(shop, (e) -> this.closeShop());
         this.view = new GameView(this.mapView, this.shopManager.getShopView());
         //topBar
-        this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(1));
+        this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(0));
         //enemies and tower
         this.enemies = new EnemiesControllerImpl(this.map, new EnemyGraphicMoverImpl(this.mapView));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(new AnchorPane(), t), enemies.getEnemiesPool());
 
-        
+
     }
-  
+
     // TODO: remove after test
     private void generateTestTower() {
         final TowerFactory tFactory = new TowerFactory();
@@ -99,8 +103,8 @@ public class GameControllerImpl implements GameController {
         return this.view;
     }
 
-    
-    
+
+
 
     /**
      * Set event handler to call when game finishes.
@@ -132,6 +136,8 @@ public class GameControllerImpl implements GameController {
         this.removeBoxLayer();
         this.mapView.reloadTowersView();
         this.generatedUpgradeBoxLayer();
+        //abilito tutti i pulsanti
+        this.view.setAllButtonDisable(false);
     }
 
     /*
@@ -172,6 +178,8 @@ public class GameControllerImpl implements GameController {
         this.view.getChildren().remove(shopManager.getShopView());
         this.choosedTower = this.shopManager.getShopController().getLastTower();
         if (this.choosedTower.isPresent()) {
+            //disabilito tutti i pulsanti
+            this.view.setAllButtonDisable(true);
             this.generatePlacementBoxLayer();
         } 
     }
@@ -187,7 +195,7 @@ public class GameControllerImpl implements GameController {
 
     }
 
-    
+
     /**
      * Check if round is finished.
      * @return true if it is false if is not.
@@ -220,16 +228,33 @@ public class GameControllerImpl implements GameController {
         if (this.isRoundFinished()) {
             this.nextRound();
         }
-      
+
     }
-    private void prova() {System.out.println("sk");}
+
+    /**
+     * Event called when an enemy pass the end of the path.
+     * decreases the player's life and checks if it is possible to continue the game.
+     */
+    private void onReachedEnd() {
+        this.lifePoint--;
+        this.enemiesOffGame++;
+        if (this.lifePoint <= 0) {
+            System.out.println("Morto");
+           // this.onGameFinish.handle();
+        }
+        System.out.println("LifePoint = " + this.lifePoint);
+    }
 
     /**
      * start the game enemies start spawn.
      * */
     private void startGame() {
-        enemies.startGenerate(this.frequencyEnemies, this.enemiesToSpawn, (e) -> this.onDead(), (e) -> this.prova());
+        this.enemiesOffGame = 0;
+        this.view.getTopMenuView().getPlayButton().setDisable(true);
+        enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, (e) -> this.onDead(), (e) -> this.onReachedEnd());
     }
+
+
 
 
 

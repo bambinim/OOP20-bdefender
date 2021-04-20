@@ -59,6 +59,9 @@ public class AppView extends Application {
 
     private void startGame() throws IOException {
         this.gameController = new GameControllerImpl(menuLoader.getController().getSelectedMap());
+        this.gameController.setOnGameFinish((e) -> {
+            this.startMenu();
+        });
         this.setContent(this.gameController.getView());
     }
 
