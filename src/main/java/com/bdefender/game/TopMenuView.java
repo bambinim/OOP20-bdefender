@@ -41,18 +41,22 @@ public class TopMenuView extends AnchorPane {
     }
 
     private void positionButtons() {
-        this.playButton.setFitWidth(BUTTON_SIZE);
-        this.playButton.setFitHeight(BUTTON_SIZE);
+        // play button positioning
+        this.playButton.setWidth(BUTTON_SIZE);
+        this.playButton.setHeight(BUTTON_SIZE);
         this.playButton.setX(30);
-        this.playButton.setY(5);
-        this.exitButton.setFitWidth(BUTTON_SIZE);
-        this.exitButton.setFitHeight(BUTTON_SIZE);
+        this.playButton.setY(20);
+        // exit button positioning
+        this.exitButton.setWidth(BUTTON_SIZE);
+        this.exitButton.setHeight(BUTTON_SIZE);
         this.exitButton.setX(1200);
-        this.exitButton.setY(5);
-        this.shopButton.setFitWidth(BUTTON_SIZE);
-        this.shopButton.setFitHeight(BUTTON_SIZE);
+        this.exitButton.setY(20);
+        // shop button positioning
+        this.shopButton.setWidth(BUTTON_SIZE);
+        this.shopButton.setHeight(BUTTON_SIZE);
         this.shopButton.setX(85);
-        this.shopButton.setY(5);
+        this.shopButton.setY(20);
+        // add all buttons to AnchorPane
         this.getChildren().addAll(this.playButton, this.exitButton, this.shopButton);
     }
 
