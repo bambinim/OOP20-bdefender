@@ -1,6 +1,7 @@
 package com.bdefender.game;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import com.bdefender.component.ImageButton;
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
@@ -21,7 +22,7 @@ import com.bdefender.wallet.Wallet;
 import com.bdefender.enemies.view.EnemiesPoolImpl;
 import com.bdefender.wallet.WalletImpl;
 
-
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -39,12 +40,21 @@ public class GameControllerImpl implements GameController {
     private final MapView mapView;
     //enemies and tower
     private TowersController towerController;
+    private EnemiesController enemies;
     //private EnemiesPoolInteractor pool;
     //economy and shop
     private final ShopManager shopManager;
     private final Shop shop;
     TowerPlacementView placementView;
+    Optional <TowerName> choosedTower = Optional.empty();
     private final int INITIAL_AMOUNT = 1000;
+    
+    //game Managment 
+    private Integer round = 0;
+    private final Integer DEAD_MONEY = 20;
+    private Integer enemiesOffGame = 0;
+    private Integer enemiesToSpawn = 10;
+    private Integer frequencyEnemies;
 
 
     private EventHandler<GameEvent> onGameFinish;
@@ -57,17 +67,14 @@ public class GameControllerImpl implements GameController {
         this.shopManager = new ShopManager(shop, (e) -> this.closeShop());
         this.view = new GameView(this.mapView, this.shopManager.getShopView());
         //topBar
-        this.view.setActionTopM((e) -> this.openShop(), (e) -> System.exit(1));
+        this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(1));
         //enemies and tower
-        //this.pool = new EnemiesPoolImpl(new MapInteractorImpl(this.map), new EnemyGraphicMoverImpl(this.mapView.getEnemiesPane()));
-        EnemiesController enemies = new EnemiesControllerImpl(this.map, new EnemyGraphicMoverImpl(this.mapView));
+        this.enemies = new EnemiesControllerImpl(this.map, new EnemyGraphicMoverImpl(this.mapView));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(new AnchorPane(), t), enemies.getEnemiesPool());
 
-        enemies.startGenerate(5, 10, (e) -> this.prova(), (e) -> this.prova());
+        
     }
-    private void prova() {
-        System.out.println("ciao");
-    }
+  
     // TODO: remove after test
     private void generateTestTower() {
         final TowerFactory tFactory = new TowerFactory();
@@ -96,6 +103,16 @@ public class GameControllerImpl implements GameController {
         return this.view;
     }
 
+    private void onDead() {
+        this.shop.getWallet().addMoney(DEAD_MONEY);
+        Platform.runLater(() -> this.shopManager.getShopController().updMoneyVal());
+        this.enemiesOffGame++;
+        if (this.isRoundFinished()) {
+            this.nextRound();
+        }
+      
+    }
+
     /**
      * Set event handler to call when game finishes.
      * @param handler
@@ -120,10 +137,9 @@ public class GameControllerImpl implements GameController {
      */
     private void addTower(final MouseEvent event) {
         final TowerBox boxClicked = (TowerBox) event.getSource();
-        final TowerName choosedTower = this.shopManager.getShopController().getLastTower();
-        final Tower tower = this.towerController.addTower(choosedTower, boxClicked.getCentralCoordinate());
+        final Tower tower = this.towerController.addTower(choosedTower.get(), boxClicked.getCentralCoordinate());
         boxClicked.setTower(tower);
-
+        this.shopManager.getShopController().setEmptyLastTower();
         this.removeBoxLayer();
         this.mapView.reloadTowersView();
         this.generatedUpgradeBoxLayer();
@@ -162,7 +178,10 @@ public class GameControllerImpl implements GameController {
 
     private void closeShop() {
         this.view.getChildren().remove(shopManager.getShopView());
-        this.generatePlacementBoxLayer();
+        this.choosedTower = this.shopManager.getShopController().getLastTower();
+        if (this.choosedTower.isPresent()) {
+            this.generatePlacementBoxLayer();
+        } 
     }
 
     private void openShop() {
@@ -172,6 +191,23 @@ public class GameControllerImpl implements GameController {
         removeBoxLayer();
 
 
+    }
+    
+    private boolean isRoundFinished(){
+        return this.enemiesOffGame == this.enemiesToSpawn;
+    }
+    private void nextRound() {
+        this.round++;
+        if (this.round % 2 == 0){
+            //aumento nemici
+        }
+        else {
+            //aumento frequenza
+        }
+    }
+    private void prova() {System.out.println("sk");}
+    private void startGame() {
+        enemies.startGenerate(5, 10, (e) -> this.onDead(), (e) -> this.prova());
     }
 
 

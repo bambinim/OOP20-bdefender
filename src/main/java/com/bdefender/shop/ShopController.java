@@ -6,8 +6,10 @@ import com.bdefender.tower.Tower;
 
 public interface ShopController {
     void initialize();
-    TowerName getLastTower();
+    Optional<TowerName> getLastTower();
     void setBtnUpgradeOff();
     void setBtnUpgradeOn();
+    void setEmptyLastTower();
     void setTowerToUpg(Tower tower);
+    void updMoneyVal();
 }

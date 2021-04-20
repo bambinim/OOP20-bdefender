@@ -39,10 +39,14 @@ public class GameView extends AnchorPane {
    /**
     * Set Action on the top bar button, to Open Shop, Start the match and go back to the menu.
     * @param openShop action we want to associate to the button Shop
+    * @param startGame actione we want to associato to the button Play
     * @param backMenu action we want to associate to the button BackMenu
     */
-    public final void setActionTopM(final EventHandler<MouseEvent> openShop, final EventHandler<MouseEvent> backMenu) {
+    public final void setActionTopM(final EventHandler<MouseEvent> openShop,
+            final EventHandler<MouseEvent> startGame, 
+            final EventHandler<MouseEvent> backMenu) {
         btnShop.setOnMouseClick(openShop);
+        btnPlay.setOnMouseClick(startGame);
         btnExit.setOnMouseClick(backMenu);
     }
     

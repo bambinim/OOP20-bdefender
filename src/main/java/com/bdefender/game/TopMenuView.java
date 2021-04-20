@@ -35,7 +35,7 @@ public class TopMenuView extends AnchorPane {
         this.getChildren().add(rec);
         this.playButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/play.png")));
         this.playButton.setDisabledImage(this.loadImage(ClassLoader.getSystemResource("game/play-grey.png")));
-        this.exitButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/times.png")));
+        this.exitButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/back-menu.png")));
         this.shopButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/shopping-cart.png")));
         this.positionButtons();
     }

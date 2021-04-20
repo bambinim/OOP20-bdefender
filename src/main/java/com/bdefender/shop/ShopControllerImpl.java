@@ -21,7 +21,7 @@ public class ShopControllerImpl implements ShopController {
 
     private final Shop shop;
     private Map<Button, TowerName> towers = new HashMap<>();
-    private TowerName lastTower = null;
+    private Optional<TowerName> lastTower = Optional.empty();
     private Tower towerToUpg = null;
     private EventHandler<MouseEvent> closeShop;
     
@@ -30,6 +30,9 @@ public class ShopControllerImpl implements ShopController {
     @FXML
     private Label lblMoney;
 
+    @FXML
+    private Button bntCloseShop;
+    
     @FXML
     private Label lblFireArrow;
 
@@ -77,6 +80,7 @@ public class ShopControllerImpl implements ShopController {
            this.setBtnUpgradeOff();
        });
 
+       bntCloseShop.setOnMouseClicked(closeShop);
     }
 
     /*
@@ -86,7 +90,7 @@ public class ShopControllerImpl implements ShopController {
     private void buyTower(final Button btn) {
             shop.buyTower(towers.get(btn));
             updMoneyVal();
-            this.lastTower = towers.get(btn);
+            this.lastTower = Optional.of(towers.get(btn));
             this.refreshToweBtn();
     }
     /** when the button upgrade is clicked prooced subctract the money.
@@ -99,7 +103,7 @@ public class ShopControllerImpl implements ShopController {
    /*
     * useful to keep updated the money value
     * */
-    private void updMoneyVal() {
+    public void updMoneyVal() {
         lblMoney.setText("" + shop.getWallet().getMoney());
     }
     
@@ -156,10 +160,12 @@ public class ShopControllerImpl implements ShopController {
   }
 
 
-  public final TowerName getLastTower() {
+  public final Optional<TowerName> getLastTower() {
       return this.lastTower;
   }
-
+public final void setEmptyLastTower() {
+    this.lastTower = Optional.empty();
+}
   public void setTowerToUpg(Tower tower) {
     this.towerToUpg = tower;
 }
