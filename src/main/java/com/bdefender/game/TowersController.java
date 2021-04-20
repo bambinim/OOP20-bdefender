@@ -19,7 +19,7 @@ public interface TowersController {
      * Removes the tower from prompted panel and interrupts its life thread.
      * @param towerId tower ID.
      */
-    void removeTower(Integer towerId);
+    void removeTower(Tower tower);
 
     /**
      * Upgrade the tower to the next level.

@@ -17,8 +17,7 @@ public class TowersControllerImpl implements TowersController{
         TowerView getView(Tower tower);
     }
 
-    private final Map<Integer, TowerData> towersData = new HashMap<>();
-    private int towerCounter = 0;
+    private final Map<Tower, TowerData> towersData = new HashMap<>();
     private final TowerFactory factory = new TowerFactory();
     private final EnemiesPoolInteractor pool;
     private final TowerViewImplementation towerViewImplementation;
@@ -42,17 +41,17 @@ public class TowersControllerImpl implements TowersController{
         Tower tower = getTowerByTypeName(name, pos);
         TowerView view = towerViewImplementation.getView(tower);
         TowerThread thread = new TowerThread(tower,view);
-        towersData.put(++towerCounter,new TowerData(view,thread));
+        towersData.put(tower,new TowerData(view,thread));
         thread.start();
         view.addTowerToGameField();
         return tower;
     }
 
     @Override
-    public void removeTower(Integer towerId) {
-        this.towersData.get(towerId).getThread().killTower();
-        this.towersData.get(towerId).getView().removeTowerFromGameField();
-        this.towersData.remove(towerId);
+    public void removeTower(Tower tower) {
+        this.towersData.get(tower).getThread().killTower();
+        this.towersData.get(tower).getView().removeTowerFromGameField();
+        this.towersData.remove(tower);
     }
 
     @Override
