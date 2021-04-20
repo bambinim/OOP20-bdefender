@@ -24,7 +24,7 @@ public class ShopControllerImpl implements ShopController {
     private Optional<TowerName> lastTower = Optional.empty();
     private Tower towerToUpg = null;
     private EventHandler<MouseEvent> closeShop;
-    
+
     private final Double DIS_OP = 0.5;
     private final Double EN_OP = 0.0;
     @FXML
@@ -32,7 +32,7 @@ public class ShopControllerImpl implements ShopController {
 
     @FXML
     private Button bntCloseShop;
-    
+
     @FXML
     private Label lblFireArrow;
 
@@ -67,7 +67,7 @@ public class ShopControllerImpl implements ShopController {
 
        initializeButton();
        initializeLabel();
-       updMoneyVal();
+       updLblMoney();
        this.setBtnUpgradeOff();
        towers.forEach((k, v) -> {
            k.setOnMousePressed((e) -> {
@@ -89,7 +89,7 @@ public class ShopControllerImpl implements ShopController {
 
     private void buyTower(final Button btn) {
             shop.buyTower(towers.get(btn));
-            updMoneyVal();
+            updLblMoney();
             this.lastTower = Optional.of(towers.get(btn));
             this.refreshToweBtn();
     }
@@ -99,14 +99,33 @@ public class ShopControllerImpl implements ShopController {
     private void buyUpgrade() {
         shop.buyUpgrade(this.towerToUpg);
     }
+    
+    /**
+     * @return lastTower The tower choosed to be bought
+     */
+    public final Optional<TowerName> getLastTower() {
+        return this.lastTower;
+    }
+
+  public final void setEmptyLastTower() {
+      this.lastTower = Optional.empty();
+  }
+
+  /**
+   * Set tower to Upgrade.
+   * @param tower we want to upgrade.
+   */
+    public void setTowerToUpg(final Tower tower) {
+      this.towerToUpg = tower;
+  }
 
    /*
-    * useful to keep updated the money value
+    * nees to keep updated the money value label
     * */
-    public void updMoneyVal() {
+    public final void updLblMoney() {
         lblMoney.setText("" + shop.getWallet().getMoney());
     }
-    
+ 
   /*
    * Fill the map with the button and the towerName it is linked with
    * */
@@ -125,6 +144,9 @@ public class ShopControllerImpl implements ShopController {
       lblThunderbolt.setText(TowerName.THUNDERBOLT.getPrice().toString());
   }
 
+  /**
+   * If money are enough let the tower's button enable, othewise disable it.
+   */
   public final void refreshToweBtn() {
       towers.forEach((k, v) -> {
         if (shop.canBuyTower(v)) {
@@ -134,7 +156,8 @@ public class ShopControllerImpl implements ShopController {
         }
       });
   }
-  /**Enable all other buttons and set upgradeBtn disabled. 
+
+  /**Enable all  buttons and set upgradeBtn disabled. 
    */
   public void setBtnUpgradeOn() {
       towers.forEach((k, v) -> disableButton(k));
@@ -147,6 +170,8 @@ public class ShopControllerImpl implements ShopController {
       towers.forEach((k, v) -> enableButton(k));
       disableButton(btnUpgrade);
   }
+
+ 
   private void enableButton(final Button btn) {
     btn.setOpacity(EN_OP);
     btn.setText("");
@@ -160,15 +185,7 @@ public class ShopControllerImpl implements ShopController {
   }
 
 
-  public final Optional<TowerName> getLastTower() {
-      return this.lastTower;
-  }
-public final void setEmptyLastTower() {
-    this.lastTower = Optional.empty();
-}
-  public void setTowerToUpg(Tower tower) {
-    this.towerToUpg = tower;
-}
+
 
 
 }

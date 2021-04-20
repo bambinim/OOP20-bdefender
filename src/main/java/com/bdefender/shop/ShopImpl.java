@@ -39,18 +39,17 @@ public class ShopImpl implements Shop {
 
     @Override
     public final void buyUpgrade(final Tower tower) {
-       
       final TowerName  typeToUpg = Stream.of(TowerName.values())
               .filter((x) -> x.getId() == tower.getTowerId())
               .findFirst()
               .get();
-       
       if (wallet.areMoneyEnough(typeToUpg.getUpgCost())) {
            tower.upgradeLevel();
            wallet.subtractMoney(typeToUpg.getUpgCost());
        }
 
     }
+    
     /*
      * @return the userWallet
      * */

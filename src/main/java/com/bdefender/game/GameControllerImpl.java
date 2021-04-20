@@ -54,7 +54,7 @@ public class GameControllerImpl implements GameController {
     private final Integer DEAD_MONEY = 20;
     private Integer enemiesOffGame = 0;
     private Integer enemiesToSpawn = 10;
-    private Integer frequencyEnemies;
+    private Integer frequencyEnemies = 5;
 
 
     private EventHandler<GameEvent> onGameFinish;
@@ -103,15 +103,8 @@ public class GameControllerImpl implements GameController {
         return this.view;
     }
 
-    private void onDead() {
-        this.shop.getWallet().addMoney(DEAD_MONEY);
-        Platform.runLater(() -> this.shopManager.getShopController().updMoneyVal());
-        this.enemiesOffGame++;
-        if (this.isRoundFinished()) {
-            this.nextRound();
-        }
-      
-    }
+    
+    
 
     /**
      * Set event handler to call when game finishes.
@@ -176,6 +169,9 @@ public class GameControllerImpl implements GameController {
         this.mapView.getChildren().add(this.placementView);
     }
 
+    /**
+     * Close Shop widow.
+     */
     private void closeShop() {
         this.view.getChildren().remove(shopManager.getShopView());
         this.choosedTower = this.shopManager.getShopController().getLastTower();
@@ -183,7 +179,9 @@ public class GameControllerImpl implements GameController {
             this.generatePlacementBoxLayer();
         } 
     }
-
+    /**
+     * Open Shop window.
+     */
     private void openShop() {
         this.view.getChildren().add(this.shopManager.getShopView());
         this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
@@ -192,10 +190,19 @@ public class GameControllerImpl implements GameController {
 
 
     }
+
     
+    /**
+     * Check if round is finished.
+     * @return true if it is false if is not.
+     * */
     private boolean isRoundFinished(){
         return this.enemiesOffGame == this.enemiesToSpawn;
     }
+
+    /**
+     * Increment round and increase the level difficulty.
+     * */
     private void nextRound() {
         this.round++;
         if (this.round % 2 == 0){
@@ -205,9 +212,27 @@ public class GameControllerImpl implements GameController {
             //aumento frequenza
         }
     }
+
+    /** 
+     * Event called when a enemy die.
+     * Add money to the wallet and if the round is finished go for a new one.
+     * */
+    private void onDead() {
+        this.shop.getWallet().addMoney(DEAD_MONEY);
+        Platform.runLater(() -> this.shopManager.getShopController().updLblMoney());
+        this.enemiesOffGame++;
+        if (this.isRoundFinished()) {
+            this.nextRound();
+        }
+      
+    }
     private void prova() {System.out.println("sk");}
+
+    /**
+     * start the game enemies start spawn.
+     * */
     private void startGame() {
-        enemies.startGenerate(5, 10, (e) -> this.onDead(), (e) -> this.prova());
+        enemies.startGenerate(this.frequencyEnemies, this.enemiesToSpawn, (e) -> this.onDead(), (e) -> this.prova());
     }
 
 
