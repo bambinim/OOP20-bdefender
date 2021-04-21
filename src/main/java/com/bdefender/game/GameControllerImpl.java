@@ -56,6 +56,7 @@ public class GameControllerImpl implements GameController {
     private int enemiesOffGame = 0;
     private int enemiesToSpawn = 10;
     private static final int FREQUENCY_ENEMIES= 5;
+    private static final int INC_ENEMIES = 2;
 
 
     private EventHandler<GameEvent> onGameFinish;
@@ -204,7 +205,7 @@ public class GameControllerImpl implements GameController {
      * @return true if it is false if is not.
      * */
     private boolean isRoundFinished(){
-        return this.enemiesOffGame == this.enemiesToSpawn;
+        return this.enemiesOffGame >= this.enemiesToSpawn;
     }
 
     /**
@@ -212,12 +213,9 @@ public class GameControllerImpl implements GameController {
      * */
     private void nextRound() {
         this.round++;
-        if (this.round % 2 == 0){
-            //aumento nemici
-        }
-        else {
-            //aumento frequenza
-        }
+      this.view.getTopMenuView().setRoundTextValue(this.round);
+      this.enemiesToSpawn = this.enemiesToSpawn + this.INC_ENEMIES;
+      this.view.setAllButtonEnable();
     }
 
     /** 
@@ -231,7 +229,7 @@ public class GameControllerImpl implements GameController {
         if (this.isRoundFinished()) {
             this.nextRound();
         }
-        this.enableButtonIfRoundEnd();
+       // this.enableButtonIfRoundEnd();
     }
 
     /**
@@ -247,16 +245,14 @@ public class GameControllerImpl implements GameController {
             System.out.println("Morto");
            // this.onGameFinish.handle();
         }
-        this.enableButtonIfRoundEnd();
+        if (this.isRoundFinished()) {
+            this.nextRound();
+        }
         System.out.println("LifePoint = " + this.lifePoint);
     }
 
-    private void enableButtonIfRoundEnd() {
-        //if all enemies are died or passed the end unlock the menu buttons.
-        if (this.enemiesOffGame >= this.enemiesToSpawn) {
-            this.view.setAllButtonEnable();
-        }
-    }
+   
+ 
 
     /**
      * start the game enemies start spawn.

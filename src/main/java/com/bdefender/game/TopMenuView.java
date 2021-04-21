@@ -23,11 +23,15 @@ public class TopMenuView extends AnchorPane {
      */
     public static final int HEIGHT = 40;
     private static final int BUTTON_SIZE = 30;
+    private static final int FONT_SIZE = 18;
+    private static final String FONT_NAME = "MV Boli";
+    
     private final ImageButton playButton;
     private final ImageButton exitButton;
     private final ImageButton shopButton;
     private final ProgressBar lifeBar;
     private final Text lifeText;
+    private final Text roundText;
 
 
     public TopMenuView() {
@@ -46,8 +50,13 @@ public class TopMenuView extends AnchorPane {
         //life bar
         this.lifeBar = new ProgressBar(1);
         this.lifeText = new Text("Punti vita:   ");
-        this.lifeText.setFont(Font.font("MV Boli", 18));
+        this.lifeText.setFont(Font.font(FONT_NAME, FONT_SIZE));
         this.lifeText.setFill(Color.WHITE);
+        
+        //round level
+        this.roundText = new Text("LVL 0");
+        this.roundText.setFont(Font.font(FONT_NAME, FONT_SIZE));
+        this.roundText.setFill(Color.WHITE);
 
         this.positionElement();
     }
@@ -73,9 +82,13 @@ public class TopMenuView extends AnchorPane {
         lifeIndicatorHBox.getChildren().addAll(lifeText, this.lifeBar);
         lifeIndicatorHBox.setLayoutX(620);
         lifeIndicatorHBox.setLayoutY(15);
+        
+        //round label
+        this.roundText.setY(35);
+        this.roundText.setX(150);
 
         // add all element to AnchorPane
-        this.getChildren().addAll(this.playButton, this.exitButton, this.shopButton, lifeIndicatorHBox);
+        this.getChildren().addAll(this.playButton, this.exitButton, this.shopButton, lifeIndicatorHBox, this.roundText);
     }
 
     private Image loadImage(final URL imageFile) {
@@ -117,10 +130,18 @@ public class TopMenuView extends AnchorPane {
     }
 
     /**
-     * set the progress bar indicator
+     * set the progress bar indicator.
      * @param lifeValue
      */
     public void setLifeProgressBarValue(final Double lifeValue) {
         this.lifeBar.setProgress(lifeValue);
+    }
+
+    /**
+     * Set the round level text indicator.
+     * @param round
+     */
+    public void setRoundTextValue(final int round){
+        this.roundText.setText("LVL " + round);
     }
 }

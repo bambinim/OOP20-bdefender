@@ -72,4 +72,12 @@ public class GameView extends AnchorPane {
     public void setLifePiointsInTopMenu(final Double life) {
         this.topMenuView.setLifeProgressBarValue(life);
     }
+    
+    /**
+     * Set the round level text.
+     * @param round
+     */
+    public void setRoundText(final int round) {
+        this.topMenuView.setRoundTextValue(round);
+    }
 }
