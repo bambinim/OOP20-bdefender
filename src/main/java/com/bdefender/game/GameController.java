@@ -22,4 +22,6 @@ public interface GameController {
      * @return handler
      */
     EventHandler<GameEvent> getOnGameFinish();
+
+    void closeAllThread();
 }

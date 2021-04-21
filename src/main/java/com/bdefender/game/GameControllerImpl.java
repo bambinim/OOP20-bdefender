@@ -17,14 +17,10 @@ import com.bdefender.tower.TowerFactory;
 import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
 import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.WalletImpl;
-
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopManager;
@@ -51,11 +47,11 @@ public class GameControllerImpl implements GameController {
 
     //game Managment 
     private int lifePoint = 100;
-    private int round = 0;
+    private int round;
     private static final int DEAD_MONEY = 20;
     private int enemiesOffGame = 0;
     private int enemiesToSpawn = 10;
-    private static final int FREQUENCY_ENEMIES= 5;
+    private static final int FREQUENCY_ENEMIES = 5;
     private static final int INC_ENEMIES = 2;
 
 
@@ -69,33 +65,18 @@ public class GameControllerImpl implements GameController {
         this.shopManager = new ShopManager(shop, (e) -> this.closeShop());
         this.view = new GameView(this.mapView, this.shopManager.getShopView());
         //topBar
-        this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(0));
+        //this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(0));
+        this.view.getTopMenuView().getShopButton().setOnMouseClick((e) -> this.openShop());
+        this.view.getTopMenuView().getPlayButton().setOnMouseClick((e) -> this.startGame());
+        this.view.getTopMenuView().getExitButton().setOnMouseClick((e) -> {
+            this.closeAllThread();
+            this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT));
+        });
         //enemies and tower
         this.enemies = new EnemiesControllerImpl(this.map, new EnemyGraphicMoverImpl(this.mapView));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(new AnchorPane(), t), enemies.getEnemiesPool());
 
-
     }
-
-    // TODO: remove after test
-    private void generateTestTower() {
-        final TowerFactory tFactory = new TowerFactory();
-        final EnemiesPoolInteractor pool = new EnemiesPoolImpl(new MapInteractorImpl(map), new EnemyGraphicMoverImpl(this.view));
-        final TowerPlacementView placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
-        placementView.setOnBoxClick(event -> {
-            final TowerBox box = (TowerBox) event.getSource();
-            this.map.getEmptyTowerBoxes().forEach(el -> {
-                if (el.equals(box)) {
-                    el.setTower(tFactory.getTowerDirect1(pool, el.getCentralCoordinate()));
-                    return;
-                }
-            });
-            this.mapView.reloadTowersView();
-            placementView.reload(this.map.getEmptyTowerBoxes());
-        });
-        this.mapView.getChildren().add(placementView);
-    }
-
 
     /**
      * Returns the main view of the game.
@@ -104,8 +85,6 @@ public class GameControllerImpl implements GameController {
     public GameView getView() {
         return this.view;
     }
-
-
 
 
     /**
@@ -138,8 +117,14 @@ public class GameControllerImpl implements GameController {
         this.removeBoxLayer();
         this.mapView.reloadTowersView();
         this.generatedUpgradeBoxLayer();
-        //abilito tutti i pulsanti
-        this.view.setAllButtonEnable();
+        //abilito tutti i pulsanti se il roun è finito, altrimenti abilito solo shop e exit
+        if (this.isRoundFinished()) {
+            this.view.setAllButtonEnable();
+        } else {
+            this.view.getTopMenuView().getExitButton().enable();
+            this.view.getTopMenuView().getShopButton().enable();
+        }
+        
     }
 
     /*
@@ -204,16 +189,14 @@ public class GameControllerImpl implements GameController {
      * Check if round is finished.
      * @return true if it is false if is not.
      * */
-    private boolean isRoundFinished(){
-        return this.enemiesOffGame >= this.enemiesToSpawn;
+    private boolean isRoundFinished() {
+        return this.enemiesOffGame >= this.enemiesToSpawn || this.round == 0;
     }
 
     /**
      * Increment round and increase the level difficulty.
      * */
     private void nextRound() {
-        this.round++;
-      this.view.getTopMenuView().setRoundTextValue(this.round);
       this.enemiesToSpawn = this.enemiesToSpawn + this.INC_ENEMIES;
       this.view.setAllButtonEnable();
     }
@@ -251,16 +234,21 @@ public class GameControllerImpl implements GameController {
         System.out.println("LifePoint = " + this.lifePoint);
     }
 
-   
- 
 
     /**
      * start the game enemies start spawn.
      * */
     private void startGame() {
+        this.round++;
+        this.view.getTopMenuView().setRoundTextValue(this.round);
         this.enemiesOffGame = 0;
         this.view.getTopMenuView().getPlayButton().disable();
         enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, (e) -> this.onDead(), (e) -> this.onReachedEnd());
+    }
+
+    @Override
+    public void closeAllThread() {
+        this.map.getOccupiedTowerBoxes().forEach((tb) -> this.towerController.removeTower(tb.getTower().get()));
     }
 
 

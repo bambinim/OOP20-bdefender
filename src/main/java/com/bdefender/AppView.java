@@ -1,8 +1,10 @@
 package com.bdefender;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -62,6 +64,9 @@ public class AppView extends Application {
         this.gameController.setOnGameFinish((e) -> {
             this.startMenu();
         });
+        //kill all thread before close the windows
+          primaryStage.setOnCloseRequest((e) -> this.gameController.closeAllThread());
+
         this.setContent(this.gameController.getView());
     }
 

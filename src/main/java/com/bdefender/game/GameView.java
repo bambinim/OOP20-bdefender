@@ -16,7 +16,7 @@ public class GameView extends AnchorPane {
     private ImageButton btnShop;
     private ImageButton btnExit;
     private ImageButton btnPlay;
-    
+
 
     public GameView(final MapView mapView, final Parent shopView) {
         this.topMenuView = new TopMenuView();
