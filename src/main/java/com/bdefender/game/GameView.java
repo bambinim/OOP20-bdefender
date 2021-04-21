@@ -49,14 +49,27 @@ public class GameView extends AnchorPane {
         btnPlay.setOnMouseClick(startGame);
         btnExit.setOnMouseClick(backMenu);
     }
-    
+
     /**
      * @param flag true if we need to set all the button Off false if we need to set all the buttons on.
      * */
 
-    public final void setAllButtonDisable(final boolean flag) {
-       this.btnShop.setDisable(flag);
-       this.btnExit.setDisable(flag);
-       this.btnPlay.setDisable(flag);
+    public final void setAllButtonEnable() {
+       this.btnShop.enable();
+       this.btnExit.enable();
+       this.btnPlay.enable();
+    }
+    
+    public void setAllButtonDisable() {
+        this.btnShop.disable();
+        this.btnExit.disable();
+        this.btnPlay.disable();
+    }
+    /**
+     * Set the progress on the life bar.
+     * @param life
+     */
+    public void setLifePiointsInTopMenu(final Double life) {
+        this.topMenuView.setLifeProgressBarValue(life);
     }
 }

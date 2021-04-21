@@ -32,6 +32,7 @@ import com.bdefender.shop.TowerPlacementView;
 
 public class GameControllerImpl implements GameController {
 
+    private static final int DAMAGE_ON_REACHED_END = 5;
     //game GUI
     private final GameView view;
     private final Map map;
@@ -137,7 +138,7 @@ public class GameControllerImpl implements GameController {
         this.mapView.reloadTowersView();
         this.generatedUpgradeBoxLayer();
         //abilito tutti i pulsanti
-        this.view.setAllButtonDisable(false);
+        this.view.setAllButtonEnable();
     }
 
     /*
@@ -175,11 +176,12 @@ public class GameControllerImpl implements GameController {
      * Close Shop widow.
      */
     private void closeShop() {
+        this.view.getTopMenuView().getShopButton().enable();
         this.view.getChildren().remove(shopManager.getShopView());
         this.choosedTower = this.shopManager.getShopController().getLastTower();
         if (this.choosedTower.isPresent()) {
             //disabilito tutti i pulsanti
-            this.view.setAllButtonDisable(true);
+            this.view.setAllButtonDisable();
             this.generatePlacementBoxLayer();
         } 
     }
@@ -187,6 +189,7 @@ public class GameControllerImpl implements GameController {
      * Open Shop window.
      */
     private void openShop() {
+        this.view.getTopMenuView().getShopButton().disable();
         this.view.getChildren().add(this.shopManager.getShopView());
         this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
         //toglie la griglia di posizionamento
@@ -228,7 +231,7 @@ public class GameControllerImpl implements GameController {
         if (this.isRoundFinished()) {
             this.nextRound();
         }
-
+        this.enableButtonIfRoundEnd();
     }
 
     /**
@@ -236,13 +239,23 @@ public class GameControllerImpl implements GameController {
      * decreases the player's life and checks if it is possible to continue the game.
      */
     private void onReachedEnd() {
-        this.lifePoint--;
+        this.lifePoint = this.lifePoint - DAMAGE_ON_REACHED_END;
+        final Double lifePointToDouble = (double) this.lifePoint;
+        this.view.setLifePiointsInTopMenu(lifePointToDouble / 100.0);
         this.enemiesOffGame++;
         if (this.lifePoint <= 0) {
             System.out.println("Morto");
            // this.onGameFinish.handle();
         }
+        this.enableButtonIfRoundEnd();
         System.out.println("LifePoint = " + this.lifePoint);
+    }
+
+    private void enableButtonIfRoundEnd() {
+        //if all enemies are died or passed the end unlock the menu buttons.
+        if (this.enemiesOffGame >= this.enemiesToSpawn) {
+            this.view.setAllButtonEnable();
+        }
     }
 
     /**
@@ -250,7 +263,7 @@ public class GameControllerImpl implements GameController {
      * */
     private void startGame() {
         this.enemiesOffGame = 0;
-        this.view.getTopMenuView().getPlayButton().setDisable(true);
+        this.view.getTopMenuView().getPlayButton().disable();
         enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, (e) -> this.onDead(), (e) -> this.onReachedEnd());
     }
 
