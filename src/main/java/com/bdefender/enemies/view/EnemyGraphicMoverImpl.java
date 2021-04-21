@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
 
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
 
     public EnemyGraphicMoverImpl(AnchorPane pane) {
         Canvas canvas = new Canvas(AppView.DEFAULT_WIDTH, com.bdefender.map.MapView.MAP_HEIGHT);

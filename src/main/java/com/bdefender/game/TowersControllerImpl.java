@@ -97,7 +97,10 @@ class TowerThread extends Thread {
         while(alive){
             try {
                 sleep(10000L / tower.getShootSpeed());
-                var shootTargetPos = tower.shoot();
+                Pair<Double, Double> shootTargetPos;
+                synchronized (this) {
+                    shootTargetPos = tower.shoot();
+                }
                 if (shootTargetPos == null) {
                     System.out.println("No more enemies around...");
                 } else {
