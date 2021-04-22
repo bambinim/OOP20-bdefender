@@ -2,12 +2,12 @@ package com.bdefender.game;
 
 import com.bdefender.enemies.Enemy;
 import com.bdefender.enemies.EnemyFactory;
-import com.bdefender.enemies.event.EnemyEvent;
 import com.bdefender.enemies.pool.*;
 import com.bdefender.enemies.pool.EnemiesPoolImpl;
 import com.bdefender.map.Map;
 import com.bdefender.enemies.view.EnemyGraphicMover;
 import javafx.application.Platform;
+import com.bdefender.event.EnemyEvent;
 import javafx.event.EventHandler;
 
 import java.util.Random;

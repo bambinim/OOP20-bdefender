@@ -1,7 +1,6 @@
 package com.bdefender.component;
 
 import java.util.Optional;
-
 import com.bdefender.event.EventHandler;
 import com.bdefender.event.MouseEvent;
 import javafx.scene.Cursor;

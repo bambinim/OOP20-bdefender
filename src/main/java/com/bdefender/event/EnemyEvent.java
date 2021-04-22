@@ -1,31 +1,34 @@
-package com.bdefender.enemies.event;
+package com.bdefender.event;
 
 import com.bdefender.enemies.Enemy;
-import javafx.event.Event;
-import javafx.event.EventType;
 
 public class EnemyEvent extends Event {
 
     /**
-     * 
+     * Enemy Killed
      */
-    private static final long serialVersionUID = -6175312624802207211L;
     public static final EventType<EnemyEvent> ENEMY_KILLED = new EventType<>("Enemy Killed");
+    /**
+     * Enemy spawned
+     */
     public static final EventType<EnemyEvent> ENEMY_SPAWNED = new EventType<>("Enemy Spawned");
+    /**
+     * Enemy reached end
+     */
     public static final EventType<EnemyEvent> ENEMY_REACHED_END = new EventType<>("Enemy Reached End");
 
-    private final Enemy source;
+    private final Enemy enemy;
 
     public EnemyEvent(final EventType<? extends Event> eventType, final Enemy source) {
         super(eventType);
-        this.source = source;
+        this.enemy = source;
     }
 
     /**
      * @return enemy
      */
-    public Enemy getSource() {
-        return this.source;
+    public Enemy getEnemy() {
+        return this.enemy;
     }
 
 }
