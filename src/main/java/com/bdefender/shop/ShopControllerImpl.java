@@ -5,16 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.bdefender.event.EventHandler;
+import com.bdefender.event.MouseEvent;
 import com.bdefender.game.TowerName;
 import com.bdefender.tower.Tower;
 import com.bdefender.wallet.Wallet;
 import com.sun.source.doctree.AttributeTree.ValueKind;
 
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+
 
 public class ShopControllerImpl implements ShopController {
 
@@ -40,25 +42,24 @@ public class ShopControllerImpl implements ShopController {
     private Button btnFireArrow;
 
     @FXML
+    private Label lblThunderBolt;
+
+    @FXML
+    private Button btnThunderbolt;
+
+    @FXML
     private Label lblFireBall;
 
     @FXML
     private Button btnFireBall;
 
     @FXML
-    private Label lblThunderbolt;
-
-    @FXML
-    private Button btnThunderbolt;
-
-    @FXML
     private Label lblUpgrade;
 
     @FXML
     private Button btnUpgrade;
-
  
-    public ShopControllerImpl(final Shop shop, EventHandler<MouseEvent> closeShop) {
+    public ShopControllerImpl(final Shop shop, final EventHandler<MouseEvent> closeShop) {
         this.shop = shop;
         this.closeShop = closeShop;
     }
@@ -72,7 +73,7 @@ public class ShopControllerImpl implements ShopController {
        towers.forEach((k, v) -> {
            k.setOnMousePressed((e) -> {
            buyTower(((Button) e.getSource()));
-             closeShop.handle(e);
+             this.closeShop.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, e.getSource()));
              });
        });
        btnUpgrade.setOnMouseClicked((e) -> {
@@ -80,7 +81,7 @@ public class ShopControllerImpl implements ShopController {
            this.setBtnUpgradeOff();
        });
 
-       bntCloseShop.setOnMouseClicked(closeShop);
+       bntCloseShop.setOnMouseClicked(e -> this.closeShop.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, e.getSource())));
     }
 
     /*
@@ -139,9 +140,8 @@ public class ShopControllerImpl implements ShopController {
    * */
   private void initializeLabel() {
       lblFireArrow.setText(TowerName.FIRE_ARROW.getPrice().toString());
-     System.out.println("costo");
       lblFireBall.setText(TowerName.FIRE_BALL.getPrice().toString());
-      lblThunderbolt.setText(TowerName.THUNDERBOLT.getPrice().toString());
+      lblThunderBolt.setText(TowerName.THUNDERBOLT.getPrice().toString());
   }
 
   /**
