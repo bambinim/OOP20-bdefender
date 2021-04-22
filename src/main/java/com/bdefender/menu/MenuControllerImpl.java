@@ -6,7 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 import com.bdefender.map.MapType;
-import javafx.event.EventHandler;
+import com.bdefender.event.EventHandler;
+import com.bdefender.event.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -15,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -38,8 +38,8 @@ public class MenuControllerImpl implements Initializable, MenuController {
     @FXML
     private ChoiceBox<String> mapChoiceBox;
 
-    public MenuControllerImpl(final EventHandler<MouseEvent> handler) {
-        this.onPlayClick = handler;
+    public MenuControllerImpl(final EventHandler<MouseEvent> playEvent) {
+        this.onPlayClick = playEvent;
     }
 
     /**
@@ -50,7 +50,8 @@ public class MenuControllerImpl implements Initializable, MenuController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         //Play Action
-        startPlayBtn.setOnMouseClicked(this.onPlayClick);
+        startPlayBtn.setOnMouseClicked((event) -> 
+            this.onPlayClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, event.getSource())));
         onMouseOverHandler(this.startPlayBtn, Color.BLACK, Color.BROWN);
 
         //choiceBox

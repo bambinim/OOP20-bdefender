@@ -3,11 +3,11 @@ package com.bdefender.menu;
 
 
 import java.io.IOException;
-
-import javafx.event.EventHandler;
+import com.bdefender.event.EventHandler;
+import com.bdefender.event.MouseEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.input.MouseEvent;
+
 
 public class LaunchMenuLoaderImpl implements LaunchMenuLoader {
     private final MenuController menuController;
