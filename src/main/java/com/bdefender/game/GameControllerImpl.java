@@ -32,7 +32,7 @@ public class GameControllerImpl implements GameController {
 
     //enemies and tower
     private final TowersController towerController;
-    private final EnemiesController enemies;
+    private EnemiesController enemies;
 
     //economy and shop
     private final ShopManager shopManager;

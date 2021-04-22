@@ -20,7 +20,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
 
 	
-	private final Map<Integer,Enemy> enemies = new HashMap<>();
+	private Map<Integer,Enemy> enemies = new HashMap<>();
 	private int counter = 0;
 	private final MapInteractor mapInteractor;
 	private final EnemyGraphicMover graphicMover;
@@ -33,6 +33,10 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 	@Override
 	public Map<Integer, Enemy> getEnemies(boolean alive){
 		return alive ? this.getAliveEnemies() : this.enemies;
+	}
+
+	public void ClearPool(){
+		this.enemies = new HashMap<>();
 	}
 
 	private Map<Integer,Enemy> getAliveEnemies(){
@@ -98,17 +102,19 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
 	@Override
 	public void moveEnemies () {
-		for (Enemy enemy : this.enemies.values()) {
-			if (enemy.isAlive() && !enemy.isArrived()) {
-				try {
-					enemy.moveTo(getNextValidPos(getNextPos(enemy.getDirection(), enemy.getPosition(), new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000)), enemy));
-				} catch (EnemyReachedEndException ex) {
-					enemy.setArrived(true);
-					enemy.doDamage();
+		synchronized (this) {
+			for (Enemy enemy : this.enemies.values()) {
+				if (enemy.isAlive() && !enemy.isArrived()) {
+					try {
+						enemy.moveTo(getNextValidPos(getNextPos(enemy.getDirection(), enemy.getPosition(), new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000)), enemy));
+					} catch (EnemyReachedEndException ex) {
+						enemy.setArrived(true);
+						enemy.doDamage();
+					}
 				}
 			}
+			this.graphicMover.moveEnemies(new ArrayList<>(this.getAliveEnemies().values()));
 		}
-		this.graphicMover.moveEnemies(new ArrayList<>(this.getAliveEnemies().values()));
 	}
 
 }

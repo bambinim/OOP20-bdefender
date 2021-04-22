@@ -16,7 +16,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-  public static void main(String[] args) { Application.launch(); }
+  public static void main(String[] args) {
+    Application.launch();
+  }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -34,11 +36,26 @@ public class Main extends Application {
 
     EnemiesController enemiesController = new EnemiesControllerImpl(map, new EnemyGraphicMoverImpl(root));
 
-    TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t),enemiesController.getEnemiesPool());
-    enemiesController.startGenerate(5, 10, e -> {System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOO");}, event -> {System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");});
-    ctrl.addTower(TowerName.THUNDERBOLT,new Coordinates(10.0,8.0));
+    TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t), enemiesController.getEnemiesPool());
+    enemiesController.startGenerate(50, 200, e -> {
+      System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+    }, event -> {
+      System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    });
+    ctrl.addTower(TowerName.THUNDERBOLT, new Coordinates(10.0, 8.0));
 
-    ctrl.addTower(TowerName.FIRE_ARROW,new Coordinates(18.0,8.0)); }
+    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+
+    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+
+    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+
+    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+
+    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
 
   }
+}
+
+
 

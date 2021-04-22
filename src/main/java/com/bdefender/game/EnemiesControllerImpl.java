@@ -7,6 +7,7 @@ import com.bdefender.enemies.pool.*;
 import com.bdefender.enemies.pool.EnemiesPoolImpl;
 import com.bdefender.map.Map;
 import com.bdefender.enemies.view.EnemyGraphicMover;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 
 import java.util.Random;
@@ -14,7 +15,7 @@ import java.util.Random;
 
 public class EnemiesControllerImpl implements EnemiesController{
 
-    private EnemiesPoolImpl pool;
+    private final EnemiesPoolImpl pool;
     private EnemyMoverThread moverThread;
 
     public EnemiesControllerImpl(Map map,EnemyGraphicMover graphicMover){
@@ -24,9 +25,11 @@ public class EnemiesControllerImpl implements EnemiesController{
 
     @Override
     public void startGenerate(int intensity, int totEnemies, EventHandler<EnemyEvent> onDead, EventHandler<EnemyEvent> onReachedEnd) {
-        EnemyMoverThread moverThread = new EnemyMoverThread(this.pool);
+        this.pool.ClearPool();
+        this.moverThread.killMover();
+        this.moverThread = new EnemyMoverThread(this.pool);
         EnemySpawnerThread spawnerThread = new EnemySpawnerThread(intensity, totEnemies, pool, onDead, onReachedEnd);
-        moverThread.start();
+        this.moverThread.start();
         spawnerThread.start();
     }
 
@@ -96,7 +99,7 @@ class EnemyMoverThread extends Thread {
         while(alive){
             try {
                 sleep(10L);
-                mover.moveEnemies();
+                Platform.runLater(mover::moveEnemies);
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }
