@@ -6,9 +6,9 @@ import com.bdefender.enemies.pool.*;
 import com.bdefender.enemies.pool.EnemiesPoolImpl;
 import com.bdefender.map.Map;
 import com.bdefender.enemies.view.EnemyGraphicMover;
-import javafx.application.Platform;
 import com.bdefender.event.EnemyEvent;
-import javafx.event.EventHandler;
+import com.bdefender.event.EventHandler;
+
 
 import java.util.Random;
 
@@ -99,7 +99,7 @@ class EnemyMoverThread extends Thread {
         while(alive){
             try {
                 sleep(10L);
-                Platform.runLater(mover::moveEnemies);
+                mover.moveEnemies();
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }

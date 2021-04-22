@@ -3,8 +3,8 @@ package com.bdefender.enemies;
 
 import com.bdefender.Pair;
 import com.bdefender.event.EnemyEvent;
+import com.bdefender.event.EventHandler;
 
-import javafx.event.EventHandler;
 
 public class EnemyFactory {
 

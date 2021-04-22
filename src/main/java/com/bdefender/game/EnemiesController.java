@@ -2,8 +2,8 @@ package com.bdefender.game;
 
 import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 import com.bdefender.event.EnemyEvent;
+import com.bdefender.event.EventHandler;
 
-import javafx.event.EventHandler;
 
 public interface EnemiesController {
 
