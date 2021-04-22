@@ -67,7 +67,7 @@
                         <Image url="@0/panelBack.png" />
                      </image>
                      <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </ImageView>
                   <ImageView fitHeight="46.0" fitWidth="60.0" layoutX="27.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
@@ -83,7 +83,7 @@
                         <Font name="Ebrima Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button id="btnFireArrow" fx:id="btnFireArrow" layoutX="18.0" layoutY="20.0" mnemonicParsing="false" opacity="0.59" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: orange;">
+                  <Button id="btnFireArrow" fx:id="btnFireArrow" layoutX="18.0" layoutY="24.0" mnemonicParsing="false" opacity="0.59" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: orange;">
                      <cursor>
                         <Cursor fx:constant="CLOSED_HAND" />
                      </cursor>
@@ -100,7 +100,7 @@
                         <Image url="@0/panelBack.png" />
                      </image>
                      <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </ImageView>
                   <ImageView fitHeight="49.0" fitWidth="41.0" layoutX="27.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
@@ -116,9 +116,9 @@
                         <Font name="Ebrima Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button id="btnFireBall" fx:id="btnFireBall" layoutX="20.0" layoutY="6.0" mnemonicParsing="false" opacity="0.74" prefHeight="67.0" prefWidth="94.0" style="-fx-background-color: orange;">
+                  <Button id="btnFireBall" fx:id="btnThunderbolt" layoutX="20.0" layoutY="6.0" mnemonicParsing="false" opacity="0.74" prefHeight="67.0" prefWidth="94.0" style="-fx-background-color: orange;">
                      <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
+                        <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                </children>
@@ -133,7 +133,7 @@
                         <Image url="@0/panelBack.png" />
                      </image>
                   </ImageView>
-                  <Label id="lblThunderBolt" fx:id="lblThunderbolt" layoutX="91.0" layoutY="58.0" text="CS">
+                  <Label id="lblThunderBolt" fx:id="lblFireBall" layoutX="91.0" layoutY="58.0" text="CS">
                      <font>
                         <Font name="Ebrima Bold" size="12.0" />
                      </font>
@@ -143,9 +143,9 @@
                         <Image url="@../towers/2/tower.png" />
                      </image>
                   </ImageView>
-                  <Button id="btnThunderbolt" fx:id="btnThunderbolt" layoutX="25.0" layoutY="23.0" mnemonicParsing="false" opacity="0.49" prefHeight="58.0" prefWidth="86.0" style="-fx-background-color: orange;">
+                  <Button id="btnThunderbolt" fx:id="btnFireBall" layoutX="25.0" layoutY="22.0" mnemonicParsing="false" opacity="0.49" prefHeight="58.0" prefWidth="86.0" style="-fx-background-color: orange;">
                      <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
+                        <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                </children>
@@ -160,10 +160,10 @@
                         <Image url="@0/panelBack.png" />
                      </image>
                      <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblUpgrade" layoutX="94.0" layoutY="96.0" text="CS">
+                  <Label fx:id="lblUpgrade" layoutX="86.0" layoutY="95.0" text="UPG">
                      <font>
                         <Font name="Ebrima Bold" size="12.0" />
                      </font></Label>
@@ -172,9 +172,9 @@
                         <Image url="@0/upgrade.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnUpgrade" layoutX="24.0" layoutY="61.0" mnemonicParsing="false" opacity="0.5" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: orange;">
+                  <Button fx:id="btnUpgrade" layoutX="26.0" layoutY="61.0" mnemonicParsing="false" opacity="0.5" prefHeight="58.0" prefWidth="94.0" style="-fx-background-color: orange;">
                      <cursor>
-                        <Cursor fx:constant="CLOSED_HAND" />
+                        <Cursor fx:constant="HAND" />
                      </cursor>
                      <font>
                         <Font name="System Bold" size="12.0" />
