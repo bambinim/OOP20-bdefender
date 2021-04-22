@@ -23,7 +23,7 @@ public class Coordinates extends Pair<Double, Double> {
      * @return Pixel number
      */
     public int getCenterPixelX() {
-        return (int) Math.round(super.getX()) * TILE_SIZE + TILE_SIZE / 2;
+        return (int) Math.round(super.getX() * TILE_SIZE) + TILE_SIZE / 2;
     }
 
     /**

@@ -1,13 +1,11 @@
 package com.bdefender.game;
 
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-
 import com.bdefender.component.ImageButton;
 import com.bdefender.map.MapView;
-import com.bdefender.shop.ShopManager;
+import com.bdefender.event.MouseEvent;
+import com.bdefender.event.EventHandler;
 
 public class GameView extends AnchorPane {
 
@@ -52,14 +50,13 @@ public class GameView extends AnchorPane {
 
     /**
      * @param flag true if we need to set all the button Off false if we need to set all the buttons on.
-     * */
-
+     **/
     public final void setAllButtonEnable() {
        this.btnShop.enable();
        this.btnExit.enable();
        this.btnPlay.enable();
     }
-    
+
     public void setAllButtonDisable() {
         this.btnShop.disable();
         this.btnExit.disable();

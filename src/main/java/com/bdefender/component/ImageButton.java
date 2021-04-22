@@ -2,13 +2,14 @@ package com.bdefender.component;
 
 import java.util.Optional;
 
-import javafx.event.EventHandler;
+import com.bdefender.event.EventHandler;
+import com.bdefender.event.MouseEvent;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 
 public class ImageButton extends StackPane {
 
@@ -25,7 +26,7 @@ public class ImageButton extends StackPane {
         this.setCursor(Cursor.HAND);
         this.setOnMouseClicked(event -> {
             if (this.enabled) {
-                this.onMouseClick.handle(event.copyFor(this, event.getTarget()));
+                this.onMouseClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, event.getSource()));
             }
         });
         this.getChildren().addAll(this.imageView, this.label);
@@ -41,8 +42,8 @@ public class ImageButton extends StackPane {
      * @param value
      */
     public void setWidth(final double value) {
-        this.setMinWidth(value);
-        this.setMaxWidth(value);
+        //this.setMinWidth(value);
+        //this.setMaxWidth(value);
         this.imageView.setFitWidth(value);
     }
 
@@ -51,8 +52,8 @@ public class ImageButton extends StackPane {
      * @param value
      */
     public void setHeight(final double value) {
-        this.setMinHeight(value);
-        this.setMaxHeight(value);
+        //this.setMinHeight(value);
+        //this.setMaxHeight(value);
         this.imageView.setFitHeight(value);
     }
 
@@ -70,6 +71,30 @@ public class ImageButton extends StackPane {
      */
     public void setY(final double value) {
         this.setLayoutY(value);
+    }
+
+    /**
+     * Set button's label width.
+     * @param value
+     */
+    public void setLabelWidth(final double value) {
+        this.label.prefWidth(value);
+    }
+
+    /**
+     * Set button's label height.
+     * @param value
+     */
+    public void setLabelHeight(final double value) {
+        this.label.prefHeight(value);
+    }
+
+    /**
+     * Set button's label font.
+     * @param font
+     */
+    public void setLabelFont(final Font font) {
+        this.label.setFont(font);
     }
 
     /**

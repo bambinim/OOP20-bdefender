@@ -3,24 +3,19 @@ package com.bdefender.game;
 import java.io.IOException;
 import java.util.Optional;
 
-import com.bdefender.enemies.pool.EnemiesPoolInteractor;
-import com.bdefender.enemies.pool.MapInteractorImpl;
-import com.bdefender.enemies.pool.EnemiesPoolImpl;
-import com.bdefender.game.event.GameEvent;
 import com.bdefender.map.MapLoader;
 import com.bdefender.map.MapType;
 import com.bdefender.map.MapView;
 import com.bdefender.map.TowerBox;
 import com.bdefender.map.Map;
 import com.bdefender.tower.Tower;
-import com.bdefender.tower.TowerFactory;
 import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
+import com.bdefender.event.GameEvent;
 import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.WalletImpl;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
+import com.bdefender.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopManager;
@@ -73,8 +68,13 @@ public class GameControllerImpl implements GameController {
             this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT));
         });
         //enemies and tower
-        this.enemies = new EnemiesControllerImpl(this.map, new EnemyGraphicMoverImpl(this.mapView));
-        this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(new AnchorPane(), t), enemies.getEnemiesPool());
+        this.enemies = new EnemiesControllerImpl(this.map, new EnemyGraphicMoverImpl(this.mapView.getEnemiesPane()));
+        this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.mapView.getTowersPane(), t), enemies.getEnemiesPool());
+        this.mapView.setOnTowerClick(e -> {
+            this.shopManager.getShopController().setTowerToUpg(e.getTower());
+            this.openShop();
+            shopManager.getShopController().setBtnUpgradeOn();
+        });
 
     }
 
@@ -116,7 +116,6 @@ public class GameControllerImpl implements GameController {
         this.shopManager.getShopController().setEmptyLastTower();
         this.removeBoxLayer();
         this.mapView.reloadTowersView();
-        this.generatedUpgradeBoxLayer();
         //abilito tutti i pulsanti se il roun è finito, altrimenti abilito solo shop e exit
         if (this.isRoundFinished()) {
             this.view.setAllButtonEnable();
@@ -124,7 +123,6 @@ public class GameControllerImpl implements GameController {
             this.view.getTopMenuView().getExitButton().enable();
             this.view.getTopMenuView().getShopButton().enable();
         }
-        
     }
 
     /*
@@ -141,21 +139,6 @@ public class GameControllerImpl implements GameController {
             this.mapView.getChildren().remove(this.placementView);
         } catch (Exception e) {
         }
-    }
-
-    /*
-     * Genera le poszioni cliccabili per potenziare le torri
-     */
-    private void generatedUpgradeBoxLayer() {
-        this.placementView = new TowerPlacementView(this.map.getOccupiedTowerBoxes());
-
-        this.placementView.setOnBoxClick((e) -> {
-            final TowerBox boxClicked = (TowerBox) (e.getSource());
-            this.shopManager.getShopController().setTowerToUpg(boxClicked.getTower().get());
-            this.openShop();
-            shopManager.getShopController().setBtnUpgradeOn();
-        });
-        this.mapView.getChildren().add(this.placementView);
     }
 
     /**
@@ -180,8 +163,6 @@ public class GameControllerImpl implements GameController {
         this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
         //toglie la griglia di posizionamento
         removeBoxLayer();
-
-
     }
 
 
@@ -250,9 +231,4 @@ public class GameControllerImpl implements GameController {
     public void closeAllThread() {
         this.map.getOccupiedTowerBoxes().forEach((tb) -> this.towerController.removeTower(tb.getTower().get()));
     }
-
-
-
-
-
 }

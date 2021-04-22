@@ -85,40 +85,37 @@ public class MapTest extends Application {
         return gridPane;
     }
 
-    private List<Rectangle> createTowerPositioningGrid(final Map map) {
-        final double rectangleOpacity = 0.7;
-        final List<Rectangle> res = new ArrayList<>();
-        map.getTowerBoxes().forEach((el) -> {
-            final Rectangle rec = new Rectangle();
-            rec.setWidth(TOWER_AREA_SIZE);
-            rec.setHeight(TOWER_AREA_SIZE);
-            rec.setX(el.getTopLeftCoord().getLeftPixel() + 2);
-            rec.setY(el.getTopLeftCoord().getTopPixel() + 2);
-            rec.setFill(Color.GRAY);
-            rec.setOnMouseEntered(e -> rec.setFill(Color.GREEN));
-            rec.setOnMouseExited(e -> rec.setFill(Color.GRAY));
-            rec.setCursor(Cursor.HAND);
-            rec.opacityProperty().setValue(rectangleOpacity);
-            res.add(rec);
-        });
-        return res;
-    }
-
     /**
      * load a test map with an animated circle on path.
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
         final GridPane gridPane = this.createStageLayout(primaryStage);
-        final Map map = MapLoader.getInstance().loadMap(MapType.ICEPLAIN);
+        final Map map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
         final MapView root = new MapView(map);
         final Circle circle = this.createCircle(map);
         final Path path = createPath(map);
         final PathTransition pathTransition = this.createTransition(circle, path);
-        final Rectangle rec = new Rectangle();
         gridPane.getChildren().add(root);
-        root.getChildren().addAll(circle, rec);
-        root.getChildren().addAll(this.createTowerPositioningGrid(map));
+        root.getChildren().add(circle);
+        for (int i = 0; i < 5; i++) {
+            var tb = map.getTowerBoxes().get(i);
+            /*
+            Circle cir = new Circle();
+            cir.setLayoutX(tb.getCentralCoordinate().getCenterPixelX());
+            cir.setLayoutY(tb.getCentralCoordinate().getCenterPixelY());
+            cir.setFill(Color.BLACK);
+            cir.setRadius(30);
+            root.getChildren().add(cir);
+            */
+            Rectangle rec = new Rectangle();
+            rec.setWidth(30);
+            rec.setHeight(30);
+            rec.setX(tb.getCentralCoordinate().getCenterPixelX());
+            rec.setY(tb.getCentralCoordinate().getCenterPixelY());
+            rec.setFill(Color.BLACK);
+            root.getChildren().add(rec);
+        }
         pathTransition.play();
     }
 
