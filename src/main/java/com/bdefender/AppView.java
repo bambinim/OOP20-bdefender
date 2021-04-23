@@ -1,31 +1,18 @@
 package com.bdefender;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-
 import java.io.IOException;
-
 import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
-import com.bdefender.map.Map;
-import javafx.stage.Stage;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import com.bdefender.game.GameController;
-import com.bdefender.game.GameControllerImpl;
-import com.bdefender.map.Map;
-import com.bdefender.map.MapType;
 import com.bdefender.menu.LaunchMenuLoader;
 import com.bdefender.menu.LaunchMenuLoaderImpl;
-import com.bdefender.wallet.Wallet;
 
 public class AppView extends Application {
     /**

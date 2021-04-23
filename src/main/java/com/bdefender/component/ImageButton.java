@@ -128,7 +128,7 @@ public class ImageButton extends StackPane {
      * Set image label text.
      * @param label
      */
-    public void setLabel(final String label) {
+    public final void setLabel(final String label) {
         this.label.setText(label);
     }
 
