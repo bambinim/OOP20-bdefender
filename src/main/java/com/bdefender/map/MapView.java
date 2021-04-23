@@ -42,11 +42,11 @@ public class MapView extends AnchorPane {
         if (visible) {
             if (!this.getChildren().contains(this.towerPlaceView)) {
                 this.getChildren().add(this.towerPlaceView);
-                this.towerPlaceView.reload(map.getEmptyTowerBoxes());
-            } else {
-                if (this.getChildren().contains(this.towerPlaceView)) {
-                    this.getChildren().remove(this.towerPlaceView);
-                }
+            }
+            this.towerPlaceView.reload(map.getEmptyTowerBoxes());
+        } else {
+            if (this.getChildren().contains(this.towerPlaceView)) {
+                this.getChildren().remove(this.towerPlaceView);
             }
         }
     }
