@@ -7,6 +7,7 @@ import com.bdefender.enemy.view.EnemyGraphicMover;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
@@ -19,7 +20,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
         private static final long serialVersionUID = 1L;
     }
 
-    private Map<Integer, Enemy> enemies = new HashMap<>();
+    private final Map<Integer, Enemy> enemies = new ConcurrentHashMap<>();
     private int counter = 0;
     private final MapInteractor mapInteractor;
     private final EnemyGraphicMover graphicMover;
@@ -35,7 +36,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     public void clearPool() {
-        this.enemies = new HashMap<>();
+        this.enemies.clear();
     }
 
     private Map<Integer, Enemy> getAliveEnemies() {
@@ -45,16 +46,16 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
     @Override
     public void addEnemy(final Enemy enemy) {
-        enemy.moveTo(mapInteractor.getSpawnPoint());
-        enemy.setDirection(this.mapInteractor.getStartingDirection());
-        synchronized (this) {
+        synchronized (this.enemies) {
+            enemy.moveTo(mapInteractor.getSpawnPoint());
+            enemy.setDirection(this.mapInteractor.getStartingDirection());
             enemies.put(counter++, enemy);
         }
     }
 
     @Override
     public void applyDamageById(final int id, final Double damage) {
-        synchronized (this) {
+        synchronized (this.enemies) {
             this.enemies.get(id).takeDamage(damage);
         }
     }
@@ -106,7 +107,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
     @Override
     public void moveEnemies() {
-        synchronized (this) {
+        synchronized (this.enemies) {
             for (Enemy enemy : this.enemies.values()) {
                 if (enemy.isAlive() && !enemy.isArrived()) {
                     try {
