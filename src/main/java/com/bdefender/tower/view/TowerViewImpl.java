@@ -40,16 +40,6 @@ public class TowerViewImpl implements TowerView{
         });
     }
 
-    @Override
-    public void addTowerToGameField() {
-        panel.getChildren().add(towerImage);
-    }
-
-    @Override
-    public void removeTowerFromGameField() {
-        panel.getChildren().remove(towerImage);
-    }
-
     private Coordinates getTowerCoordinates(){
         return new Coordinates(this.tower.getPosition().getX(), this.tower.getPosition().getY());
     }

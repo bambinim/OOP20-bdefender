@@ -43,14 +43,12 @@ public class TowersControllerImpl implements TowersController{
         TowerThread thread = new TowerThread(tower,view);
         towersData.put(tower,new TowerData(view,thread));
         thread.start();
-        view.addTowerToGameField();
         return tower;
     }
 
     @Override
     public void removeTower(Tower tower) {
         this.towersData.get(tower).getThread().killTower();
-        this.towersData.get(tower).getView().removeTowerFromGameField();
         this.towersData.remove(tower);
     }
 
