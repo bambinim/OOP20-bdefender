@@ -5,11 +5,11 @@ import com.bdefender.game.TowerName;
 import com.bdefender.tower.Tower;
 
 public interface ShopController {
-    void initialize();
-    Optional<TowerName> getLastTower();
+    Optional<TowerName> getLastTowerClicked();
     void setBtnUpgradeOff();
     void setBtnUpgradeOn();
     void setEmptyLastTower();
     void setTowerToUpg(Tower tower);
     void updLblMoney();
+
 }

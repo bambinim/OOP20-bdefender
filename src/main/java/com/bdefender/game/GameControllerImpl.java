@@ -19,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopManager;
+import com.bdefender.shop.ShopManagerImpl;
+import com.bdefender.shop.ShopView;
 import com.bdefender.shop.TowerPlacementView;
 
 public class GameControllerImpl implements GameController {
@@ -43,9 +45,9 @@ public class GameControllerImpl implements GameController {
     //game Managment 
     private int lifePoint = 100;
     private int round;
-    private static final int DEAD_MONEY = 20;
-    private int enemiesOffGame = 0;
+    private int enemiesOffGame;
     private int enemiesToSpawn = 10;
+    private static final int DEAD_MONEY = 20;
     private static final int FREQUENCY_ENEMIES = 5;
     private static final int INC_ENEMIES = 2;
 
@@ -57,7 +59,7 @@ public class GameControllerImpl implements GameController {
         this.mapView = new MapView(this.map);
         //shop
         this.shop = new ShopImpl(new WalletImpl(INITIAL_AMOUNT));
-        this.shopManager = new ShopManager(shop, (e) -> this.closeShop());
+        this.shopManager = new ShopManagerImpl(shop, (e) -> this.closeShop());
         this.view = new GameView(this.mapView, this.shopManager.getShopView());
         //topBar
         //this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(0));
@@ -116,7 +118,7 @@ public class GameControllerImpl implements GameController {
         this.shopManager.getShopController().setEmptyLastTower();
         this.removeBoxLayer();
         this.mapView.reloadTowersView();
-        //abilito tutti i pulsanti se il roun è finito, altrimenti abilito solo shop e exit
+        //enable all the buttons if round is finished, otherwise just shop and exit
         if (this.isRoundFinished()) {
             this.view.setAllButtonEnable();
         } else {
@@ -125,8 +127,8 @@ public class GameControllerImpl implements GameController {
         }
     }
 
-    /*
-     * Genera le posizioni cliccabili sulla mappa per posizionare una torre. 
+    /**
+     * Create the cliccables positions on the map.
      */
     private void generatePlacementBoxLayer() {
         placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
@@ -142,12 +144,12 @@ public class GameControllerImpl implements GameController {
     }
 
     /**
-     * Close Shop widow.
+     * Close Shop window.
      */
     private void closeShop() {
         this.view.getTopMenuView().getShopButton().enable();
         this.view.getChildren().remove(shopManager.getShopView());
-        this.choosedTower = this.shopManager.getShopController().getLastTower();
+        this.choosedTower = this.shopManager.getShopController().getLastTowerClicked();
         if (this.choosedTower.isPresent()) {
             //disabilito tutti i pulsanti
             //this.view.setAllButtonDisable();
@@ -156,6 +158,7 @@ public class GameControllerImpl implements GameController {
             this.generatePlacementBoxLayer();
         } 
     }
+
     /**
      * Open Shop window.
      */
@@ -180,8 +183,8 @@ public class GameControllerImpl implements GameController {
      * Increment round and increase the level difficulty.
      * */
     private void nextRound() {
-      this.enemiesToSpawn = this.enemiesToSpawn + this.INC_ENEMIES;
-      this.view.setAllButtonEnable();
+        this.enemiesToSpawn = this.enemiesToSpawn + this.INC_ENEMIES;
+        this.view.setAllButtonEnable();
     }
 
     /** 
@@ -195,7 +198,7 @@ public class GameControllerImpl implements GameController {
         if (this.isRoundFinished()) {
             this.nextRound();
         }
-       // this.enableButtonIfRoundEnd();
+        // this.enableButtonIfRoundEnd();
     }
 
     /**
@@ -209,7 +212,7 @@ public class GameControllerImpl implements GameController {
         this.enemiesOffGame++;
         if (this.lifePoint <= 0) {
             System.out.println("Morto");
-           // this.onGameFinish.handle();
+            // this.onGameFinish.handle();
         }
         if (this.isRoundFinished()) {
             this.nextRound();
@@ -219,7 +222,7 @@ public class GameControllerImpl implements GameController {
 
 
     /**
-     * start the game enemies start spawn.
+     * Start the game and enemies start spawn.
      * */
     private void startGame() {
         this.round++;
@@ -229,8 +232,9 @@ public class GameControllerImpl implements GameController {
         enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, (e) -> this.onDead(), (e) -> this.onReachedEnd());
     }
 
+
     @Override
-    public void closeAllThread() {
+    public final void closeAllThread() {
         this.map.getOccupiedTowerBoxes().forEach((tb) -> this.towerController.removeTower(tb.getTower().get()));
     }
 }

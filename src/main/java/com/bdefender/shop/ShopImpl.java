@@ -1,14 +1,12 @@
 package com.bdefender.shop;
 
 import java.util.stream.Stream;
-
 import com.bdefender.game.TowerName;
 import com.bdefender.tower.Tower;
 import com.bdefender.wallet.Wallet;
 
 public class ShopImpl implements Shop {
-    private Wallet wallet; //to manage the money that the user has
-    
+    private final Wallet wallet; //to manage the money that the user has
     public ShopImpl(final Wallet wallet) {
         this.wallet = wallet;
     }
@@ -19,7 +17,7 @@ public class ShopImpl implements Shop {
      */
 
     @Override
-    public final boolean canBuyTower(final TowerName tower) {
+    public final boolean isTowerBuyable(final TowerName tower) {
         return wallet.areMoneyEnough(tower.getPrice());
     }
 
@@ -39,23 +37,25 @@ public class ShopImpl implements Shop {
 
     @Override
     public final void buyUpgrade(final Tower tower) {
+        //find the upgrade prices
       final TowerName  typeToUpg = Stream.of(TowerName.values())
               .filter((x) -> x.getId() == tower.getTowerTypeId())
               .findFirst()
               .get();
+      //check if money are enough
       if (wallet.areMoneyEnough(typeToUpg.getUpgCost())) {
            tower.upgradeLevel();
            wallet.subtractMoney(typeToUpg.getUpgCost());
        }
 
     }
-    
+
     /*
      * @return the userWallet
      * */
 
     @Override
-    public Wallet getWallet() {
+    public final Wallet getWallet() {
         return this.wallet;
     }
 

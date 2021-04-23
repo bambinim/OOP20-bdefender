@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import com.bdefender.component.ImageButton;
 import com.bdefender.map.MapView;
+import com.bdefender.shop.ShopView;
 import com.bdefender.event.MouseEvent;
 import com.bdefender.event.EventHandler;
 

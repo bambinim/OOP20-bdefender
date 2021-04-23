@@ -1,46 +1,47 @@
 package com.bdefender.wallet;
 
 public class WalletImpl implements Wallet {
-    private final int NGLIMIT = -1;
+    private static final int NEG_LIMIT = -1;
     private int userMoney;
 	
-    /*
-	 *set the initial value of the user money
+    /**
+	 *Set the initial value of the user money.
+	 *@param initValue the initial amount of money.
 	 */
 	public WalletImpl(final int initValue) {
 		this.userMoney = initValue;
 	}
 	
-	/* 
-	 *subtract the prices at the user money
+	/**
+	 *Subtract the prices at the user money value.
 	 */
-	
 	@Override
-	public void subtractMoney(final int price) {
+    public final void subtractMoney(final int price) {
 		if (areMoneyEnough(price)) {
 			this.userMoney = this.userMoney - price; 
 		}
 	}
-	/*
-	 * check if there are enough money to proceed with the purchase
+	/**
+	 * Check if there is enough money to proceed with the purchase.
 	 * @return true if money are enough or false if not
 	 */
 	@Override
-	public boolean areMoneyEnough(final int price) {
-		return this.userMoney - price > NGLIMIT;
+    public final boolean areMoneyEnough(final int price) {
+		return this.userMoney - price > NEG_LIMIT;
 	}
 	
-	/*
-	 * @ return the user money amount
+	/**
+	 * @ return the user money amount.
 	 */
-	
 	@Override
-	public int getMoney() {
+    public final int getMoney() {
 		return this.userMoney;
 	}
-
+	/**
+     * @param value money value that has to be added.
+     */
     @Override
-    public void addMoney(final int value) {
+    public final void addMoney(final int value) {
         this.userMoney = this.userMoney + value;
     }
 

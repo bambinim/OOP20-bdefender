@@ -20,10 +20,10 @@ public class ShopTest {
         Shop shop = new ShopImpl(wallet);
         shop.buyTower(TowerName.FIRE_ARROW); //price 200
         assertTrue(shop.getWallet().getMoney() == INIT_AMOUNT); //expected no decrease
-        assertFalse(shop.canBuyTower(TowerName.FIRE_ARROW)); //no enough money
-        assertTrue(shop.canBuyTower(TowerName.FIRE_BALL)); //price 100
+        assertFalse(shop.isTowerBuyable(TowerName.FIRE_ARROW)); //no enough money
+        assertTrue(shop.isTowerBuyable(TowerName.FIRE_BALL)); //price 100
         shop.getWallet().addMoney(300);
-        assertTrue(shop.canBuyTower(TowerName.FIRE_BALL)); //money are enough to buy tower
+        assertTrue(shop.isTowerBuyable(TowerName.FIRE_BALL)); //money are enough to buy tower
         shop.buyTower(TowerName.FIRE_BALL);
         assertTrue(shop.getWallet().getMoney() == 300 ); //expect corret decrease
     }
