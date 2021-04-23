@@ -13,14 +13,13 @@ import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
 import com.bdefender.event.GameEvent;
 import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.WalletImpl;
-import javafx.application.Platform;
-import com.bdefender.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import com.bdefender.event.EventHandler;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopManager;
 import com.bdefender.shop.ShopManagerImpl;
-import com.bdefender.shop.ShopView;
+
 import com.bdefender.shop.TowerPlacementView;
 
 public class GameControllerImpl implements GameController {
@@ -193,7 +192,7 @@ public class GameControllerImpl implements GameController {
      * */
     private void onDead() {
         this.shop.getWallet().addMoney(DEAD_MONEY);
-        Platform.runLater(() -> this.shopManager.getShopController().updLblMoney());
+        this.shopManager.getShopController().updLblMoney();
         this.enemiesOffGame++;
         if (this.isRoundFinished()) {
             this.nextRound();

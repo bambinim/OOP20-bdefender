@@ -8,6 +8,8 @@ import com.bdefender.event.EventHandler;
 import com.bdefender.event.MouseEvent;
 import com.bdefender.game.TowerName;
 import com.bdefender.tower.Tower;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -130,7 +132,7 @@ public class ShopControllerImpl implements ShopController {
      * Keeps updated the money value label.
      */
     public final void updLblMoney() {
-        lblMoney.setText(Integer.toString(shop.getWallet().getMoney()));
+       Platform.runLater(() -> lblMoney.setText(Integer.toString(shop.getWallet().getMoney())));
     }
 
     /**
