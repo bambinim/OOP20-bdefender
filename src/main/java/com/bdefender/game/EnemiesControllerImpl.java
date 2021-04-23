@@ -28,7 +28,7 @@ public class EnemiesControllerImpl implements EnemiesController {
     @Override
     public void startGenerate(final int intensity, final int totEnemies, final EventHandler<EnemyEvent> onDead,
             final EventHandler<EnemyEvent> onReachedEnd) {
-        this.pool.ClearPool();
+        this.pool.clearPool();
         this.moverThread.killMover();
         this.moverThread = new EnemyMoverThread(this.pool);
         EnemySpawnerThread spawnerThread = new EnemySpawnerThread(intensity, totEnemies, pool, onDead, onReachedEnd);
