@@ -1,9 +1,11 @@
 package com.bdefender.game;
 
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import com.bdefender.component.ImageButton;
 import com.bdefender.map.MapView;
+import com.bdefender.menu.GameOverMenu;
 import com.bdefender.event.MouseEvent;
 import com.bdefender.event.EventHandler;
 
@@ -12,8 +14,9 @@ public class GameView extends AnchorPane {
     private final TopMenuView topMenuView;
     private final Parent shopView;
     private ImageButton btnShop;
-    private ImageButton btnExit;
+    private ImageButton btnBackToMenu;
     private ImageButton btnPlay;
+
 
 
     public GameView(final MapView mapView, final Parent shopView) {
@@ -22,9 +25,20 @@ public class GameView extends AnchorPane {
         mapView.setLayoutY(TopMenuView.HEIGHT);
         this.shopView.setLayoutY(TopMenuView.HEIGHT);
         this.btnShop = this.topMenuView.getShopButton();
-        this.btnExit = this.topMenuView.getExitButton();
+        this.btnBackToMenu = this.topMenuView.getExitButton();
         this.btnPlay = this.topMenuView.getPlayButton();
         this.getChildren().addAll(this.topMenuView, mapView, this.shopView);
+    }
+
+    /**
+     * Show the game over of the game, show also the level passed.
+     * @param round
+     * @param event
+     */
+    public void showGameOverMenu(final int round, final EventHandler<MouseEvent> event) {
+        final GameOverMenu gameOverMenu = new GameOverMenu(round);
+        gameOverMenu.setBackToMenuEvent(event);
+        Platform.runLater(() -> this.getChildren().add(gameOverMenu));
     }
 
     /**
@@ -45,7 +59,7 @@ public class GameView extends AnchorPane {
             final EventHandler<MouseEvent> backMenu) {
         btnShop.setOnMouseClick(openShop);
         btnPlay.setOnMouseClick(startGame);
-        btnExit.setOnMouseClick(backMenu);
+        btnBackToMenu.setOnMouseClick(backMenu);
     }
 
     /**
@@ -53,13 +67,13 @@ public class GameView extends AnchorPane {
      **/
     public final void setAllButtonEnable() {
        this.btnShop.enable();
-       this.btnExit.enable();
+       this.btnBackToMenu.enable();
        this.btnPlay.enable();
     }
 
     public void setAllButtonDisable() {
         this.btnShop.disable();
-        this.btnExit.disable();
+        this.btnBackToMenu.disable();
         this.btnPlay.disable();
     }
     /**

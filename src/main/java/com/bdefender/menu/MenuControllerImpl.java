@@ -33,7 +33,7 @@ public class MenuControllerImpl implements Initializable, MenuController {
 
 
     @FXML
-    private Label titleLable;
+    private Label titleLabel;
 
     @FXML
     private ChoiceBox<String> mapChoiceBox;
@@ -49,11 +49,19 @@ public class MenuControllerImpl implements Initializable, MenuController {
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        //Play Action
-        startPlayBtn.setOnMouseClicked((event) -> 
-            this.onPlayClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, event.getSource())));
-        onMouseOverHandler(this.startPlayBtn, Color.BLACK, Color.BROWN);
+        initializePlayBtn();
+        initializeChoiceBox();
+        initializeTutorialBtn();
 
+    }
+
+    private void initializeTutorialBtn() {
+        //tutorial action
+        this.tutorialBtn.setOnMouseClicked((e) -> this.popup());
+        onMouseOverHandler(this.tutorialBtn, Color.BLACK, Color.BROWN);
+    }
+
+    private void initializeChoiceBox() {
         //choiceBox
         boolean firstIteration = true;
         //load all map name in the choiceBox 
@@ -69,11 +77,13 @@ public class MenuControllerImpl implements Initializable, MenuController {
             this.selectedMap = getMapByName(mapChoiceBox.getSelectionModel().getSelectedItem());
             System.out.println("Ora vale = " + this.selectedMap);
         });
+    }
 
-        //tutorial action
-        this.tutorialBtn.setOnMouseClicked((e) -> this.popup());
-        onMouseOverHandler(this.tutorialBtn, Color.BLACK, Color.BROWN);
-
+    private void initializePlayBtn() {
+        //Play Action
+        startPlayBtn.setOnMouseClicked((event) -> 
+            this.onPlayClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, event.getSource())));
+        onMouseOverHandler(this.startPlayBtn, Color.BLACK, Color.BROWN);
     }
 
     private void popup() {

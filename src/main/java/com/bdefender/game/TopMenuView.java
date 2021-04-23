@@ -27,7 +27,7 @@ public class TopMenuView extends AnchorPane {
     private static final String FONT_NAME = "MV Boli";
     
     private final ImageButton playButton;
-    private final ImageButton exitButton;
+    private final ImageButton backToMenuButton;
     private final ImageButton shopButton;
     private final ProgressBar lifeBar;
     private final Text lifeText;
@@ -44,7 +44,7 @@ public class TopMenuView extends AnchorPane {
         this.getChildren().add(rec);
         this.playButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/play.png")));
         this.playButton.setDisabledImage(this.loadImage(ClassLoader.getSystemResource("game/play-grey.png")));
-        this.exitButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/back-menu.png")));
+        this.backToMenuButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("menu/img/backButton.png")));
         this.shopButton = new ImageButton(this.loadImage(ClassLoader.getSystemResource("game/shopping-cart.png")));
         this.shopButton.setDisabledImage(this.loadImage(ClassLoader.getSystemResource("game/shopping-cart-grey.png")));
         //life bar
@@ -68,10 +68,10 @@ public class TopMenuView extends AnchorPane {
         this.playButton.setX(30);
         this.playButton.setY(20);
         // exit button positioning
-        this.exitButton.setWidth(BUTTON_SIZE);
-        this.exitButton.setHeight(BUTTON_SIZE);
-        this.exitButton.setX(1200);
-        this.exitButton.setY(20);
+        this.backToMenuButton.setWidth(BUTTON_SIZE+30);
+        this.backToMenuButton.setHeight(BUTTON_SIZE);
+        this.backToMenuButton.setX(1200);
+        this.backToMenuButton.setY(20);
         // shop button positioning
         this.shopButton.setWidth(BUTTON_SIZE);
         this.shopButton.setHeight(BUTTON_SIZE);
@@ -88,7 +88,7 @@ public class TopMenuView extends AnchorPane {
         this.roundText.setX(150);
 
         // add all element to AnchorPane
-        this.getChildren().addAll(this.playButton, this.exitButton, this.shopButton, lifeIndicatorHBox, this.roundText);
+        this.getChildren().addAll(this.playButton, this.backToMenuButton, this.shopButton, lifeIndicatorHBox, this.roundText);
     }
 
     private Image loadImage(final URL imageFile) {
@@ -112,7 +112,7 @@ public class TopMenuView extends AnchorPane {
      * @return exit button
      */
     public ImageButton getExitButton() {
-        return this.exitButton;
+        return this.backToMenuButton;
     }
 
     /**
