@@ -6,20 +6,14 @@ import com.bdefender.event.EventHandler;
 
 public class EnemyFactory {
 
-    public Enemy getEnemy1(EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
-        return this.enemyFromParams(40.0, 40.0, 30.0, 0, onDeath, onReachedEnd);
+    public Enemy getEnemy(EnemyName enemy, final EventHandler<EnemyEvent> onDeath,
+            final EventHandler<EnemyEvent> onReachedEnd) {
+        return this.enemyFromParams(enemy.getLife(), enemy.getSpeed(), enemy.getDamage(), enemy.getId(), onDeath,
+                onReachedEnd);
     }
 
-    public Enemy getEnemy2(EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
-        return this.enemyFromParams(45.0, 50.0, 25.0, 1, onDeath, onReachedEnd);
-    }
-
-    public Enemy getEnemy3(EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
-        return this.enemyFromParams(80.0, 30.0, 30.0, 2, onDeath, onReachedEnd);
-    }
-
-    private Enemy enemyFromParams(Double life, Double speed, Double damage, Integer typeId,
-            EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+    private Enemy enemyFromParams(final Double life, final Double speed, final Double damage, final Integer typeId,
+            final EventHandler<EnemyEvent> onDeath, final EventHandler<EnemyEvent> onReachedEnd) {
         return new Enemy() {
 
             private Pair<Double, Double> enemyPos;
@@ -33,7 +27,7 @@ public class EnemyFactory {
             }
 
             @Override
-            public void takeDamage(Double damage) {
+            public void takeDamage(final Double damage) {
                 enemyLife -= damage;
                 if (enemyLife <= 0) {
                     onDeath.handle(new EnemyEvent(EnemyEvent.ENEMY_KILLED, this));
@@ -51,12 +45,12 @@ public class EnemyFactory {
             }
 
             @Override
-            public void setArrived(boolean arrived) {
+            public void setArrived(final boolean arrived) {
                 this.arrived = arrived;
             }
 
             @Override
-            public void moveTo(Pair<Double, Double> newPos) {
+            public void moveTo(final Pair<Double, Double> newPos) {
                 enemyPos = newPos;
             }
 
@@ -82,7 +76,7 @@ public class EnemyFactory {
             }
 
             @Override
-            public void setDirection(Pair<Integer, Integer> dir) {
+            public void setDirection(final Pair<Integer, Integer> dir) {
                 this.enemyDirection = dir;
             }
 

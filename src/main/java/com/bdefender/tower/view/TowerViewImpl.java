@@ -19,18 +19,18 @@ public class TowerViewImpl implements TowerView {
     private final Pane panel;
     private final Tower tower;
 
-    public TowerViewImpl(AnchorPane panel, Tower tower) {
+    public TowerViewImpl(final AnchorPane panel, final Tower tower) {
         this.tower = tower;
         this.panel = panel;
-        ImageView towerImage = new ImageView(TowerImageLoader.GetTowerImage(this.tower).get());
+        ImageView towerImage = new ImageView(TowerImageLoader.getTowerImage(this.tower).get());
         Coordinates towerPos = new Coordinates(this.tower.getPosition().getX(), this.tower.getPosition().getY());
         towerImage.setX(towerPos.getLeftPixel());
         towerImage.setY(towerPos.getTopPixel());
     }
 
     @Override
-    public void startShootAnimation(Pair<Double, Double> target) {
-        ImageView towerShoot = new ImageView(TowerImageLoader.GetTowerShootImage(tower).get());
+    public void startShootAnimation(final Pair<Double, Double> target) {
+        ImageView towerShoot = new ImageView(TowerImageLoader.getTowerShootImage(tower).get());
         Platform.runLater(() -> {
             var shootAnimation = createTransition(towerShoot, new Coordinates(target.getX(), target.getY()));
             shootAnimation.setOnFinished(e -> panel.getChildren().remove(towerShoot));

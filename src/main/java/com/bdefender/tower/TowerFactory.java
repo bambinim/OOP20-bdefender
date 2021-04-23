@@ -8,6 +8,9 @@ import com.bdefender.tower.controller.EnemyControllerDirectImpl;
 import java.util.Map;
 
 public class TowerFactory {
+
+    private static final double NEXT_LEVEL_MULT = 0.25;
+
     /**
      * Generate a direct shot tower.
      *
@@ -46,8 +49,8 @@ public class TowerFactory {
         return this.towerDirectByParams(damage, rangeRadius, shootSpeed, pool, pos, id);
     }
 
-    private Tower towerDirectByParams(Double damage, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool,
-            Pair<Double, Double> pos, int id) {
+    private Tower towerDirectByParams(final Double damage, final Double rangeRadius, final Long shootSpeed,
+            final EnemiesPoolInteractor pool, final Pair<Double, Double> pos, final int id) {
 
         return new Tower() {
 
@@ -58,7 +61,7 @@ public class TowerFactory {
             public Pair<Double, Double> shoot() {
                 try {
                     int targetId = this.getOptimalTarget();
-                    this.enemiesCtrl.applyDamageById(targetId, damage + ((level - 1) * 0.25));
+                    this.enemiesCtrl.applyDamageById(targetId, damage + ((level - 1) * NEXT_LEVEL_MULT));
                     return this.enemiesCtrl.getEnemyPosByID(targetId);
                 } catch (NoEnemiesAroundException ex) {
                     return null;

@@ -27,14 +27,14 @@ public interface Enemy {
     boolean isArrived();
 
     /**
-     * set the isArrived param
+     * set the isArrived parameter.
      *
      * @param arrived true if enemy is arrived
      */
     void setArrived(boolean arrived);
 
     /**
-     * move enemy to a certain position
+     * move enemy to a certain position.
      *
      * @param pos where to move the enemy
      */
@@ -51,14 +51,14 @@ public interface Enemy {
     Pair<Integer, Integer> getDirection();
 
     /**
-     * modifies enemy direction
+     * modifies enemy direction.
      *
      * @param dir new direction
      */
     void setDirection(Pair<Integer, Integer> dir);
 
     /**
-     * applies enemy damage to player
+     * applies enemy damage to player.
      */
     void doDamage();
 

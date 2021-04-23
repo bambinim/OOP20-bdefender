@@ -17,12 +17,12 @@ public class TowersControllerImpl implements TowersController {
     private final EnemiesPoolInteractor pool;
     private final TowerViewImplementation towerViewImplementation;
 
-    public TowersControllerImpl(TowerViewImplementation viewImplementation, EnemiesPoolInteractor enemyPool) {
+    public TowersControllerImpl(final TowerViewImplementation viewImplementation, final EnemiesPoolInteractor enemyPool) {
         this.towerViewImplementation = viewImplementation;
         this.pool = enemyPool;
     }
 
-    private Tower getTowerByTypeName(TowerName name, Coordinates pos) {
+    private Tower getTowerByTypeName(final TowerName name, final Coordinates pos) {
         switch (name) {
         case FIRE_BALL:
             return factory.getTowerDirect3(this.pool, pos);
@@ -30,12 +30,13 @@ public class TowersControllerImpl implements TowersController {
             return factory.getTowerDirect1(this.pool, pos);
         case THUNDERBOLT:
             return factory.getTowerDirect2(this.pool, pos);
+        default:
+            return null;
         }
-        return null;
     }
 
     @Override
-    public Tower addTower(TowerName name, Coordinates pos) {
+    public Tower addTower(final TowerName name, final Coordinates pos) {
         Tower tower = getTowerByTypeName(name, pos);
         TowerView view = towerViewImplementation.getView(tower);
         TowerThread thread = new TowerThread(tower, view);
@@ -45,13 +46,13 @@ public class TowersControllerImpl implements TowersController {
     }
 
     @Override
-    public void removeTower(Tower tower) {
+    public void removeTower(final Tower tower) {
         this.towersData.get(tower).getThread().killTower();
         this.towersData.remove(tower);
     }
 
     @Override
-    public Integer upgradeTower(Tower tower) {
+    public Integer upgradeTower(final Tower tower) {
         return tower.upgradeLevel();
     }
 
@@ -65,7 +66,7 @@ class TowerData {
     private final TowerView towerView;
     private final TowerThread thread;
 
-    public TowerData(TowerView view, TowerThread thread) {
+    TowerData(final TowerView view, final TowerThread thread) {
         this.towerView = view;
         this.thread = thread;
     }
@@ -81,11 +82,12 @@ class TowerData {
 }
 
 class TowerThread extends Thread {
+    private static final long TEN_SECONDS = 10000;
     private final TowerView view;
     private final Tower tower;
     private boolean alive = true;
 
-    public TowerThread(Tower tower, TowerView view) {
+    TowerThread(final Tower tower, final TowerView view) {
         this.view = view;
         this.tower = tower;
     }
@@ -98,7 +100,7 @@ class TowerThread extends Thread {
     public void run() {
         while (alive) {
             try {
-                sleep(10000L / tower.getShootSpeed());
+                sleep(TEN_SECONDS / tower.getShootSpeed());
                 Pair<Double, Double> shootTargetPos;
                 synchronized (this) {
                     shootTargetPos = tower.shoot();

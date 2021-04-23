@@ -10,16 +10,16 @@ import java.util.Optional;
 
 public class EnemiesViewLoader {
 
-    private static final EnemiesViewLoader Instance;
-    private static final int N_ENEMIES = 2;
+    private static final EnemiesViewLoader INSTANCE;
+    private static final int N_ENEMIES = 3;
 
     static {
-        Instance = new EnemiesViewLoader(N_ENEMIES);
+        INSTANCE = new EnemiesViewLoader(N_ENEMIES);
     }
 
-    ArrayList<Optional<Image>> enemyImages = new ArrayList<>();
+    private ArrayList<Optional<Image>> enemyImages = new ArrayList<>();
 
-    public EnemiesViewLoader(int nEnemies) {
+    public EnemiesViewLoader(final int nEnemies) {
         for (int i = 0; i < nEnemies; i++) {
             Optional<Image> enemyImage;
             try {
@@ -33,10 +33,10 @@ public class EnemiesViewLoader {
         }
     }
 
-    public static HashMap<Enemy, Optional<Image>> GetEnemiesImages(List<Enemy> enemies) {
+    public static HashMap<Enemy, Optional<Image>> getEnemiesImages(final List<Enemy> enemies) {
         HashMap<Enemy, Optional<Image>> enemiesImages = new HashMap<>();
         for (Enemy enemy : enemies) {
-            enemiesImages.put(enemy, Instance.enemyImages.get(enemy.getTypeId()));
+            enemiesImages.put(enemy, INSTANCE.enemyImages.get(enemy.getTypeId()));
         }
         return enemiesImages;
     }

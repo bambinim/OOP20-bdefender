@@ -20,7 +20,7 @@ public interface Tower {
     long getShootSpeed();
 
     /**
-     * return tower type ID
+     * @return tower type ID.
      */
     int getTowerTypeId();
 

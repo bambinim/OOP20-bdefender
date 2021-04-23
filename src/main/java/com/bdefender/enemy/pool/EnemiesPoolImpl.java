@@ -12,6 +12,11 @@ import java.util.stream.Collectors;
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
 
     static class EnemyReachedEndException extends Exception {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
     }
 
     private Map<Integer, Enemy> enemies = new HashMap<>();
@@ -19,17 +24,17 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     private final MapInteractor mapInteractor;
     private final EnemyGraphicMover graphicMover;
 
-    public EnemiesPoolImpl(MapInteractor mapInteractor, EnemyGraphicMover graphicMover) {
+    public EnemiesPoolImpl(final MapInteractor mapInteractor, final EnemyGraphicMover graphicMover) {
         this.mapInteractor = mapInteractor;
         this.graphicMover = graphicMover;
     }
 
     @Override
-    public Map<Integer, Enemy> getEnemies(boolean alive) {
+    public Map<Integer, Enemy> getEnemies(final boolean alive) {
         return alive ? this.getAliveEnemies() : this.enemies;
     }
 
-    public void ClearPool() {
+    public void clearPool() {
         this.enemies = new HashMap<>();
     }
 
@@ -39,7 +44,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     @Override
-    public void addEnemy(Enemy enemy) {
+    public void addEnemy(final Enemy enemy) {
         enemy.moveTo(mapInteractor.getSpawnPoint());
         enemy.setDirection(this.mapInteractor.getStartingDirection());
         synchronized (this) {
@@ -48,29 +53,31 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     @Override
-    public void applyDamageById(final int id, Double damage) {
+    public void applyDamageById(final int id, final Double damage) {
         synchronized (this) {
             this.enemies.get(id).takeDamage(damage);
         }
     }
 
-    private Pair<Double, Double> getNextPos(Pair<Integer, Integer> dir, Pair<Double, Double> currPos,
-            Pair<Double, Double> distance) {
+    private Pair<Double, Double> getNextPos(final Pair<Integer, Integer> dir, final Pair<Double, Double> currPos,
+            final Pair<Double, Double> distance) {
         double newX = currPos.getX() + (distance.getX() * dir.getX());
         double newY = currPos.getY() + (distance.getY() * dir.getY());
         return new Pair<>(newX, newY);
     }
 
-    private boolean isAfterKeyPoint(Pair<Double, Double> p1, Pair<Double, Double> p2, Pair<Integer, Integer> dir) {
+    private boolean isAfterKeyPoint(final Pair<Double, Double> p1, final Pair<Double, Double> p2,
+            final Pair<Integer, Integer> dir) {
         return (((p1.getX() - p2.getX()) > 0 && dir.getX() == 1) || (p1.getX().equals(p2.getX()) && dir.getX() == 0))
                 && (p1.getY() - p2.getY()) * dir.getY() >= 0;
     }
 
-    private boolean keyPointIsAfter(Pair<Double, Double> p1, Pair<Double, Double> p2, Pair<Integer, Integer> dir) {
+    private boolean keyPointIsAfter(final Pair<Double, Double> p1, final Pair<Double, Double> p2,
+            final Pair<Integer, Integer> dir) {
         return (p1.getX() >= p2.getX()) && (p1.getY() - p2.getY()) * dir.getY() >= 0;
     }
 
-    private Pair<Double, Double> getNextValidPos(Pair<Double, Double> nextPosSimple, Enemy enemy)
+    private Pair<Double, Double> getNextValidPos(final Pair<Double, Double> nextPosSimple, final Enemy enemy)
             throws EnemyReachedEndException {
         ArrayList<Pair<Double, Double>> keyPoints = new ArrayList<>(this.mapInteractor.getKeyPoints());
         Pair<Integer, Integer> dir = enemy.getDirection();

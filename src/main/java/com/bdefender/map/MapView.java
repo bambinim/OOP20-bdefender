@@ -64,7 +64,7 @@ public class MapView extends AnchorPane {
     public void reloadTowersView() {
         this.towersPane.getChildren().clear();
         this.towersPane.getChildren().addAll(this.map.getTowerBoxes().stream().filter(el -> el.getTower().isPresent()).map(el -> {
-            final ImageButton tmp = new ImageButton(TowerImageLoader.GetTowerImage(el.getTower().get()).get());
+            final ImageButton tmp = new ImageButton(TowerImageLoader.getTowerImage(el.getTower().get()).get());
             tmp.setX(el.getCentralCoordinate().getCenterPixelX());
             tmp.setY(el.getCentralCoordinate().getCenterPixelY());
             tmp.setWidth(TOWER_WIDTH);

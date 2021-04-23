@@ -38,7 +38,7 @@ public class Main extends Application {
 
         TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t),
                 enemiesController.getEnemiesPool());
-        enemiesController.startGenerate(50, 200, e -> {
+        enemiesController.startGenerate(20, 200, e -> {
             System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         }, event -> {
             System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");

@@ -2,7 +2,12 @@ package com.bdefender.game;
 
 import com.bdefender.enemy.Enemy;
 import com.bdefender.enemy.EnemyFactory;
-import com.bdefender.enemy.pool.*;
+import com.bdefender.enemy.EnemyName;
+import com.bdefender.enemy.pool.EnemiesPoolImpl;
+import com.bdefender.enemy.pool.EnemiesPoolInteractor;
+import com.bdefender.enemy.pool.EnemiesPoolMover;
+import com.bdefender.enemy.pool.EnemiesPoolSpawner;
+import com.bdefender.enemy.pool.MapInteractorImpl;
 import com.bdefender.enemy.view.EnemyGraphicMover;
 import com.bdefender.event.EnemyEvent;
 import com.bdefender.event.EventHandler;
@@ -15,14 +20,14 @@ public class EnemiesControllerImpl implements EnemiesController {
     private final EnemiesPoolImpl pool;
     private EnemyMoverThread moverThread;
 
-    public EnemiesControllerImpl(Map map, EnemyGraphicMover graphicMover) {
+    public EnemiesControllerImpl(final Map map, final EnemyGraphicMover graphicMover) {
         this.pool = new EnemiesPoolImpl(new MapInteractorImpl(map), graphicMover);
         this.moverThread = new EnemyMoverThread(this.pool);
     }
 
     @Override
-    public void startGenerate(int intensity, int totEnemies, EventHandler<EnemyEvent> onDead,
-            EventHandler<EnemyEvent> onReachedEnd) {
+    public void startGenerate(final int intensity, final int totEnemies, final EventHandler<EnemyEvent> onDead,
+            final EventHandler<EnemyEvent> onReachedEnd) {
         this.pool.ClearPool();
         this.moverThread.killMover();
         this.moverThread = new EnemyMoverThread(this.pool);
@@ -52,8 +57,8 @@ class EnemySpawnerThread extends Thread {
     private final EventHandler<EnemyEvent> onDead;
     private final EventHandler<EnemyEvent> onReachedEnd;
 
-    public EnemySpawnerThread(int intensity, int totEnemies, EnemiesPoolSpawner spawner,
-            EventHandler<EnemyEvent> onDead, EventHandler<EnemyEvent> onReachedEnd) {
+    EnemySpawnerThread(final int intensity, final int totEnemies, final EnemiesPoolSpawner spawner,
+            final EventHandler<EnemyEvent> onDead, final EventHandler<EnemyEvent> onReachedEnd) {
         this.intensity = intensity;
         this.totEnemies = totEnemies;
         this.spawner = spawner;
@@ -61,14 +66,14 @@ class EnemySpawnerThread extends Thread {
         this.onReachedEnd = onReachedEnd;
     }
 
-    public Enemy getEnemyByType(int enemyCod) {
+    public Enemy getEnemyByType(final int enemyCod) {
         switch (enemyCod) {
         case 0:
-            return factory.getEnemy1(this.onDead, this.onReachedEnd);
+            return factory.getEnemy(EnemyName.AXE_OGRE, this.onDead, this.onReachedEnd);
         case 1:
-            return factory.getEnemy2(this.onDead, this.onReachedEnd);
+            return factory.getEnemy(EnemyName.SWORD_OGRE, this.onDead, this.onReachedEnd);
         case 2:
-            return factory.getEnemy3(this.onDead, this.onReachedEnd);
+            return factory.getEnemy(EnemyName.HAMMER_OGRE, this.onDead, this.onReachedEnd);
         default:
             return null;
         }
@@ -80,7 +85,7 @@ class EnemySpawnerThread extends Thread {
             try {
                 sleep(TEN_SEC / intensity);
                 Random random = new Random();
-                Enemy enemy = getEnemyByType(random.nextInt(2));
+                Enemy enemy = getEnemyByType(random.nextInt(3));
                 spawner.addEnemy(enemy);
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
@@ -94,7 +99,7 @@ class EnemyMoverThread extends Thread {
     private final EnemiesPoolMover mover;
     private boolean alive = true;
 
-    public EnemyMoverThread(EnemiesPoolMover mover) {
+    EnemyMoverThread(final EnemiesPoolMover mover) {
         this.mover = mover;
     }
 
