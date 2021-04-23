@@ -1,11 +1,10 @@
 package com.bdefender.tower.controller;
 
+import com.bdefender.Pair;
+import com.bdefender.enemy.pool.EnemiesPoolInteractor;
+
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import com.bdefender.Pair;
-import com.bdefender.enemies.pool.EnemiesPoolInteractor;
 
 public class EnemyControllerDirectImpl implements EnemyControllerDirect {
 
@@ -19,7 +18,7 @@ public class EnemyControllerDirectImpl implements EnemyControllerDirect {
     @Override
     public Map<Integer, Pair<Double, Double>> getEnemiesInZone(final double radius, final Pair<Double, Double> center) {
         return this.enemiesPool.getEnemies(true).entrySet().stream().filter(e -> Math.hypot(center.getY() - e.getValue().getPosition().getY(), center.getX() - e.getValue().getPosition().getX()) <= radius)
-				.collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getPosition()));
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getPosition()));
     }
 
     @Override

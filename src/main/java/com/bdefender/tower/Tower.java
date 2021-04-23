@@ -5,27 +5,17 @@ import com.bdefender.Pair;
 
 public interface Tower {
 
-    class NoEnemiesAroundException extends Exception {
-        private static final long serialVersionUID = 1L;
-
-        public NoEnemiesAroundException(final String errorMessage) {
-            super(errorMessage);
-        }
-    }
     /**
-     *
      * @return center of the shoot.
      */
     Pair<Double, Double> shoot();
 
     /**
-     *
      * @return level before the upgrade.
      */
     int upgradeLevel();
 
     /**
-     *
      * @return number of shoot every 10 seconds
      */
     long getShootSpeed();
@@ -36,10 +26,17 @@ public interface Tower {
     int getTowerTypeId();
 
     /**
-     *
      * @return tower position
      */
     Pair<Double, Double> getPosition();
+
+    class NoEnemiesAroundException extends Exception {
+        private static final long serialVersionUID = 1L;
+
+        public NoEnemiesAroundException(final String errorMessage) {
+            super(errorMessage);
+        }
+    }
 
 
 }

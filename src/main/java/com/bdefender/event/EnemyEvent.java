@@ -1,6 +1,6 @@
 package com.bdefender.event;
 
-import com.bdefender.enemies.Enemy;
+import com.bdefender.enemy.Enemy;
 
 public class EnemyEvent extends Event {
 

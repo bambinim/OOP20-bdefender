@@ -1,10 +1,11 @@
 package com.bdefender.tower;
-import java.util.Map;
 
 import com.bdefender.Pair;
-import com.bdefender.enemies.pool.EnemiesPoolInteractor;
+import com.bdefender.enemy.pool.EnemiesPoolInteractor;
 import com.bdefender.tower.controller.EnemyControllerDirect;
 import com.bdefender.tower.controller.EnemyControllerDirectImpl;
+
+import java.util.Map;
 
 
 public class TowerFactory {
@@ -58,7 +59,7 @@ public class TowerFactory {
             public Pair<Double, Double> shoot() {
                 try {
                     int targetId = this.getOptimalTarget();
-                    this.enemiesCtrl.applyDamageById(targetId, damage + ( (level - 1) * 0.25));
+                    this.enemiesCtrl.applyDamageById(targetId, damage + ((level - 1) * 0.25));
                     return this.enemiesCtrl.getEnemyPosByID(targetId);
                 } catch (NoEnemiesAroundException ex) {
                     return null;

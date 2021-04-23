@@ -14,16 +14,15 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
-public class TowerViewImpl implements TowerView{
+public class TowerViewImpl implements TowerView {
 
     private final Pane panel;
     private final Tower tower;
-    private final ImageView towerImage;
 
-    public TowerViewImpl(AnchorPane panel, Tower tower){
+    public TowerViewImpl(AnchorPane panel, Tower tower) {
         this.tower = tower;
         this.panel = panel;
-        towerImage = new ImageView(TowerImageLoader.GetTowerImage(this.tower).get());
+        ImageView towerImage = new ImageView(TowerImageLoader.GetTowerImage(this.tower).get());
         Coordinates towerPos = new Coordinates(this.tower.getPosition().getX(), this.tower.getPosition().getY());
         towerImage.setX(towerPos.getLeftPixel());
         towerImage.setY(towerPos.getTopPixel());
@@ -33,14 +32,14 @@ public class TowerViewImpl implements TowerView{
     public void startShootAnimation(Pair<Double, Double> target) {
         ImageView towerShoot = new ImageView(TowerImageLoader.GetTowerShootImage(tower).get());
         Platform.runLater(() -> {
-            var shootAnimation = createTransition(towerShoot,new Coordinates(target.getX(), target.getY()));
+            var shootAnimation = createTransition(towerShoot, new Coordinates(target.getX(), target.getY()));
             shootAnimation.setOnFinished(e -> panel.getChildren().remove(towerShoot));
             panel.getChildren().add(towerShoot);
             shootAnimation.play();
         });
     }
 
-    private Coordinates getTowerCoordinates(){
+    private Coordinates getTowerCoordinates() {
         return new Coordinates(this.tower.getPosition().getX(), this.tower.getPosition().getY());
     }
 

@@ -1,7 +1,7 @@
 
 package com.bdefender.test.davide;
 
-import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
+import com.bdefender.enemy.view.EnemyGraphicMoverImpl;
 import com.bdefender.game.*;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
@@ -37,7 +37,7 @@ public class Main extends Application {
     EnemiesController enemiesController = new EnemiesControllerImpl(map, new EnemyGraphicMoverImpl(root));
 
     TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t), enemiesController.getEnemiesPool());
-    enemiesController.startGenerate(50, 200, e -> {
+    enemiesController.startGenerate(100, 2000, e -> {
       System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOO");
     }, event -> {
       System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");

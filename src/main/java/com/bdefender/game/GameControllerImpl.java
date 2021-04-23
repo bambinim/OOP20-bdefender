@@ -9,7 +9,7 @@ import com.bdefender.map.MapView;
 import com.bdefender.map.TowerBox;
 import com.bdefender.map.Map;
 import com.bdefender.tower.Tower;
-import com.bdefender.enemies.view.EnemyGraphicMoverImpl;
+import com.bdefender.enemy.view.EnemyGraphicMoverImpl;
 import com.bdefender.event.GameEvent;
 import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.WalletImpl;
