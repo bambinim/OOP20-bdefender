@@ -22,4 +22,6 @@ public interface EnemiesController {
      */
     EnemiesPoolInteractor getEnemiesPool();
 
+    void stopMovingEnemies();
+
 }

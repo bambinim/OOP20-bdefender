@@ -35,6 +35,11 @@ public class EnemiesControllerImpl implements EnemiesController {
     public EnemiesPoolInteractor getEnemiesPool() {
         return pool;
     }
+
+    @Override
+    public void stopMovingEnemies() {
+        this.moverThread.killMover();
+    }
 }
 
 class EnemySpawnerThread extends Thread {
