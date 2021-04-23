@@ -22,18 +22,18 @@ public enum TowerName {
      */
     ROCK("Rock", 50, 3, 20);
 
-
     private final String name;
     private final Integer id;
     private final Integer price;
     private final Integer upgCost;
 
-    TowerName(final String name, final Integer price, final Integer id,final Integer upgCost){
+    TowerName(final String name, final Integer price, final Integer id, final Integer upgCost) {
         this.name = name;
         this.price = price;
         this.upgCost = upgCost;
         this.id = id;
     }
+
     public String getName() {
         return this.name;
     }
@@ -41,11 +41,12 @@ public enum TowerName {
     public Integer getPrice() {
         return this.price;
     }
+
     public Integer getUpgCost() {
         return this.upgCost;
     }
+
     public Integer getId() {
         return this.id;
     }
 }
-

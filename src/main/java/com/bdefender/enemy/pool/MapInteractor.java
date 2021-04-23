@@ -1,6 +1,5 @@
 package com.bdefender.enemy.pool;
 
-
 import com.bdefender.Pair;
 import com.bdefender.map.Coordinates;
 

@@ -23,12 +23,16 @@ public class TowerImageLoader {
             Optional<Image> towerImage;
             Optional<Image> towerShootImage;
             try {
-                towerImage = Optional.of(new Image(ClassLoader.getSystemResource(String.format("towers/%d/tower.png", i)).openStream(), 64, 64, false, false));
+                towerImage = Optional.of(
+                        new Image(ClassLoader.getSystemResource(String.format("towers/%d/tower.png", i)).openStream(),
+                                64, 64, false, false));
             } catch (Exception e) {
                 towerImage = Optional.empty();
             }
             try {
-                towerShootImage = Optional.of(new Image(ClassLoader.getSystemResource(String.format("towers/%d/shoot.png", i)).openStream(), 32, 32, false, false));
+                towerShootImage = Optional.of(
+                        new Image(ClassLoader.getSystemResource(String.format("towers/%d/shoot.png", i)).openStream(),
+                                32, 32, false, false));
             } catch (Exception e) {
                 towerShootImage = Optional.empty();
             }

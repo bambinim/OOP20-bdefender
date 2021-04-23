@@ -10,7 +10,6 @@ import com.bdefender.map.Map;
 
 import java.util.Random;
 
-
 public class EnemiesControllerImpl implements EnemiesController {
 
     private final EnemiesPoolImpl pool;
@@ -22,7 +21,8 @@ public class EnemiesControllerImpl implements EnemiesController {
     }
 
     @Override
-    public void startGenerate(int intensity, int totEnemies, EventHandler<EnemyEvent> onDead, EventHandler<EnemyEvent> onReachedEnd) {
+    public void startGenerate(int intensity, int totEnemies, EventHandler<EnemyEvent> onDead,
+            EventHandler<EnemyEvent> onReachedEnd) {
         this.pool.ClearPool();
         this.moverThread.killMover();
         this.moverThread = new EnemyMoverThread(this.pool);
@@ -52,7 +52,8 @@ class EnemySpawnerThread extends Thread {
     private final EventHandler<EnemyEvent> onDead;
     private final EventHandler<EnemyEvent> onReachedEnd;
 
-    public EnemySpawnerThread(int intensity, int totEnemies, EnemiesPoolSpawner spawner, EventHandler<EnemyEvent> onDead, EventHandler<EnemyEvent> onReachedEnd) {
+    public EnemySpawnerThread(int intensity, int totEnemies, EnemiesPoolSpawner spawner,
+            EventHandler<EnemyEvent> onDead, EventHandler<EnemyEvent> onReachedEnd) {
         this.intensity = intensity;
         this.totEnemies = totEnemies;
         this.spawner = spawner;
@@ -62,14 +63,14 @@ class EnemySpawnerThread extends Thread {
 
     public Enemy getEnemyByType(int enemyCod) {
         switch (enemyCod) {
-            case 0:
-                return factory.getEnemy1(this.onDead, this.onReachedEnd);
-            case 1:
-                return factory.getEnemy2(this.onDead, this.onReachedEnd);
-            case 2:
-                return factory.getEnemy3(this.onDead, this.onReachedEnd);
-            default:
-                return null;
+        case 0:
+            return factory.getEnemy1(this.onDead, this.onReachedEnd);
+        case 1:
+            return factory.getEnemy2(this.onDead, this.onReachedEnd);
+        case 2:
+            return factory.getEnemy3(this.onDead, this.onReachedEnd);
+        default:
+            return null;
         }
     }
 

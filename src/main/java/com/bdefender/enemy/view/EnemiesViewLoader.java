@@ -23,7 +23,9 @@ public class EnemiesViewLoader {
         for (int i = 0; i < nEnemies; i++) {
             Optional<Image> enemyImage;
             try {
-                enemyImage = Optional.of(new Image(ClassLoader.getSystemResource(String.format("enemies/%d/enemy.png", i)).openStream(), 64, 64, false, false));
+                enemyImage = Optional.of(
+                        new Image(ClassLoader.getSystemResource(String.format("enemies/%d/enemy.png", i)).openStream(),
+                                64, 64, false, false));
             } catch (Exception e) {
                 enemyImage = Optional.empty();
             }

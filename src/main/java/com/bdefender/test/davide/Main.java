@@ -16,46 +16,44 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-  public static void main(String[] args) {
-    Application.launch();
-  }
+    public static void main(String[] args) {
+        Application.launch();
+    }
 
-  @Override
-  public void start(Stage primaryStage) throws Exception {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
 
-    Map map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
-    primaryStage.setTitle("Map");
-    AnchorPane root = new AnchorPane();
-    root.setMaxWidth(1280);
-    root.setMaxHeight(736);
-    root.getChildren().addAll(new ImageView(map.getMapImage()));
-    primaryStage.setResizable(true);
-    Scene scene = new Scene(root);
-    primaryStage.setScene(scene);
-    primaryStage.show();
+        Map map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
+        primaryStage.setTitle("Map");
+        AnchorPane root = new AnchorPane();
+        root.setMaxWidth(1280);
+        root.setMaxHeight(736);
+        root.getChildren().addAll(new ImageView(map.getMapImage()));
+        primaryStage.setResizable(true);
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
-    EnemiesController enemiesController = new EnemiesControllerImpl(map, new EnemyGraphicMoverImpl(root));
+        EnemiesController enemiesController = new EnemiesControllerImpl(map, new EnemyGraphicMoverImpl(root));
 
-    TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t), enemiesController.getEnemiesPool());
-    enemiesController.startGenerate(100, 2000, e -> {
-      System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-    }, event -> {
-      System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    });
-    ctrl.addTower(TowerName.THUNDERBOLT, new Coordinates(10.0, 8.0));
+        TowersController ctrl = new TowersControllerImpl(t -> new TowerViewImpl(root, t),
+                enemiesController.getEnemiesPool());
+        enemiesController.startGenerate(50, 200, e -> {
+            System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        }, event -> {
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        });
+        ctrl.addTower(TowerName.THUNDERBOLT, new Coordinates(10.0, 8.0));
 
-    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+        ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
 
-    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+        ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
 
-    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+        ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
 
-    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+        ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
 
-    ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
+        ctrl.addTower(TowerName.FIRE_ARROW, new Coordinates(18.0, 8.0));
 
-  }
+    }
 }
-
-
-

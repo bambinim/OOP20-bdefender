@@ -24,12 +24,12 @@ public class TowersControllerImpl implements TowersController {
 
     private Tower getTowerByTypeName(TowerName name, Coordinates pos) {
         switch (name) {
-            case FIRE_BALL:
-                return factory.getTowerDirect3(this.pool, pos);
-            case FIRE_ARROW:
-                return factory.getTowerDirect1(this.pool, pos);
-            case THUNDERBOLT:
-                return factory.getTowerDirect2(this.pool, pos);
+        case FIRE_BALL:
+            return factory.getTowerDirect3(this.pool, pos);
+        case FIRE_ARROW:
+            return factory.getTowerDirect1(this.pool, pos);
+        case THUNDERBOLT:
+            return factory.getTowerDirect2(this.pool, pos);
         }
         return null;
     }

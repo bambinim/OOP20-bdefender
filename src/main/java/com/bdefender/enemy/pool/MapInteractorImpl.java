@@ -1,13 +1,11 @@
 package com.bdefender.enemy.pool;
 
-
 import com.bdefender.Pair;
 import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MapInteractorImpl implements MapInteractor {
     Map map;
@@ -38,6 +36,5 @@ public class MapInteractorImpl implements MapInteractor {
     public Coordinates getSpawnPoint() {
         return map.getPath().get(0);
     }
-
 
 }

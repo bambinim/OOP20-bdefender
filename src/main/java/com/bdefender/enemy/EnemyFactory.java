@@ -1,10 +1,8 @@
 package com.bdefender.enemy;
 
-
 import com.bdefender.Pair;
 import com.bdefender.event.EnemyEvent;
 import com.bdefender.event.EventHandler;
-
 
 public class EnemyFactory {
 
@@ -16,12 +14,12 @@ public class EnemyFactory {
         return this.enemyFromParams(45.0, 50.0, 25.0, 1, onDeath, onReachedEnd);
     }
 
-
     public Enemy getEnemy3(EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
         return this.enemyFromParams(80.0, 30.0, 30.0, 2, onDeath, onReachedEnd);
     }
 
-    private Enemy enemyFromParams(Double life, Double speed, Double damage, Integer typeId, EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
+    private Enemy enemyFromParams(Double life, Double speed, Double damage, Integer typeId,
+            EventHandler<EnemyEvent> onDeath, EventHandler<EnemyEvent> onReachedEnd) {
         return new Enemy() {
 
             private Pair<Double, Double> enemyPos;

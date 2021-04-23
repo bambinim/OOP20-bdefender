@@ -1,10 +1,8 @@
 package com.bdefender.tower.controller;
 
-
 import com.bdefender.Pair;
 
 import java.util.Map;
-
 
 public interface EnemyController {
 

@@ -9,12 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
 
     static class EnemyReachedEndException extends Exception {
     }
-
 
     private Map<Integer, Enemy> enemies = new HashMap<>();
     private int counter = 0;
@@ -36,7 +34,8 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     private Map<Integer, Enemy> getAliveEnemies() {
-        return this.enemies.entrySet().stream().filter(e -> e.getValue().isAlive() && !e.getValue().isArrived()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return this.enemies.entrySet().stream().filter(e -> e.getValue().isAlive() && !e.getValue().isArrived())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override
@@ -55,22 +54,24 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
         }
     }
 
-    private Pair<Double, Double> getNextPos(Pair<Integer, Integer> dir, Pair<Double, Double> currPos, Pair<Double, Double> distance) {
+    private Pair<Double, Double> getNextPos(Pair<Integer, Integer> dir, Pair<Double, Double> currPos,
+            Pair<Double, Double> distance) {
         double newX = currPos.getX() + (distance.getX() * dir.getX());
         double newY = currPos.getY() + (distance.getY() * dir.getY());
         return new Pair<>(newX, newY);
     }
 
-
     private boolean isAfterKeyPoint(Pair<Double, Double> p1, Pair<Double, Double> p2, Pair<Integer, Integer> dir) {
-        return (((p1.getX() - p2.getX()) > 0 && dir.getX() == 1) || (p1.getX().equals(p2.getX()) && dir.getX() == 0)) && (p1.getY() - p2.getY()) * dir.getY() >= 0;
+        return (((p1.getX() - p2.getX()) > 0 && dir.getX() == 1) || (p1.getX().equals(p2.getX()) && dir.getX() == 0))
+                && (p1.getY() - p2.getY()) * dir.getY() >= 0;
     }
 
     private boolean keyPointIsAfter(Pair<Double, Double> p1, Pair<Double, Double> p2, Pair<Integer, Integer> dir) {
         return (p1.getX() >= p2.getX()) && (p1.getY() - p2.getY()) * dir.getY() >= 0;
     }
 
-    private Pair<Double, Double> getNextValidPos(Pair<Double, Double> nextPosSimple, Enemy enemy) throws EnemyReachedEndException {
+    private Pair<Double, Double> getNextValidPos(Pair<Double, Double> nextPosSimple, Enemy enemy)
+            throws EnemyReachedEndException {
         ArrayList<Pair<Double, Double>> keyPoints = new ArrayList<>(this.mapInteractor.getKeyPoints());
         Pair<Integer, Integer> dir = enemy.getDirection();
         Pair<Double, Double> currPos = enemy.getPosition();
@@ -87,7 +88,8 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
                         nextYDir = nextKeyPointY > keyPoint.getY() ? 1 : -1;
                     }
                     enemy.setDirection(new Pair<>(nextXDir, nextYDir));
-                    nxtPos = getNextPos(enemy.getDirection(), keyPoint, new Pair<>(Math.abs(nxtPos.getY() - keyPoint.getY()), Math.abs(nxtPos.getX() - keyPoint.getX())));
+                    nxtPos = getNextPos(enemy.getDirection(), keyPoint, new Pair<>(
+                            Math.abs(nxtPos.getY() - keyPoint.getY()), Math.abs(nxtPos.getX() - keyPoint.getX())));
                 }
                 break;
             }
@@ -101,7 +103,8 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
             for (Enemy enemy : this.enemies.values()) {
                 if (enemy.isAlive() && !enemy.isArrived()) {
                     try {
-                        enemy.moveTo(getNextValidPos(getNextPos(enemy.getDirection(), enemy.getPosition(), new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000)), enemy));
+                        enemy.moveTo(getNextValidPos(getNextPos(enemy.getDirection(), enemy.getPosition(),
+                                new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000)), enemy));
                     } catch (EnemyReachedEndException ex) {
                         enemy.setArrived(true);
                         enemy.doDamage();

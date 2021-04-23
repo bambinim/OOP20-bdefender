@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class EnemyControllerDirectImpl implements EnemyControllerDirect {
 
-
     private final EnemiesPoolInteractor enemiesPool;
 
     public EnemyControllerDirectImpl(final EnemiesPoolInteractor enemiesPool) {
@@ -17,7 +16,9 @@ public class EnemyControllerDirectImpl implements EnemyControllerDirect {
 
     @Override
     public Map<Integer, Pair<Double, Double>> getEnemiesInZone(final double radius, final Pair<Double, Double> center) {
-        return this.enemiesPool.getEnemies(true).entrySet().stream().filter(e -> Math.hypot(center.getY() - e.getValue().getPosition().getY(), center.getX() - e.getValue().getPosition().getX()) <= radius)
+        return this.enemiesPool.getEnemies(true).entrySet().stream()
+                .filter(e -> Math.hypot(center.getY() - e.getValue().getPosition().getY(),
+                        center.getX() - e.getValue().getPosition().getX()) <= radius)
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getPosition()));
     }
 
@@ -30,6 +31,5 @@ public class EnemyControllerDirectImpl implements EnemyControllerDirect {
     public void applyDamageById(final Integer id, final Double damage) {
         this.enemiesPool.applyDamageById(id, damage);
     }
-
 
 }

@@ -2,7 +2,6 @@ package com.bdefender.tower;
 
 import com.bdefender.Pair;
 
-
 public interface Tower {
 
     /**
@@ -37,6 +36,5 @@ public interface Tower {
             super(errorMessage);
         }
     }
-
 
 }

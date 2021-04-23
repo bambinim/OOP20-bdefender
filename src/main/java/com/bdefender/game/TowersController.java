@@ -3,9 +3,7 @@ package com.bdefender.game;
 import com.bdefender.map.Coordinates;
 import com.bdefender.tower.Tower;
 
-
 public interface TowersController {
-
 
     /**
      * Creates the tower threads and add its view to the game panel.
@@ -29,6 +27,5 @@ public interface TowersController {
      * @return level after the upgrade
      */
     Integer upgradeTower(Tower tower);
-
 
 }

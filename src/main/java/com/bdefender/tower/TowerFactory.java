@@ -7,7 +7,6 @@ import com.bdefender.tower.controller.EnemyControllerDirectImpl;
 
 import java.util.Map;
 
-
 public class TowerFactory {
     /**
      * Generate a direct shot tower.
@@ -47,8 +46,8 @@ public class TowerFactory {
         return this.towerDirectByParams(damage, rangeRadius, shootSpeed, pool, pos, id);
     }
 
-
-    private Tower towerDirectByParams(Double damage, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool, Pair<Double, Double> pos, int id) {
+    private Tower towerDirectByParams(Double damage, Double rangeRadius, Long shootSpeed, EnemiesPoolInteractor pool,
+            Pair<Double, Double> pos, int id) {
 
         return new Tower() {
 
@@ -72,7 +71,8 @@ public class TowerFactory {
             }
 
             public Integer getOptimalTarget() throws NoEnemiesAroundException {
-                Map<Integer, Pair<Double, Double>> enemiesInRange = this.enemiesCtrl.getEnemiesInZone(rangeRadius + level - 1, pos);
+                Map<Integer, Pair<Double, Double>> enemiesInRange = this.enemiesCtrl
+                        .getEnemiesInZone(rangeRadius + level - 1, pos);
 
                 if (enemiesInRange.isEmpty()) {
                     throw new NoEnemiesAroundException("No enemies around this tower");
@@ -81,7 +81,8 @@ public class TowerFactory {
                 Pair<Integer, Double> closerEnemy = new Pair<>(0, rangeRadius + 1);
 
                 for (var enemy : enemiesInRange.entrySet()) {
-                    double distance = Math.sqrt(Math.pow(enemy.getValue().getX() - pos.getX(), 2) + Math.pow(enemy.getValue().getY() - pos.getY(), 2));
+                    double distance = Math.sqrt(Math.pow(enemy.getValue().getX() - pos.getX(), 2)
+                            + Math.pow(enemy.getValue().getY() - pos.getY(), 2));
                     if (distance <= closerEnemy.getY()) {
                         closerEnemy = new Pair<>(enemy.getKey(), distance);
                     }
@@ -107,4 +108,3 @@ public class TowerFactory {
         };
     }
 }
-
