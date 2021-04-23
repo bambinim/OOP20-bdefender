@@ -3,12 +3,12 @@ package com.bdefender.shop;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.bdefender.map.TowerBox;
-import javafx.event.EventHandler;
+import com.bdefender.event.EventHandler;
+import com.bdefender.event.MouseEvent;
 import javafx.scene.Cursor;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.input.MouseEvent;
 
 public class TowerPlacementView extends AnchorPane {
 
@@ -33,7 +33,7 @@ public class TowerPlacementView extends AnchorPane {
             rec.setCursor(Cursor.HAND);
             rec.opacityProperty().setValue(RECTANGLE_OPACITY);
             rec.setOnMouseClicked(event -> {
-                this.onBoxClick.handle(event.copyFor(el, event.getTarget()));
+                this.onBoxClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, el));
             });
             return rec;
         }).collect(Collectors.toList()));

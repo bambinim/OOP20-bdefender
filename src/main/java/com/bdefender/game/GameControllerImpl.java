@@ -131,16 +131,22 @@ public class GameControllerImpl implements GameController {
      * Create the cliccables positions on the map.
      */
     private void generatePlacementBoxLayer() {
+        /*
         placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
         placementView.setOnBoxClick((e) -> this.addTower(e));
         this.mapView.getChildren().add(placementView);
+        */
+        this.mapView.setTowerPlacementViewVisible(true);
     }
 
     private void removeBoxLayer() {
+        /*/
         try {
             this.mapView.getChildren().remove(this.placementView);
         } catch (Exception e) {
         }
+        */
+        this.mapView.setTowerPlacementViewVisible(false);
     }
 
     /**
