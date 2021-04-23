@@ -47,12 +47,16 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 	public void addEnemy(Enemy enemy) {
 		enemy.moveTo(mapInteractor.getSpawnPoint());
 		enemy.setDirection(this.mapInteractor.getStartingDirection());
-		enemies.put(counter++,enemy);
+		synchronized (this) {
+		    enemies.put(counter++,enemy);
+		}
 	}
 
 	@Override
 	public void applyDamageById(final int id, Double damage) {
-		this.enemies.get(id).takeDamage(damage);
+		synchronized (this) {
+		    this.enemies.get(id).takeDamage(damage);
+		}
 		System.out.println("Enemy " + id + " got damaged");
 		if (!enemies.get(id).isAlive()) {
 			System.out.println("Enemy " + id + " died");
