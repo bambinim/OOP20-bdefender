@@ -39,6 +39,7 @@ public class GameControllerImpl implements GameController {
     private final ShopManager shopManager;
     private final Shop shop;
     private Optional<TowerName> choosedTower = Optional.empty();
+    private boolean isShopOpen = true;
     private static final  int INITIAL_AMOUNT = 1000;
 
     //game Managment 
@@ -146,27 +147,33 @@ public class GameControllerImpl implements GameController {
      * Close Shop window.
      */
     private void closeShop() {
-        this.view.getTopMenuView().getShopButton().enable();
-        this.view.getChildren().remove(shopManager.getShopView());
-        this.choosedTower = this.shopManager.getShopController().getLastTowerClicked();
-        if (this.choosedTower.isPresent()) {
-            //disabilito tutti i pulsanti
-            //this.view.setAllButtonDisable();
-            this.view.getTopMenuView().getExitButton().disable();
-            this.view.getTopMenuView().getShopButton().disable();
-            this.generatePlacementBoxLayer();
-        } 
+        if (this.isShopOpen) {
+            this.isShopOpen = false;
+            this.view.getTopMenuView().getShopButton().enable();
+            this.view.getChildren().remove(shopManager.getShopView());
+            this.choosedTower = this.shopManager.getShopController().getLastTowerClicked();
+            if (this.choosedTower.isPresent()) {
+                //disabilito tutti i pulsanti
+                //this.view.setAllButtonDisable();
+                this.view.getTopMenuView().getExitButton().disable();
+                this.view.getTopMenuView().getShopButton().disable();
+                this.generatePlacementBoxLayer();
+            } 
+        }
     }
 
     /**
      * Open Shop window.
      */
     private void openShop() {
-        this.view.getTopMenuView().getShopButton().disable();
-        this.view.getChildren().add(this.shopManager.getShopView());
-        this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
-        //toglie la griglia di posizionamento
-        removeBoxLayer();
+        if (!this.isShopOpen) {
+            this.isShopOpen = true;
+            this.view.getTopMenuView().getShopButton().disable();
+            this.view.getChildren().add(this.shopManager.getShopView());
+            this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
+            //toglie la griglia di posizionamento
+            removeBoxLayer();
+        }
     }
 
 

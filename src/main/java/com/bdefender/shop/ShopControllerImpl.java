@@ -81,6 +81,7 @@ public class ShopControllerImpl implements ShopController {
         btnUpgrade.setOnMouseClicked((e) -> {
             this.buyUpgrade();
             this.setBtnUpgradeOff();
+            this.closeShop.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, e.getSource()));
         });
 
         //add event to Close button
@@ -104,6 +105,7 @@ public class ShopControllerImpl implements ShopController {
      */
     private void buyUpgrade() {
         shop.buyUpgrade(this.towerToUpg);
+        this.refreshToweBtn();
     }
 
     /**
