@@ -200,6 +200,7 @@ public class GameControllerImpl implements GameController {
     private void onDead() {
         this.shop.getWallet().addMoney(DEAD_MONEY);
         this.shopManager.getShopController().updLblMoney();
+        this.shopManager.getShopController().refreshTowerBtn();
         this.enemiesOffGame++;
         if (this.isRoundFinished()) {
             this.nextRound();

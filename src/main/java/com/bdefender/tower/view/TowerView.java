@@ -9,14 +9,4 @@ public interface TowerView {
      * @param target shoot target position.
      */
     void startShootAnimation(Pair<Double, Double> target);
-
-    /**
-     * adds the tower to game panel.
-     */
-    void addTowerToGameField();
-
-    /**
-     * removes tower from game panel
-     */
-    void removeTowerFromGameField();
 }

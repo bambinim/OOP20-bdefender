@@ -88,24 +88,33 @@ public class ShopControllerImpl implements ShopController {
         bntCloseShop.setOnMouseClicked(e -> this.closeShop.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, e.getSource())));
     }
 
-
-
     /**
-     * Proceed with the purchase of the tower, update the label and saves it.
-     * @param btn of the tower that has been clicked
+     * If money are enough let the tower's button enable, othewise disable it.
      */
-    private void buyTower(final Button btn) {
-        shop.buyTower(this.btnTowerMap.get(btn));
-        this.updLblMoney();
-        this.lastTowerClicked = Optional.of(this.btnTowerMap.get(btn));
-        this.refreshToweBtn();
+    public final void refreshTowerBtn() {
+        btnTowerMap.forEach((k, v) -> {
+            if (shop.isTowerBuyable(v)) {
+                enableButton(k);
+            } else {
+                disableButton(k);
+            }
+        });
     }
 
-    /** When the button upgrade is clicked  subctract the money and Upgrade the tower saved to be upgraded.
+    /**
+     * Enable all  buttons and set upgradeBtn disabled. 
      */
-    private void buyUpgrade() {
-        shop.buyUpgrade(this.towerToUpg);
-        this.refreshToweBtn();
+    public void setBtnUpgradeOn() {
+        btnTowerMap.forEach((k, v) -> disableButton(k));
+        enableButton(btnUpgrade);
+    }
+
+    /**
+     * Disable all other buttons and set upgradeBtn enable. 
+     */
+    public final void setBtnUpgradeOff() {
+        btnTowerMap.forEach((k, v) -> enableButton(k));
+        disableButton(btnUpgrade);
     }
 
     /**
@@ -134,7 +143,7 @@ public class ShopControllerImpl implements ShopController {
      * Keeps updated the money value label.
      */
     public final void updLblMoney() {
-       Platform.runLater(() -> lblMoney.setText(Integer.toString(shop.getWallet().getMoney())));
+        Platform.runLater(() -> lblMoney.setText(Integer.toString(shop.getWallet().getMoney())));
     }
 
     /**
@@ -156,44 +165,33 @@ public class ShopControllerImpl implements ShopController {
     }
 
     /**
-     * If money are enough let the tower's button enable, othewise disable it.
+     * Proceed with the purchase of the tower, update the label and saves it.
+     * @param btn of the tower that has been clicked
      */
-    public final void refreshToweBtn() {
-        btnTowerMap.forEach((k, v) -> {
-            if (shop.isTowerBuyable(v)) {
-                enableButton(k);
-            } else {
-                disableButton(k);
-            }
-        });
+    private void buyTower(final Button btn) {
+        shop.buyTower(this.btnTowerMap.get(btn));
+        this.updLblMoney();
+        this.lastTowerClicked = Optional.of(this.btnTowerMap.get(btn));
+        this.refreshTowerBtn();
     }
 
-    /**
-     * Enable all  buttons and set upgradeBtn disabled. 
+    /** When the button upgrade is clicked  subctract the money and Upgrade the tower saved to be upgraded.
      */
-    public void setBtnUpgradeOn() {
-        btnTowerMap.forEach((k, v) -> disableButton(k));
-        enableButton(btnUpgrade);
-    }
-
-    /**
-     * Disable all other buttons and set upgradeBtn enable. 
-     */
-    public final void setBtnUpgradeOff() {
-        btnTowerMap.forEach((k, v) -> enableButton(k));
-        disableButton(btnUpgrade);
+    private void buyUpgrade() {
+        shop.buyUpgrade(this.towerToUpg);
+        this.refreshTowerBtn();
     }
 
 
     private void enableButton(final Button btn) {
         btn.setOpacity(EN_OP);
-        btn.setText("");
+        Platform.runLater(() -> btn.setText(""));
         btn.setDisable(false);
     }
 
     private void disableButton(final Button btn) {
         btn.setOpacity(DIS_OP);
-        btn.setText("Disabled");
+        Platform.runLater(() -> btn.setText("Disabled"));
         btn.setDisable(true);
     }
 

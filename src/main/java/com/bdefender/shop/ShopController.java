@@ -11,5 +11,6 @@ public interface ShopController {
     void setEmptyLastTower();
     void setTowerToUpg(Tower tower);
     void updLblMoney();
+    void refreshTowerBtn();
 
 }
