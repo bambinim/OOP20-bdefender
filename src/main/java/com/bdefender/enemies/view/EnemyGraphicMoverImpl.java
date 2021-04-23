@@ -25,6 +25,7 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
 
     @Override
     public void moveEnemies(ArrayList<Enemy> enemies) {
+        /*
         Platform.runLater(() -> {
             HashMap<Enemy, Optional<Image>> enemiesImage = EnemiesViewLoader.GetEnemiesImages(enemies);
             gc.clearRect(0, 0, AppView.DEFAULT_WIDTH, AppView.DEFAULT_HEIGHT);
@@ -35,5 +36,14 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
                 }
             }
         });
+        */
+        HashMap<Enemy, Optional<Image>> enemiesImage = EnemiesViewLoader.GetEnemiesImages(enemies);
+        gc.clearRect(0, 0, AppView.DEFAULT_WIDTH, AppView.DEFAULT_HEIGHT);
+        for (Enemy enemy : enemies) {
+            Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 1, enemy.getPosition().getY() - 1);
+            if (enemiesImage.get(enemy).isPresent()) {
+                gc.drawImage(enemiesImage.get(enemy).get(), enemyPos.getLeftPixel(), enemyPos.getTopPixel());
+            }
+        }
     }
 }
