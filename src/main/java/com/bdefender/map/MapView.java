@@ -6,6 +6,7 @@ import javafx.scene.layout.AnchorPane;
 import com.bdefender.tower.view.TowerImageLoader;
 import com.bdefender.component.ImageButton;
 import com.bdefender.event.TowerEvent;
+import com.bdefender.shop.TowerPlacementView;
 import com.bdefender.event.EventHandler;
 
 public class MapView extends AnchorPane {
@@ -24,11 +25,30 @@ public class MapView extends AnchorPane {
     private final Map map;
     private final AnchorPane towersPane = new AnchorPane();
     private final AnchorPane enemiesPane = new AnchorPane();
+    private final TowerPlacementView towerPlaceView;
     private EventHandler<TowerEvent> onTowerClick;
 
     public MapView(final Map map) {
         this.map = map;
         this.getChildren().addAll(new ImageView(this.map.getMapImage()), this.enemiesPane, this.towersPane);
+        this.towerPlaceView = new TowerPlacementView(this.map.getTowerBoxes());
+    }
+
+    /**
+     * Show or hide tower placement view.
+     * @param visible
+     */
+    public void setTowerPlacementViewVisible(final boolean visible) {
+        if (visible) {
+            if (!this.getChildren().contains(this.towerPlaceView)) {
+                this.getChildren().add(this.towerPlaceView);
+                this.towerPlaceView.reload(map.getTowerBoxes());
+            } else {
+                if (this.getChildren().contains(this.towerPlaceView)) {
+                    this.getChildren().remove(this.towerPlaceView);
+                }
+            }
+        }
     }
 
     /**
