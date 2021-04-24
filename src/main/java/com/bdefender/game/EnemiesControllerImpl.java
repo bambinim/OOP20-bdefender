@@ -100,8 +100,10 @@ class EnemySpawnerThread extends Thread {
 class EnemyMoverThread extends Thread {
 
     private final EnemiesPoolMover mover;
-    private final EnemyGraphicMover gMover; 
+    private final EnemyGraphicMover gMover;
     private boolean alive = true;
+    private static final long SPEED_DIV = 1000;
+    private static final long TEN_SEC = 10000;
 
     EnemyMoverThread(final EnemiesPoolMover mover, final EnemyGraphicMover gMover) {
         this.mover = mover;
@@ -116,8 +118,8 @@ class EnemyMoverThread extends Thread {
     public void run() {
         while (alive) {
             try {
-                sleep(10L);
-                this.mover.moveEnemies();
+                sleep(TEN_SEC / SPEED_DIV);
+                this.mover.moveEnemies(SPEED_DIV);
                 this.gMover.moveEnemies(new ArrayList<>(mover.getAliveEnemies().values()));
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());

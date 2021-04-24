@@ -7,6 +7,7 @@ import com.bdefender.map.Coordinates;
 import com.bdefender.map.Map;
 import com.bdefender.map.MapLoader;
 import com.bdefender.map.MapType;
+import com.bdefender.tower.TowerName;
 import com.bdefender.tower.view.TowerViewImpl;
 import javafx.application.Application;
 import javafx.scene.Scene;

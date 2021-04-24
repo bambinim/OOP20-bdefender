@@ -12,10 +12,6 @@ import java.util.stream.Collectors;
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
 
     static class EnemyReachedEndException extends Exception {
-
-        /**
-         * 
-         */
         private static final long serialVersionUID = 1L;
     }
 
@@ -104,13 +100,13 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     @Override
-    public void moveEnemies() {
+    public void moveEnemies(final long speedDiv) {
         synchronized (this.enemies) {
             for (Enemy enemy : this.enemies.values()) {
                 if (enemy.isAlive() && !enemy.isArrived()) {
                     try {
                         enemy.moveTo(getNextValidPos(getNextPos(enemy.getDirection(), enemy.getPosition(),
-                                new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000)), enemy));
+                                new Pair<>(enemy.getSpeed() / speedDiv, enemy.getSpeed() / speedDiv)), enemy));
                     } catch (EnemyReachedEndException ex) {
                         enemy.setArrived(true);
                         enemy.doDamage();

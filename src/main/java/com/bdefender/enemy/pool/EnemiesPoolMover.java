@@ -8,8 +8,9 @@ public interface EnemiesPoolMover {
 
     /**
      * moves all enemies.
+     * @param speedDiv enemy speed divisor
      */
-    void moveEnemies();
+    void moveEnemies(long speedDiv);
 
     /**
      * 
