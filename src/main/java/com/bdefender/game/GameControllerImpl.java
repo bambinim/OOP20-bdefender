@@ -21,8 +21,6 @@ import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopManager;
 import com.bdefender.shop.ShopManagerImpl;
 
-import com.bdefender.shop.TowerPlacementView;
-
 public class GameControllerImpl implements GameController {
 
     private static final int DAMAGE_ON_REACHED_END = 5;
@@ -243,7 +241,7 @@ public class GameControllerImpl implements GameController {
         this.view.getTopMenuView().setRoundTextValue(this.round);
         this.enemiesOffGame = 0;
         this.view.getTopMenuView().getPlayButton().disable();
-        enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, (e) -> this.onDead(), (e) -> this.onReachedEnd());
+        enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, e -> this.onDead(), e -> this.onReachedEnd());
     }
 
 

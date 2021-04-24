@@ -2,8 +2,11 @@ package com.bdefender.event;
 
 import com.bdefender.tower.Tower;
 
-public class TowerEvent extends Event {
+public class TowerEvent extends EventImpl {
 
+    /**
+     * Tower Clicked event type.
+     */
     public static final EventType<TowerEvent> TOWER_CLICKED = new EventType<>("Tower Clicked");
     private final Tower tower;
 
@@ -12,6 +15,9 @@ public class TowerEvent extends Event {
         this.tower = tower;
     }
 
+    /**
+     * @return tower clicked
+     */
     public Tower getTower() {
         return this.tower;
     }

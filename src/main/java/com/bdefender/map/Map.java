@@ -52,19 +52,11 @@ public class Map {
     }
 
     /**
-     * @return number of empty boxes
-     */
-    public final int countEmpyTowerBoxes() {
-        return (int) this.towerBoxes.stream().filter(el -> el.getTower().isEmpty()).count();
-    }
-
-    /**
      * Return the background image of the map.
      * @return - Image object
      */
     public Image getMapImage() {
         return this.mapImage;
     }
-    }
-
+}
 
