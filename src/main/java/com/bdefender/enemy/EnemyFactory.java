@@ -71,6 +71,11 @@ public class EnemyFactory {
             }
 
             @Override
+            public Double getLife() {
+                return this.enemyLife;
+            }
+
+            @Override
             public Pair<Integer, Integer> getDirection() {
                 return this.enemyDirection;
             }
