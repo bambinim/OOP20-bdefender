@@ -1,20 +1,15 @@
-package com.bdefender.test.davide;
+package com.bdefender.enemy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.bdefender.Pair;
 import org.junit.jupiter.api.Test;
 
-import com.bdefender.enemy.Enemy;
-import com.bdefender.enemy.EnemyFactory;
-import com.bdefender.enemy.EnemyName;
 import com.bdefender.enemy.pool.EnemiesPoolImpl;
 import com.bdefender.enemy.pool.MapInteractor;
 import com.bdefender.enemy.pool.MapInteractorImpl;
 import com.bdefender.map.MapLoader;
 import com.bdefender.map.MapType;
 
-import java.util.stream.IntStream;
 
 class EnemiesTest {
 
