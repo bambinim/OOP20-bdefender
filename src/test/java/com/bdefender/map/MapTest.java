@@ -11,7 +11,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(ApplicationExtension.class)
 public class MapTest {
@@ -35,7 +35,8 @@ public class MapTest {
     public void loadMapCountryside() {
         final Map map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
         // test path
-        assertEquals(map.getPath(), List.of(new Coordinates(0.0, 9.0), new Coordinates(7.0, 9.0)));
+        assertEquals(map.getPath(), List.of(new Coordinates(0.0, 9.0), new Coordinates(7.0, 9.0), new Coordinates(7.0, 18.0),
+                new Coordinates(14.0, 18.0), new Coordinates(14.0, 3.0)));
         // test tower boxes
         final List<TowerBox> towerBoxes = new ArrayList<>();
         for (double i = 4 ; i < 8; i+=2) {
@@ -44,7 +45,7 @@ public class MapTest {
             }
         }
         assertEquals(map.getTowerBoxes(), towerBoxes);
-        assertNotEquals(map.getMapImage(), null);
+        assertNotNull(map.getMapImage());
     }
 
     @Test
@@ -60,7 +61,7 @@ public class MapTest {
             }
         }
         assertEquals(map.getTowerBoxes(), towerBoxes);
-        assertNotEquals(map.getMapImage(), null);
+        assertNotNull(map.getMapImage());
     }
 
     @Test
