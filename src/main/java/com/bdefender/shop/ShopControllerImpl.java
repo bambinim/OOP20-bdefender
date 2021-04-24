@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import com.bdefender.event.EventHandler;
 import com.bdefender.event.MouseEvent;
-import com.bdefender.game.TowerName;
 import com.bdefender.tower.Tower;
+import com.bdefender.tower.TowerName;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -179,6 +179,7 @@ public class ShopControllerImpl implements ShopController {
      */
     private void buyUpgrade() {
         shop.buyUpgrade(this.towerToUpg);
+        this.updLblMoney();
         this.refreshTowerBtn();
     }
 

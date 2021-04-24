@@ -15,6 +15,11 @@ public interface Tower {
     int upgradeLevel();
 
     /**
+     * @return actual level.
+     */
+    int getLevel();
+
+    /**
      * @return number of shoot every 10 seconds
      */
     long getShootSpeed();

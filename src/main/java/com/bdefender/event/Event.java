@@ -1,17 +1,9 @@
 package com.bdefender.event;
 
-public abstract class Event {
-
-    private final EventType type;
-
-    public Event(final EventType type) {
-        this.type = type;
-    }
+public interface Event {
 
     /**
      * @return event type
      */
-    public EventType getType() {
-        return this.type;
-    }
+    public EventType<? extends Event> getType();
 }

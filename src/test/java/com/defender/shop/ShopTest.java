@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.bdefender.game.TowerName;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
+import com.bdefender.tower.TowerName;
 import com.bdefender.wallet.Wallet;
 import com.bdefender.wallet.WalletImpl;
 

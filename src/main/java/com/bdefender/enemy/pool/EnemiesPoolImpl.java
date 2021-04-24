@@ -7,27 +7,20 @@ import com.bdefender.enemy.view.EnemyGraphicMover;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
 
     static class EnemyReachedEndException extends Exception {
-
-        /**
-         * 
-         */
         private static final long serialVersionUID = 1L;
     }
 
-    private final Map<Integer, Enemy> enemies = new ConcurrentHashMap<>();
+    private final Map<Integer, Enemy> enemies = new HashMap<>();
     private int counter = 0;
     private final MapInteractor mapInteractor;
-    private final EnemyGraphicMover graphicMover;
 
-    public EnemiesPoolImpl(final MapInteractor mapInteractor, final EnemyGraphicMover graphicMover) {
+    public EnemiesPoolImpl(final MapInteractor mapInteractor) {
         this.mapInteractor = mapInteractor;
-        this.graphicMover = graphicMover;
     }
 
     @Override
@@ -39,7 +32,8 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
         this.enemies.clear();
     }
 
-    private Map<Integer, Enemy> getAliveEnemies() {
+    @Override
+    public Map<Integer, Enemy> getAliveEnemies() {
         return this.enemies.entrySet().stream().filter(e -> e.getValue().isAlive() && !e.getValue().isArrived())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -67,10 +61,10 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
         return new Pair<>(newX, newY);
     }
 
-    private boolean isAfterKeyPoint(final Pair<Double, Double> p1, final Pair<Double, Double> p2,
+    private boolean isAfterKeyPoint(final Pair<Double, Double> pos, final Pair<Double, Double> keyPoint,
             final Pair<Integer, Integer> dir) {
-        return (((p1.getX() - p2.getX()) > 0 && dir.getX() == 1) || (p1.getX().equals(p2.getX()) && dir.getX() == 0))
-                && (p1.getY() - p2.getY()) * dir.getY() >= 0;
+        return ((pos.getX() - keyPoint.getX()) > 0 && pos.getY().equals(keyPoint.getY())) || (pos.getX().equals(keyPoint.getX()) && (pos.getY() - keyPoint.getY()) * dir.getY() > 0);
+
     }
 
     private boolean keyPointIsAfter(final Pair<Double, Double> p1, final Pair<Double, Double> p2,
@@ -106,20 +100,19 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     @Override
-    public void moveEnemies() {
+    public void moveEnemies(final long speedDiv) {
         synchronized (this.enemies) {
             for (Enemy enemy : this.enemies.values()) {
                 if (enemy.isAlive() && !enemy.isArrived()) {
                     try {
                         enemy.moveTo(getNextValidPos(getNextPos(enemy.getDirection(), enemy.getPosition(),
-                                new Pair<>(enemy.getSpeed() / 1000, enemy.getSpeed() / 1000)), enemy));
+                                new Pair<>(enemy.getSpeed() / speedDiv, enemy.getSpeed() / speedDiv)), enemy));
                     } catch (EnemyReachedEndException ex) {
                         enemy.setArrived(true);
                         enemy.doDamage();
                     }
                 }
             }
-            this.graphicMover.moveEnemies(new ArrayList<>(this.getAliveEnemies().values()));
         }
     }
 

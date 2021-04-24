@@ -1,11 +1,38 @@
 package com.bdefender.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.Start;
+
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.testfx.api.FxRobot;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+@ExtendWith(ApplicationExtension.class)
 public class MapTest {
+
+    private Map map;
+    private MapView mapView;
+
+    @Start
+    private void start(final Stage stage) {
+        Platform.runLater(() -> {
+            this.map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
+            this.mapView = new MapView(map);
+            stage.setWidth(1280);
+            stage.setHeight(736);
+            stage.setScene(new Scene(mapView));
+            stage.show();
+        });
+    }
 
     @Test
     public void loadMapCountryside() {
@@ -29,11 +56,23 @@ public class MapTest {
         assertEquals(map.getPath(), List.of(new Coordinates(3.0, 0.0), new Coordinates(3.0, 8.0)));
         /// test tower boxes
         final List<TowerBox> towerBoxes = new ArrayList<>();
-        for (double i = 0; i < 9; i+=2) {
-            for (double j = 0; j < 1; j+=2) {
+        for (double i = 0; i < 9; i += 2) {
+            for (double j = 0; j < 1; j += 2) {
                 towerBoxes.add(new TowerBox(new Coordinates(j, i)));
             }
         }
         assertEquals(map.getTowerBoxes(), towerBoxes);
+    }
+
+    @Test
+    public void testTowerPlacementBoxClick(final FxRobot robot) {
+        Platform.runLater(() -> {
+            final TowerBox tb = this.map.getEmptyTowerBoxes().get(0);
+            this.mapView.setTowerPlacementViewVisible(true);
+            this.mapView.getTowerPlacementView().setOnBoxClick(event -> {
+                assertEquals(tb, event.getSource());
+            });
+            robot.clickOn(this.mapView.getTowerPlacementView().getChildren().get(0));
+        });
     }
 }

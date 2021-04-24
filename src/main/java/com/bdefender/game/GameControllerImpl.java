@@ -9,18 +9,17 @@ import com.bdefender.map.MapView;
 import com.bdefender.map.TowerBox;
 import com.bdefender.map.Map;
 import com.bdefender.tower.Tower;
+import com.bdefender.tower.TowerName;
 import com.bdefender.enemy.view.EnemyGraphicMoverImpl;
 import com.bdefender.event.GameEvent;
 import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.WalletImpl;
-import javafx.scene.input.MouseEvent;
+import com.bdefender.event.MouseEvent;
 import com.bdefender.event.EventHandler;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopManager;
 import com.bdefender.shop.ShopManagerImpl;
-
-import com.bdefender.shop.TowerPlacementView;
 
 public class GameControllerImpl implements GameController {
 
@@ -29,7 +28,6 @@ public class GameControllerImpl implements GameController {
     private final GameView view;
     private final Map map;
     private final MapView mapView;
-    private TowerPlacementView placementView;
 
     //enemies and tower
     private final TowersController towerController;
@@ -57,6 +55,7 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl(final MapType mapType) throws IOException {
         this.map = MapLoader.getInstance().loadMap(mapType);
         this.mapView = new MapView(this.map);
+        this.mapView.getTowerPlacementView().setOnBoxClick(e -> this.addTower(e));
         //shop
         this.shop = new ShopImpl(new WalletImpl(INITIAL_AMOUNT));
         this.shopManager = new ShopManagerImpl(shop, (e) -> this.closeShop());
@@ -242,7 +241,7 @@ public class GameControllerImpl implements GameController {
         this.view.getTopMenuView().setRoundTextValue(this.round);
         this.enemiesOffGame = 0;
         this.view.getTopMenuView().getPlayButton().disable();
-        enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, (e) -> this.onDead(), (e) -> this.onReachedEnd());
+        enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, e -> this.onDead(), e -> this.onReachedEnd());
     }
 
 

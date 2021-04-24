@@ -7,7 +7,7 @@ import com.bdefender.event.EventHandler;
 public interface EnemiesController {
 
     /**
-     * start enemies generation
+     * start enemies generation.
      *
      * @param intensity    enemies to spawn in 10 seconds
      * @param totEnemies   number of enemies to spawn

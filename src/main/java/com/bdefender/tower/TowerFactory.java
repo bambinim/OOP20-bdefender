@@ -14,39 +14,13 @@ public class TowerFactory {
     /**
      * Generate a direct shot tower.
      *
+     * @param towerName  tower name
      * @param pool
      * @param pos
      * @return Tower
      */
-    public Tower getTowerDirect1(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
-        final Double damage = 13.0;
-        final Double rangeRadius = 10.0;
-        final Long shootSpeed = 8L;
-        final int id = 0;
-        return this.towerDirectByParams(damage, rangeRadius, shootSpeed, pool, pos, id);
-    }
-
-    /**
-     * Generate a direct shot tower.
-     *
-     * @param pool
-     * @param pos
-     * @return Tower
-     */
-    public Tower getTowerDirect2(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
-        final Double damage = 20.0;
-        final Double rangeRadius = 10.0;
-        final Long shootSpeed = 5L;
-        final int id = 1;
-        return this.towerDirectByParams(damage, rangeRadius, shootSpeed, pool, pos, id);
-    }
-
-    public Tower getTowerDirect3(final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
-        final Double damage = 20.0;
-        final Double rangeRadius = 9.0;
-        final Long shootSpeed = 10L;
-        final int id = 2;
-        return this.towerDirectByParams(damage, rangeRadius, shootSpeed, pool, pos, id);
+    public Tower getTowerDirect(final TowerName towerName, final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
+        return this.towerDirectByParams(towerName.getDamage(), towerName.getRangeRadius(), towerName.getShootSpeed(), pool, pos, towerName.getId());
     }
 
     private Tower towerDirectByParams(final Double damage, final Double rangeRadius, final Long shootSpeed,
@@ -107,6 +81,11 @@ public class TowerFactory {
             @Override
             public Pair<Double, Double> getPosition() {
                 return pos;
+            }
+
+            @Override
+            public int getLevel() {
+               return this.level;
             }
         };
     }

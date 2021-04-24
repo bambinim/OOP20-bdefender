@@ -3,6 +3,10 @@ package com.bdefender.map;
 import java.util.stream.Collectors;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+
 import com.bdefender.tower.view.TowerImageLoader;
 import com.bdefender.component.ImageButton;
 import com.bdefender.event.TowerEvent;
@@ -22,6 +26,8 @@ public class MapView extends AnchorPane {
 
     private static final int TOWER_WIDTH = 60;
     private static final int TOWER_HEIGHT = 60;
+    private static final int TOWER_LABEL_SIZE = 60;
+    private static final int TOWER_LABEL_TEXT_SIZE = 35;
     private final Map map;
     private final AnchorPane towersPane = new AnchorPane();
     private final AnchorPane enemiesPane = new AnchorPane();
@@ -69,8 +75,18 @@ public class MapView extends AnchorPane {
             tmp.setY(el.getCentralCoordinate().getCenterPixelY());
             tmp.setWidth(TOWER_WIDTH);
             tmp.setHeight(TOWER_HEIGHT);
+            tmp.getLabel().setMinWidth(Region.USE_PREF_SIZE);
+            tmp.getLabel().setMinHeight(TOWER_LABEL_SIZE);
+            tmp.getLabel().setTextAlignment(TextAlignment.CENTER);
             tmp.setOnMouseClick(event -> {
                 this.onTowerClick.handle(new TowerEvent(TowerEvent.TOWER_CLICKED, el.getTower().get()));
+            });
+            tmp.getLabel().setFont(Font.font(TOWER_LABEL_TEXT_SIZE));
+            tmp.setOnMouseEntered(event -> {
+                tmp.getLabel().setText(Integer.toString(el.getTower().get().getLevel()));
+            });
+            tmp.setOnMouseExited(event -> {
+                tmp.getLabel().setText("");
             });
             return tmp;
         }).collect(Collectors.toList()));

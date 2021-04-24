@@ -1,7 +1,10 @@
 package com.bdefender.event;
 
-public class GameEvent extends Event {
+public class GameEvent extends EventImpl {
 
+    /**
+     * Game Finished event type.
+     */
     public static final EventType<GameEvent> GAME_FINISH = new EventType<>("Game Finish");
     /**
      * 
