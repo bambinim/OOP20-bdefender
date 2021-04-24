@@ -25,7 +25,6 @@ public class TopMenuView extends AnchorPane {
     private static final int BUTTON_SIZE = 30;
     private static final int FONT_SIZE = 18;
     private static final String FONT_NAME = "MV Boli";
-    
     private final ImageButton playButton;
     private final ImageButton backToMenuButton;
     private final ImageButton shopButton;
@@ -52,7 +51,6 @@ public class TopMenuView extends AnchorPane {
         this.lifeText = new Text("Punti vita:   ");
         this.lifeText.setFont(Font.font(FONT_NAME, FONT_SIZE));
         this.lifeText.setFill(Color.WHITE);
-        
         //round level
         this.roundText = new Text("LVL 0");
         this.roundText.setFont(Font.font(FONT_NAME, FONT_SIZE));
@@ -82,7 +80,6 @@ public class TopMenuView extends AnchorPane {
         lifeIndicatorHBox.getChildren().addAll(lifeText, this.lifeBar);
         lifeIndicatorHBox.setLayoutX(620);
         lifeIndicatorHBox.setLayoutY(15);
-        
         //round label
         this.roundText.setY(35);
         this.roundText.setX(150);
@@ -141,7 +138,7 @@ public class TopMenuView extends AnchorPane {
      * Set the round level text indicator.
      * @param round
      */
-    public void setRoundTextValue(final int round){
+    public void setRoundTextValue(final int round) {
         this.roundText.setText("LVL " + round);
     }
 }

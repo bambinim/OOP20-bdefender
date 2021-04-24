@@ -8,6 +8,9 @@ public class EventType<T extends Event> {
         this.name = name;
     }
 
+    /**
+     * @return a string representation of the object.
+     */
     @Override
     public String toString() {
         return this.name;

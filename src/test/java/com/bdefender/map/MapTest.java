@@ -1,20 +1,17 @@
 package com.bdefender.map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.Start;
-
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @ExtendWith(ApplicationExtension.class)
 public class MapTest {
@@ -27,8 +24,8 @@ public class MapTest {
         Platform.runLater(() -> {
             this.map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
             this.mapView = new MapView(map);
-            stage.setWidth(1280);
-            stage.setHeight(736);
+            stage.setWidth(MapView.MAP_WIDTH);
+            stage.setHeight(MapView.MAP_WIDTH);
             stage.setScene(new Scene(mapView));
             stage.show();
         });
@@ -47,6 +44,7 @@ public class MapTest {
             }
         }
         assertEquals(map.getTowerBoxes(), towerBoxes);
+        assertNotEquals(map.getMapImage(), null);
     }
 
     @Test
@@ -62,6 +60,7 @@ public class MapTest {
             }
         }
         assertEquals(map.getTowerBoxes(), towerBoxes);
+        assertNotEquals(map.getMapImage(), null);
     }
 
     @Test

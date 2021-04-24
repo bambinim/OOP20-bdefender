@@ -8,6 +8,10 @@ public class EventImpl implements Event {
         this.type = type;
     }
 
+    /**
+     * Get event type.
+     * @return event type
+     */
     @Override
     public EventType<? extends Event> getType() {
         return this.type;

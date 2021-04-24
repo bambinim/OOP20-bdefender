@@ -5,5 +5,5 @@ public interface Event {
     /**
      * @return event type
      */
-    public EventType<? extends Event> getType();
+    EventType<? extends Event> getType();
 }
