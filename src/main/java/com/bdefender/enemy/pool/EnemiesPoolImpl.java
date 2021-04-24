@@ -20,7 +20,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
         private static final long serialVersionUID = 1L;
     }
 
-    private final Map<Integer, Enemy> enemies = new ConcurrentHashMap<>();
+    private final Map<Integer, Enemy> enemies = new HashMap<>();
     private int counter = 0;
     private final MapInteractor mapInteractor;
     private final EnemyGraphicMover graphicMover;
