@@ -5,17 +5,17 @@ public enum EnemyName {
     /**
      * First type of enemy.
      */
-    AXE_OGRE(40.0, 40.0, 30.0, 1),
+    AXE_OGRE(4.0, 40.0, 30.0, 1),
 
     /**
      * Second type of enemy.
      */
-    SWORD_OGRE(30.0, 60.0, 35.0, 0),
+    SWORD_OGRE(3.0, 60.0, 35.0, 0),
 
     /**
      * Third type of enemy.
      */
-    HAMMER_OGRE(100.0, 30.0, 50.0, 2);
+    HAMMER_OGRE(8.0, 30.0, 50.0, 2);
 
     private final double damage;
     private final double speed;
