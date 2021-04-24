@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="10.0" prefHeight="736.0" prefWidth="183.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="10.0" prefHeight="736.0" prefWidth="183.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="736.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -116,7 +116,7 @@
                         <Font name="Ebrima Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button id="btnFireBall" fx:id="btnThunderbolt" layoutX="20.0" layoutY="6.0" mnemonicParsing="false" opacity="0.74" prefHeight="67.0" prefWidth="94.0" style="-fx-background-color: orange;">
+                  <Button id="btnThunderbolt" fx:id="btnThunderbolt" layoutX="20.0" layoutY="6.0" mnemonicParsing="false" opacity="0.74" prefHeight="67.0" prefWidth="94.0" style="-fx-background-color: orange;">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -143,7 +143,7 @@
                         <Image url="@../towers/2/tower.png" />
                      </image>
                   </ImageView>
-                  <Button id="btnThunderbolt" fx:id="btnFireBall" layoutX="25.0" layoutY="22.0" mnemonicParsing="false" opacity="0.49" prefHeight="58.0" prefWidth="86.0" style="-fx-background-color: orange;">
+                  <Button id="btnFireBall" fx:id="btnFireBall" layoutX="25.0" layoutY="22.0" mnemonicParsing="false" opacity="0.49" prefHeight="58.0" prefWidth="86.0" style="-fx-background-color: orange;">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

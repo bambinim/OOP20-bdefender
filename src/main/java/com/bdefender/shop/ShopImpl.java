@@ -1,7 +1,6 @@
 package com.bdefender.shop;
 
 import java.util.stream.Stream;
-
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerName;
 import com.bdefender.wallet.Wallet;

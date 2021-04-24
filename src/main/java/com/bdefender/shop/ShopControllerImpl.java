@@ -57,6 +57,7 @@ public class ShopControllerImpl implements ShopController {
     @FXML
     private Button btnUpgrade;
 
+
     public ShopControllerImpl(final Shop shop, final EventHandler<MouseEvent> closeShop) {
         this.shop = shop;
         this.closeShop = closeShop;
@@ -113,7 +114,11 @@ public class ShopControllerImpl implements ShopController {
      * Disable all other buttons and set upgradeBtn enable. 
      */
     public final void setBtnUpgradeOff() {
-        btnTowerMap.forEach((k, v) -> enableButton(k));
+        btnTowerMap.forEach((k, v) -> {
+            if (shop.isTowerBuyable(v)) {
+                enableButton(k);
+            }
+        });
         disableButton(btnUpgrade);
     }
 
