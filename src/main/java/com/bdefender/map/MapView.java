@@ -9,7 +9,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 import com.bdefender.tower.view.TowerImageLoader;
-import com.bdefender.AppView;
 import com.bdefender.component.ImageButton;
 import com.bdefender.event.TowerEvent;
 import com.bdefender.shop.TowerPlacementView;
@@ -42,7 +41,7 @@ public class MapView extends AnchorPane {
         this.towerPlaceView = new TowerPlacementView(this.map.getTowerBoxes());
         this.enemiesPane.setLayoutX(0);
         this.enemiesPane.setLayoutY(0);
-        this.enemiesPane.setMaxWidth(AppView.DEFAULT_WIDTH);
+        this.enemiesPane.setMaxWidth(MAP_WIDTH);
         this.enemiesPane.setMaxHeight(MAP_HEIGHT);
     }
 
