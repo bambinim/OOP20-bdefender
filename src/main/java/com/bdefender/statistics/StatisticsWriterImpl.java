@@ -47,10 +47,10 @@ public class StatisticsWriterImpl implements StatisticsWriter {
      * Write game statistic in the statistics file.
      * @throws Exception 
      */
-    public void saveStatistics() throws NullPointerException, IOException {
+    public void saveStatistics() throws IOException {
         //check all value needed
         if (this.playedMap.isEmpty() || this.totTimePlayed.isEmpty() || this.round.isEmpty()) {
-            throw new NullPointerException("Missing values");
+            throw new IllegalStateException("Missing values");
         }
         this.appendLog(this.playedMap.get().getMapName() + this.SEPARATOR_CHARATTER 
                 + Long.toString(this.totTimePlayed.get()) + this.SEPARATOR_CHARATTER
