@@ -175,6 +175,7 @@ public class GameControllerImpl implements GameController {
     private void nextRound() {
         this.enemiesToSpawn = this.enemiesToSpawn + this.INC_ENEMIES;
         this.view.setAllButtonEnable();
+        this.enemies.stopMovingEnemies();
     }
 
     /** 
@@ -189,7 +190,6 @@ public class GameControllerImpl implements GameController {
         if (this.isRoundFinished()) {
             this.nextRound();
         }
-        // this.enableButtonIfRoundEnd();
     }
 
     /**
@@ -223,7 +223,11 @@ public class GameControllerImpl implements GameController {
         this.view.getTopMenuView().getPlayButton().disable();
         enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, e -> this.onDead(), e -> this.onReachedEnd());
     }
-    
+
+    /**
+     * Return true if game is running, false else.
+     * @return game status
+     */
     public boolean isRunning() {
         return this.runningState;
     }
@@ -231,6 +235,7 @@ public class GameControllerImpl implements GameController {
     @Override
     public final void closeAllThread() {
         this.enemies.stopMovingEnemies();
+        this.enemies.stopSpawner();
         this.map.getOccupiedTowerBoxes().forEach((tb) -> this.towerController.removeTower(tb.getTower().get()));
     }
 }
