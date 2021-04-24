@@ -179,6 +179,7 @@ public class ShopControllerImpl implements ShopController {
      */
     private void buyUpgrade() {
         shop.buyUpgrade(this.towerToUpg);
+        this.updLblMoney();
         this.refreshTowerBtn();
     }
 
