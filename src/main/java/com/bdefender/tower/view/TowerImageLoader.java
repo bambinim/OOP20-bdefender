@@ -4,7 +4,6 @@ import com.bdefender.tower.Tower;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class TowerImageLoader {
 
@@ -15,37 +14,37 @@ public class TowerImageLoader {
         INSTANCE = new TowerImageLoader(N_TOWERS);
     }
 
-    private final ArrayList<Optional<Image>> towerImages = new ArrayList<>();
-    private final ArrayList<Optional<Image>> towerShootImages = new ArrayList<>();
+    private final ArrayList<Image> towerImages = new ArrayList<>();
+    private final ArrayList<Image> towerShootImages = new ArrayList<>();
 
     public TowerImageLoader(final int nTowers) {
         for (int i = 0; i < nTowers; i++) {
-            Optional<Image> towerImage;
-            Optional<Image> towerShootImage;
+            Image towerImage;
+            Image towerShootImage;
             try {
-                towerImage = Optional.of(
+                towerImage =
                         new Image(ClassLoader.getSystemResource(String.format("towers/%d/tower.png", i)).openStream(),
-                                64, 64, false, false));
+                                64, 64, false, false);
             } catch (Exception e) {
-                towerImage = Optional.empty();
+                towerImage = null;
             }
             try {
-                towerShootImage = Optional.of(
+                towerShootImage =
                         new Image(ClassLoader.getSystemResource(String.format("towers/%d/shoot.png", i)).openStream(),
-                                32, 32, false, false));
+                                32, 32, false, false);
             } catch (Exception e) {
-                towerShootImage = Optional.empty();
+                towerShootImage = null;
             }
             towerImages.add(towerImage);
             towerShootImages.add(towerShootImage);
         }
     }
 
-    public static Optional<Image> getTowerImage(final Tower tower) {
+    public static Image getTowerImage(final Tower tower) {
         return INSTANCE.towerImages.get(tower.getTowerTypeId());
     }
 
-    public static Optional<Image> getTowerShootImage(final Tower tower) {
+    public static Image getTowerShootImage(final Tower tower) {
         return INSTANCE.towerShootImages.get(tower.getTowerTypeId());
     }
 }

@@ -10,7 +10,6 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
 
@@ -24,13 +23,11 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
 
     @Override
     public void moveEnemies(final ArrayList<Enemy> enemies) {
-        HashMap<Enemy, Optional<Image>> enemiesImage = EnemiesViewLoader.getEnemiesImages(enemies);
+        HashMap<Enemy, Image> enemiesImage = EnemiesViewLoader.getEnemiesImages(enemies);
         gc.clearRect(0, 0, AppView.DEFAULT_WIDTH, AppView.DEFAULT_HEIGHT);
         for (Enemy enemy : enemies) {
             Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 1, enemy.getPosition().getY() - 1);
-            if (enemiesImage.get(enemy).isPresent()) {
-                gc.drawImage(enemiesImage.get(enemy).get(), enemyPos.getLeftPixel(), enemyPos.getTopPixel());
-            }
+            gc.drawImage(enemiesImage.get(enemy), enemyPos.getLeftPixel(), enemyPos.getTopPixel());
         }
     }
 }

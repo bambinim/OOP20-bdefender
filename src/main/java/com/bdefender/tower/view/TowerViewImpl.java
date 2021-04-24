@@ -22,7 +22,7 @@ public class TowerViewImpl implements TowerView {
     public TowerViewImpl(final AnchorPane panel, final Tower tower) {
         this.tower = tower;
         this.panel = panel;
-        ImageView towerImage = new ImageView(TowerImageLoader.getTowerImage(this.tower).get());
+        ImageView towerImage = new ImageView(TowerImageLoader.getTowerImage(this.tower));
         Coordinates towerPos = new Coordinates(this.tower.getPosition().getX(), this.tower.getPosition().getY());
         towerImage.setX(towerPos.getLeftPixel());
         towerImage.setY(towerPos.getTopPixel());
@@ -30,7 +30,7 @@ public class TowerViewImpl implements TowerView {
 
     @Override
     public void startShootAnimation(final Pair<Double, Double> target) {
-        ImageView towerShoot = new ImageView(TowerImageLoader.getTowerShootImage(tower).get());
+        ImageView towerShoot = new ImageView(TowerImageLoader.getTowerShootImage(tower));
         Platform.runLater(() -> {
             var shootAnimation = createTransition(towerShoot, new Coordinates(target.getX(), target.getY()));
             shootAnimation.setOnFinished(e -> panel.getChildren().remove(towerShoot));
