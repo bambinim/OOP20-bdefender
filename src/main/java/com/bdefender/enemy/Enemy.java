@@ -67,4 +67,6 @@ public interface Enemy {
      */
     Integer getTypeId();
 
+    Double getLife();
+
 }

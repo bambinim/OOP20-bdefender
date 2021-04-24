@@ -47,7 +47,7 @@ public class TowerFactory {
                 return ++level;
             }
 
-            public Integer getOptimalTarget() throws NoEnemiesAroundException {
+            private Integer getOptimalTarget() throws NoEnemiesAroundException {
                 Map<Integer, Pair<Double, Double>> enemiesInRange = this.enemiesCtrl
                         .getEnemiesInZone(rangeRadius + level - 1, pos);
 

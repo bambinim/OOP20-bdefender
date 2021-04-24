@@ -3,6 +3,7 @@ package com.bdefender.map;
 import java.util.stream.Collectors;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -30,7 +31,7 @@ public class MapView extends AnchorPane {
     private static final int TOWER_LABEL_TEXT_SIZE = 35;
     private final Map map;
     private final AnchorPane towersPane = new AnchorPane();
-    private final AnchorPane enemiesPane = new AnchorPane();
+    private final Pane enemiesPane = new Pane();
     private final TowerPlacementView towerPlaceView;
     private EventHandler<TowerEvent> onTowerClick;
 
@@ -38,6 +39,10 @@ public class MapView extends AnchorPane {
         this.map = map;
         this.getChildren().addAll(new ImageView(this.map.getMapImage()), this.enemiesPane, this.towersPane);
         this.towerPlaceView = new TowerPlacementView(this.map.getTowerBoxes());
+        this.enemiesPane.setLayoutX(0);
+        this.enemiesPane.setLayoutY(0);
+        this.enemiesPane.setMaxWidth(MAP_WIDTH);
+        this.enemiesPane.setMaxHeight(MAP_HEIGHT);
     }
 
     /**
@@ -95,7 +100,7 @@ public class MapView extends AnchorPane {
     /**
      * @return AnchorPane where enemies are rendered
      */
-    public AnchorPane getEnemiesPane() {
+    public Pane getEnemiesPane() {
         return this.enemiesPane;
     }
 

@@ -94,9 +94,7 @@ class TowerThread extends Thread {
             try {
                 sleep(TEN_SECONDS / tower.getShootSpeed());
                 Pair<Double, Double> shootTargetPos;
-                synchronized (this) {
-                    shootTargetPos = tower.shoot();
-                }
+                shootTargetPos = tower.shoot();
                 if (shootTargetPos != null) {
                     view.startShootAnimation(new Pair<>(shootTargetPos.getX(), shootTargetPos.getY()));
                 }
