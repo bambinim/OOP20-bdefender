@@ -57,11 +57,12 @@ public final class StatisticsReaderImpl implements StatisticsReader {
     }
 
     @Override
-    public Pair<MapType, Long> getLongestTimePlayed() {
-       final Game longestGame  = this.gameList.stream()
-                .sorted((g1, g2) -> g2.getDuration().compareTo(g1.getDuration()))
-                .findFirst().get();
-        return new Pair<>(longestGame.getMap(), longestGame.getDuration());
+    public Long getTotTimePlayed() { 
+        Long totTime = 0L;
+        for (final Game game : gameList) {
+            totTime = totTime + game.getDuration();
+        }
+        return totTime;
     }
 
     @Override

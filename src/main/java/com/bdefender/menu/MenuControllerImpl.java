@@ -25,6 +25,8 @@ public class MenuControllerImpl implements Initializable, MenuController {
     //Countryside default loaded 
     private MapType selectedMap = MapType.COUNTRYSIDE; 
     private final EventHandler<MouseEvent> onPlayClick;
+    private final EventHandler<MouseEvent> onStatisticsClick;
+
     @FXML
     private Button startPlayBtn;
 
@@ -37,9 +39,13 @@ public class MenuControllerImpl implements Initializable, MenuController {
 
     @FXML
     private ChoiceBox<String> mapChoiceBox;
+    
+    @FXML
+    private Button statisticsBtn;
 
-    public MenuControllerImpl(final EventHandler<MouseEvent> playEvent) {
+    public MenuControllerImpl(final EventHandler<MouseEvent> playEvent, final EventHandler<MouseEvent> statisticsEvent) {
         this.onPlayClick = playEvent;
+        this.onStatisticsClick = statisticsEvent;
     }
 
     /**
@@ -52,7 +58,14 @@ public class MenuControllerImpl implements Initializable, MenuController {
         initializePlayBtn();
         initializeChoiceBox();
         initializeTutorialBtn();
+        initializeStatisticsBtn();
 
+    }
+
+    private void initializeStatisticsBtn() {
+        this.statisticsBtn.setOnMouseClicked((event) -> 
+            this.onStatisticsClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, event.getSource())));
+        onMouseOverHandler(this.statisticsBtn, Color.BLACK, Color.BROWN);
     }
 
     private void initializeTutorialBtn() {
