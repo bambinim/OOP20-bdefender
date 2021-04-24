@@ -7,7 +7,6 @@ import com.bdefender.enemy.view.EnemyGraphicMover;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
@@ -23,11 +22,9 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     private final Map<Integer, Enemy> enemies = new HashMap<>();
     private int counter = 0;
     private final MapInteractor mapInteractor;
-    private final EnemyGraphicMover graphicMover;
 
-    public EnemiesPoolImpl(final MapInteractor mapInteractor, final EnemyGraphicMover graphicMover) {
+    public EnemiesPoolImpl(final MapInteractor mapInteractor) {
         this.mapInteractor = mapInteractor;
-        this.graphicMover = graphicMover;
     }
 
     @Override
@@ -39,7 +36,8 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
         this.enemies.clear();
     }
 
-    private Map<Integer, Enemy> getAliveEnemies() {
+    @Override
+    public Map<Integer, Enemy> getAliveEnemies() {
         return this.enemies.entrySet().stream().filter(e -> e.getValue().isAlive() && !e.getValue().isArrived())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -119,7 +117,6 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
                     }
                 }
             }
-            this.graphicMover.moveEnemies(new ArrayList<>(this.getAliveEnemies().values()));
         }
     }
 
