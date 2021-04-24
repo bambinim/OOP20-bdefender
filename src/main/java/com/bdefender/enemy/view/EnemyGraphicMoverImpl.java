@@ -1,15 +1,10 @@
 package com.bdefender.enemy.view;
 
-import com.bdefender.AppView;
 import com.bdefender.enemy.Enemy;
 import com.bdefender.map.Coordinates;
-import com.bdefender.Pair;
 import javafx.application.Platform;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -18,11 +13,11 @@ import java.util.Map;
 public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
 
     //private final GraphicsContext gc;
-    private final AnchorPane container;
+    private final Pane container;
     private final Map<Enemy, ImageView> renderedEnemies = new HashMap<>();
     private final Object lock = new Object();
 
-    public EnemyGraphicMoverImpl(final AnchorPane pane) {
+    public EnemyGraphicMoverImpl(final Pane pane) {
         //Canvas canvas = new Canvas(AppView.DEFAULT_WIDTH, com.bdefender.map.MapView.MAP_HEIGHT);
         //this.gc = canvas.getGraphicsContext2D();
         //pane.getChildren().add(canvas);
