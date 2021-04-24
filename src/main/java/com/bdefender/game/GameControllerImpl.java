@@ -24,7 +24,7 @@ import com.bdefender.shop.TowerPlacementView;
 
 public class GameControllerImpl implements GameController {
 
-    private static final int DAMAGE_ON_REACHED_END = 5;
+    private static final int DAMAGE_ON_REACHED_END = 50;
     //game GUI
     private final GameView view;
     private final Map map;
@@ -224,8 +224,8 @@ public class GameControllerImpl implements GameController {
         this.view.setLifePiointsInTopMenu(lifePointToDouble / 100.0);
         this.enemiesOffGame++;
         if (this.lifePoint <= 0) {
-            System.out.println("Morto");
-            // this.onGameFinish.handle();
+            this.closeAllThread();
+            this.view.showGameOverMenu(this.round, (e) -> this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT)));
         }
         if (this.isRoundFinished()) {
             this.nextRound();
@@ -248,6 +248,7 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public final void closeAllThread() {
+        this.enemies.stopMovingEnemies();
         this.map.getOccupiedTowerBoxes().forEach((tb) -> this.towerController.removeTower(tb.getTower().get()));
     }
 }
