@@ -33,7 +33,7 @@ public class ImageButton extends StackPane {
 
     public ImageButton(final Image image, final String label) {
         this(image);
-        this.setLabel(label);
+        this.label.setText(label);
     }
 
     /**
@@ -73,30 +73,6 @@ public class ImageButton extends StackPane {
     }
 
     /**
-     * Set button's label width.
-     * @param value
-     */
-    public void setLabelWidth(final double value) {
-        this.label.prefWidth(value);
-    }
-
-    /**
-     * Set button's label height.
-     * @param value
-     */
-    public void setLabelHeight(final double value) {
-        this.label.prefHeight(value);
-    }
-
-    /**
-     * Set button's label font.
-     * @param font
-     */
-    public void setLabelFont(final Font font) {
-        this.label.setFont(font);
-    }
-
-    /**
      * Enable the button.
      */
     public void enable() {
@@ -125,18 +101,10 @@ public class ImageButton extends StackPane {
     }
 
     /**
-     * Set image label text.
-     * @param label
-     */
-    public final void setLabel(final String label) {
-        this.label.setText(label);
-    }
-
-    /**
      * @return image label text
      */
-    public String getLabel() {
-        return this.label.getText();
+    public Label getLabel() {
+        return this.label;
     }
 
     /**

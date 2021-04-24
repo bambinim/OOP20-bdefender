@@ -1,6 +1,6 @@
 package com.bdefender.event;
 
-public class MouseEvent extends Event {
+public class MouseEvent extends EventImpl {
 
     /**
      * Mouse Clicked Event Type.

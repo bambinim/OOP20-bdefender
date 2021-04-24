@@ -2,18 +2,20 @@ package com.bdefender.event;
 
 import com.bdefender.enemy.Enemy;
 
-public class EnemyEvent extends Event {
+public class EnemyEvent extends EventImpl {
 
     /**
-     * Enemy Killed
+     * Enemy Killed.
      */
     public static final EventType<EnemyEvent> ENEMY_KILLED = new EventType<>("Enemy Killed");
+
     /**
-     * Enemy spawned
+     * Enemy spawned.
      */
     public static final EventType<EnemyEvent> ENEMY_SPAWNED = new EventType<>("Enemy Spawned");
+
     /**
-     * Enemy reached end
+     * Enemy reached end.
      */
     public static final EventType<EnemyEvent> ENEMY_REACHED_END = new EventType<>("Enemy Reached End");
 
