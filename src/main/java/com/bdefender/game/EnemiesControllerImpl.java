@@ -13,16 +13,19 @@ import com.bdefender.event.EnemyEvent;
 import com.bdefender.event.EventHandler;
 import com.bdefender.map.Map;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class EnemiesControllerImpl implements EnemiesController {
 
     private final EnemiesPoolImpl pool;
     private EnemyMoverThread moverThread;
+    private final EnemyGraphicMover gMover;
 
     public EnemiesControllerImpl(final Map map, final EnemyGraphicMover graphicMover) {
-        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(map), graphicMover);
-        this.moverThread = new EnemyMoverThread(this.pool);
+        this.pool = new EnemiesPoolImpl(new MapInteractorImpl(map));
+        this.gMover = graphicMover;
+        this.moverThread = new EnemyMoverThread(this.pool, this.gMover);
     }
 
     @Override
@@ -30,7 +33,7 @@ public class EnemiesControllerImpl implements EnemiesController {
             final EventHandler<EnemyEvent> onReachedEnd) {
         this.pool.clearPool();
         this.moverThread.killMover();
-        this.moverThread = new EnemyMoverThread(this.pool);
+        this.moverThread = new EnemyMoverThread(this.pool, this.gMover);
         EnemySpawnerThread spawnerThread = new EnemySpawnerThread(intensity, totEnemies, pool, onDead, onReachedEnd);
         this.moverThread.start();
         spawnerThread.start();
@@ -97,10 +100,12 @@ class EnemySpawnerThread extends Thread {
 class EnemyMoverThread extends Thread {
 
     private final EnemiesPoolMover mover;
+    private final EnemyGraphicMover gMover; 
     private boolean alive = true;
 
-    EnemyMoverThread(final EnemiesPoolMover mover) {
+    EnemyMoverThread(final EnemiesPoolMover mover, final EnemyGraphicMover gMover) {
         this.mover = mover;
+        this.gMover = gMover;
     }
 
     public void killMover() {
@@ -112,7 +117,8 @@ class EnemyMoverThread extends Thread {
         while (alive) {
             try {
                 sleep(10L);
-                mover.moveEnemies();
+                this.mover.moveEnemies();
+                this.gMover.moveEnemies(new ArrayList<>(mover.getAliveEnemies().values()));
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }
