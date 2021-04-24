@@ -15,22 +15,26 @@ public class LaunchMenuLoaderImpl implements LaunchMenuLoader {
     private final AnchorPane pane = new AnchorPane();
     private final Parent menuContent;
     private Parent statisticContent = null;
+    private final StatisticsMenuControllerImpl statController;
 
     public LaunchMenuLoaderImpl(final EventHandler<MouseEvent> playEvent) throws IOException {
-        menuController = new MenuControllerImpl(playEvent, (e) -> this.setParentToShow(this.statisticContent));
-        FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("menu/launchMenu.fxml"));
-        loader.setController(this.menuController);
-        menuContent = loader.load();
+        menuController = new MenuControllerImpl(playEvent, (e) -> {
+            this.setParentToShow(this.statisticContent);
+            });
+        final FXMLLoader menuLoader = new FXMLLoader(ClassLoader.getSystemResource("menu/launchMenu.fxml"));
+        menuLoader.setController(this.menuController);
+        menuContent = menuLoader.load();
 
-        loader = new FXMLLoader(ClassLoader.getSystemResource("menu/statisticsMenu.fxml"));
-        final StatisticsMenuControllerImpl statController = new StatisticsMenuControllerImpl((e) -> this.setParentToShow(this.menuContent));
-        loader.setController(statController);
-        this.statisticContent = loader.load();
+        statController = new StatisticsMenuControllerImpl((e) -> this.setParentToShow(this.menuContent));
+        final FXMLLoader statLoader = new FXMLLoader(ClassLoader.getSystemResource("menu/statisticsMenu.fxml"));
+        statLoader.setController(statController);
+        this.statisticContent = statLoader.load();
         this.setParentToShow(this.menuContent);
     }
 
 
     private void setParentToShow(final Parent parent) {
+        this.statController.loadStat();
         if (this.pane.getChildren().contains(this.statisticContent)) {
             this.pane.getChildren().remove(this.statisticContent);
         }

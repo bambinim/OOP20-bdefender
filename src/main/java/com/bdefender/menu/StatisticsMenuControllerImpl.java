@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 public class StatisticsMenuControllerImpl implements Initializable{
 
         private final EventHandler<MouseEvent> onBackToMenuClick;
-        
+
         @FXML
         private Label titleLable;
 

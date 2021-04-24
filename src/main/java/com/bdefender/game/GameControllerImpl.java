@@ -20,6 +20,8 @@ import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopManager;
 import com.bdefender.shop.ShopManagerImpl;
+import com.bdefender.statistics.StatisticsWriter;
+import com.bdefender.statistics.StatisticsWriterImpl;
 
 public class GameControllerImpl implements GameController {
 
@@ -48,12 +50,15 @@ public class GameControllerImpl implements GameController {
     private static final int DEAD_MONEY = 20;
     private static final int FREQUENCY_ENEMIES = 5;
     private static final int INC_ENEMIES = 2;
-    private static boolean runningState = true;
+    private boolean runningState = true;
+    private final StatisticsWriter statWriter;
 
 
     private EventHandler<GameEvent> onGameFinish;
 
     public GameControllerImpl(final MapType mapType) throws IOException {
+        this.statWriter = new StatisticsWriterImpl();
+        this.statWriter.gameStarted(mapType);
         this.map = MapLoader.getInstance().loadMap(mapType);
         this.mapView = new MapView(this.map);
         this.mapView.getTowerPlacementView().setOnBoxClick(e -> this.addTower(e));
@@ -66,7 +71,7 @@ public class GameControllerImpl implements GameController {
         this.view.getTopMenuView().getShopButton().setOnMouseClick((e) -> this.openShop());
         this.view.getTopMenuView().getPlayButton().setOnMouseClick((e) -> this.startGame());
         this.view.getTopMenuView().getExitButton().setOnMouseClick((e) -> {
-            this.closeAllThread();
+            this.finishGame();
             this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT));
         });
         //enemies and tower
@@ -202,9 +207,7 @@ public class GameControllerImpl implements GameController {
         this.view.setLifePiointsInTopMenu(lifePointToDouble / 100.0);
         this.enemiesOffGame++;
         if (this.lifePoint <= 0) {
-            this.runningState = false;
-            this.closeAllThread();
-            this.view.showGameOverMenu(this.round, (e) -> this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT)));
+            this.finishGame();
         }
         if (this.isRoundFinished()) {
             this.nextRound();
@@ -212,6 +215,17 @@ public class GameControllerImpl implements GameController {
         System.out.println("LifePoint = " + this.lifePoint);
     }
 
+    private void finishGame() {
+        this.runningState = false;
+        this.closeAllThread();
+        this.statWriter.gameFinished(this.round);
+        try {
+            this.statWriter.saveStatistics();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        this.view.showGameOverMenu(this.round, (e) -> this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT)));
+    }
 
     /**
      * Start the game and enemies start spawn.
@@ -234,8 +248,10 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public final void closeAllThread() {
+        if (this.round != 0) {
         this.enemies.stopMovingEnemies();
         this.enemies.stopSpawner();
+        }
         this.map.getOccupiedTowerBoxes().forEach((tb) -> this.towerController.removeTower(tb.getTower().get()));
     }
 }

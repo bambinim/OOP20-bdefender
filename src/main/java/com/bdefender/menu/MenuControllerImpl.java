@@ -39,7 +39,7 @@ public class MenuControllerImpl implements Initializable, MenuController {
 
     @FXML
     private ChoiceBox<String> mapChoiceBox;
-    
+
     @FXML
     private Button statisticsBtn;
 
