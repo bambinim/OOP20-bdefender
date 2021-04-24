@@ -61,10 +61,10 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
         return new Pair<>(newX, newY);
     }
 
-    private boolean isAfterKeyPoint(final Pair<Double, Double> p1, final Pair<Double, Double> p2,
+    private boolean isAfterKeyPoint(final Pair<Double, Double> pos, final Pair<Double, Double> keyPoint,
             final Pair<Integer, Integer> dir) {
-        return (((p1.getX() - p2.getX()) > 0 && dir.getX() == 1) || (p1.getX().equals(p2.getX()) && dir.getX() == 0))
-                && (p1.getY() - p2.getY()) * dir.getY() >= 0;
+        return ((pos.getX() - keyPoint.getX()) > 0 && pos.getY().equals(keyPoint.getY())) || (pos.getX().equals(keyPoint.getX()) && (pos.getY() - keyPoint.getY()) * dir.getY() > 0);
+
     }
 
     private boolean keyPointIsAfter(final Pair<Double, Double> p1, final Pair<Double, Double> p2,
