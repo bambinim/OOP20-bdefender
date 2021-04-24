@@ -24,4 +24,6 @@ public interface GameController {
     EventHandler<GameEvent> getOnGameFinish();
 
     void closeAllThread();
+
+    boolean isRunning();
 }

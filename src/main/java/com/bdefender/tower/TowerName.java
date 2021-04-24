@@ -5,22 +5,22 @@ public enum TowerName {
     /**
      * First Type of Tower (price, Id, Upgrade Cost).
      */
-    FIRE_ARROW("Fire Arrow", 200, 0, 5, 13, 10, 8),
+    FIRE_ARROW("Fire Arrow", 200, 0, 5, 13, 7, 8),
 
     /**
      * Second Type of Tower (price, Id, Upgrade Cost).
      */
-    FIRE_BALL("Fire Ball", 100, 2, 15, 20, 10, 5),
+    FIRE_BALL("Fire Ball", 100, 2, 15, 20, 7, 5),
 
     /**
      * Third Type of Tower (price, Id, Upgrade Cost).
      */
-    THUNDERBOLT("Thunder Bolt", 120, 1, 10, 10, 15, 6),
+    THUNDERBOLT("Thunder Bolt", 120, 1, 10, 10, 8, 6),
 
     /**
      * Fourth Type of Tower (price, Id, Upgrade Cost).
      */
-    ROCK("Rock", 50, 3, 20, 30, 8, 5);
+    ROCK("Rock", 50, 3, 20, 30, 5, 5);
 
     private final String name;
     private final Integer id;

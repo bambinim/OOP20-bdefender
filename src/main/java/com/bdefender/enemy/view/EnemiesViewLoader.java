@@ -39,4 +39,8 @@ public class EnemiesViewLoader {
         }
         return enemiesImages;
     }
+
+    public static Image getEnemyImage(final Enemy enemy) {
+        return INSTANCE.enemyImages.get(enemy.getTypeId());
+    }
 }

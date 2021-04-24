@@ -48,6 +48,7 @@ public class GameControllerImpl implements GameController {
     private static final int DEAD_MONEY = 20;
     private static final int FREQUENCY_ENEMIES = 5;
     private static final int INC_ENEMIES = 2;
+    private static boolean runningState = true;
 
 
     private EventHandler<GameEvent> onGameFinish;
@@ -115,7 +116,7 @@ public class GameControllerImpl implements GameController {
         final Tower tower = this.towerController.addTower(choosedTower.get(), boxClicked.getCentralCoordinate());
         boxClicked.setTower(tower);
         this.shopManager.getShopController().setEmptyLastTower();
-        this.removeBoxLayer();
+        this.mapView.setTowerPlacementViewVisible(false);
         this.mapView.reloadTowersView();
         //enable all the buttons if round is finished, otherwise just shop and exit
         if (this.isRoundFinished()) {
@@ -124,28 +125,6 @@ public class GameControllerImpl implements GameController {
             this.view.getTopMenuView().getExitButton().enable();
             this.view.getTopMenuView().getShopButton().enable();
         }
-    }
-
-    /**
-     * Create the cliccables positions on the map.
-     */
-    private void generatePlacementBoxLayer() {
-        /*
-        placementView = new TowerPlacementView(this.map.getEmptyTowerBoxes());
-        placementView.setOnBoxClick((e) -> this.addTower(e));
-        this.mapView.getChildren().add(placementView);
-        */
-        this.mapView.setTowerPlacementViewVisible(true);
-    }
-
-    private void removeBoxLayer() {
-        /*/
-        try {
-            this.mapView.getChildren().remove(this.placementView);
-        } catch (Exception e) {
-        }
-        */
-        this.mapView.setTowerPlacementViewVisible(false);
     }
 
     /**
@@ -162,7 +141,7 @@ public class GameControllerImpl implements GameController {
                 //this.view.setAllButtonDisable();
                 this.view.getTopMenuView().getExitButton().disable();
                 this.view.getTopMenuView().getShopButton().disable();
-                this.generatePlacementBoxLayer();
+                this.mapView.setTowerPlacementViewVisible(true);
             } 
         }
     }
@@ -177,7 +156,7 @@ public class GameControllerImpl implements GameController {
             this.view.getChildren().add(this.shopManager.getShopView());
             this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
             //toglie la griglia di posizionamento
-            removeBoxLayer();
+            this.mapView.setTowerPlacementViewVisible(false);
         }
     }
 
@@ -196,6 +175,7 @@ public class GameControllerImpl implements GameController {
     private void nextRound() {
         this.enemiesToSpawn = this.enemiesToSpawn + this.INC_ENEMIES;
         this.view.setAllButtonEnable();
+        this.enemies.stopMovingEnemies();
     }
 
     /** 
@@ -210,7 +190,6 @@ public class GameControllerImpl implements GameController {
         if (this.isRoundFinished()) {
             this.nextRound();
         }
-        // this.enableButtonIfRoundEnd();
     }
 
     /**
@@ -223,6 +202,7 @@ public class GameControllerImpl implements GameController {
         this.view.setLifePiointsInTopMenu(lifePointToDouble / 100.0);
         this.enemiesOffGame++;
         if (this.lifePoint <= 0) {
+            this.runningState = false;
             this.closeAllThread();
             this.view.showGameOverMenu(this.round, (e) -> this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT)));
         }
@@ -244,10 +224,18 @@ public class GameControllerImpl implements GameController {
         enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, e -> this.onDead(), e -> this.onReachedEnd());
     }
 
+    /**
+     * Return true if game is running, false else.
+     * @return game status
+     */
+    public boolean isRunning() {
+        return this.runningState;
+    }
 
     @Override
     public final void closeAllThread() {
         this.enemies.stopMovingEnemies();
+        this.enemies.stopSpawner();
         this.map.getOccupiedTowerBoxes().forEach((tb) -> this.towerController.removeTower(tb.getTower().get()));
     }
 }

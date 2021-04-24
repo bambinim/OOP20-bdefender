@@ -61,7 +61,11 @@ public class AppView extends Application {
             this.startMenu();
         });
         //kill all thread before close the windows
-          primaryStage.setOnCloseRequest((e) -> this.gameController.closeAllThread());
+          primaryStage.setOnCloseRequest((e) -> {
+              if (this.gameController.isRunning()) {
+                  this.gameController.closeAllThread();
+              }
+          });
         this.setContent(this.gameController.getView());
     }
 

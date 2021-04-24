@@ -34,8 +34,10 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
     @Override
     public Map<Integer, Enemy> getAliveEnemies() {
-        return this.enemies.entrySet().stream().filter(e -> e.getValue().isAlive() && !e.getValue().isArrived())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        synchronized (this.enemies) {
+            return this.enemies.entrySet().stream().filter(e -> e.getValue().isAlive() && !e.getValue().isArrived())
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        }
     }
 
     @Override

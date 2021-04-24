@@ -12,6 +12,7 @@ import com.bdefender.enemy.view.EnemyGraphicMover;
 import com.bdefender.event.EnemyEvent;
 import com.bdefender.event.EventHandler;
 import com.bdefender.map.Map;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,6 +22,7 @@ public class EnemiesControllerImpl implements EnemiesController {
     private final EnemiesPoolImpl pool;
     private EnemyMoverThread moverThread;
     private final EnemyGraphicMover gMover;
+    private EnemySpawnerThread spawnerThread;
 
     public EnemiesControllerImpl(final Map map, final EnemyGraphicMover graphicMover) {
         this.pool = new EnemiesPoolImpl(new MapInteractorImpl(map));
@@ -34,7 +36,7 @@ public class EnemiesControllerImpl implements EnemiesController {
         this.pool.clearPool();
         this.moverThread.killMover();
         this.moverThread = new EnemyMoverThread(this.pool, this.gMover);
-        EnemySpawnerThread spawnerThread = new EnemySpawnerThread(intensity, totEnemies, pool, onDead, onReachedEnd);
+        this.spawnerThread = new EnemySpawnerThread(intensity, totEnemies, pool, onDead, onReachedEnd);
         this.moverThread.start();
         spawnerThread.start();
     }
@@ -48,6 +50,11 @@ public class EnemiesControllerImpl implements EnemiesController {
     public void stopMovingEnemies() {
         this.moverThread.killMover();
     }
+
+    @Override
+    public void stopSpawner() {
+        this.spawnerThread.shutdown();
+    }
 }
 
 class EnemySpawnerThread extends Thread {
@@ -59,6 +66,7 @@ class EnemySpawnerThread extends Thread {
     private final EnemyFactory factory = new EnemyFactory();
     private final EventHandler<EnemyEvent> onDead;
     private final EventHandler<EnemyEvent> onReachedEnd;
+    private boolean stop = false;
 
     EnemySpawnerThread(final int intensity, final int totEnemies, final EnemiesPoolSpawner spawner,
             final EventHandler<EnemyEvent> onDead, final EventHandler<EnemyEvent> onReachedEnd) {
@@ -84,6 +92,7 @@ class EnemySpawnerThread extends Thread {
 
     @Override
     public void run() {
+        /*
         for (int i = 0; i < totEnemies; i++) {
             try {
                 sleep(TEN_SEC / intensity);
@@ -94,6 +103,23 @@ class EnemySpawnerThread extends Thread {
                 System.out.println(ex.getMessage());
             }
         }
+         */
+        int i = 0;
+        while (!stop && i < this.totEnemies) {
+            try {
+                sleep(TEN_SEC / intensity);
+                Random random = new Random();
+                Enemy enemy = getEnemyByType(random.nextInt(3));
+                spawner.addEnemy(enemy);
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+            i++;
+        }
+    }
+
+    public void shutdown() {
+        this.stop = true;
     }
 }
 
