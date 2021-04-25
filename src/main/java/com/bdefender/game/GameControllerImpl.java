@@ -17,8 +17,8 @@ import com.bdefender.game.view.GameView;
 import com.bdefender.event.EventHandler;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
-import com.bdefender.shop.ShopManager;
-import com.bdefender.shop.ShopManagerImpl;
+import com.bdefender.shop.ShopLoader;
+import com.bdefender.shop.ShopLoaderImpl;
 import com.bdefender.statistics.StatisticsWriter;
 import com.bdefender.statistics.StatisticsWriterImpl;
 
@@ -34,7 +34,7 @@ public class GameControllerImpl implements GameController {
     private EnemiesController enemies;
 
     //economy and shop
-    private final ShopManager shopManager;
+    private final ShopLoader shopLoader;
     private final Shop shop;
     private Optional<TowerName> choosedTower = Optional.empty();
     private static final  int INITIAL_AMOUNT = 600;
@@ -60,8 +60,8 @@ public class GameControllerImpl implements GameController {
         this.map = MapLoader.getInstance().loadMap(mapType);
         //shop
         this.shop = new ShopImpl(new WalletImpl(INITIAL_AMOUNT));
-        this.shopManager = new ShopManagerImpl(shop, (e) -> this.closeShop());
-        this.view = new GameView(this.map, this.shopManager.getShopView());
+        this.shopLoader = new ShopLoaderImpl(shop, (e) -> this.closeShop());
+        this.view = new GameView(this.map, this.shopLoader.getShopView());
         this.view.getMapView().getTowerPlacementView().setOnBoxClick(e -> this.addTower(e));
         //topBar
         //this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(0));
@@ -75,9 +75,9 @@ public class GameControllerImpl implements GameController {
         this.enemies = new EnemiesControllerImpl(this.map, new EnemiesGraphicMoverImpl(this.view.getMapView().getEnemiesContainer()));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.view.getMapView().getTowersContainer(), t), enemies.getEnemiesPool());
         this.view.getMapView().setOnTowerClick(e -> {
-            this.shopManager.getShopController().setTowerToUpg(e.getTower());
+            this.shop.setTowerToUpg(e.getTower());
             this.openShop();
-            shopManager.getShopController().setBtnUpgradeOn();
+            shopLoader.getShopViewManager().setBtnUpgradeOn();
         });
 
     }
@@ -117,9 +117,12 @@ public class GameControllerImpl implements GameController {
         final TowerBox boxClicked = (TowerBox) event.getSource();
         final Tower tower = this.towerController.addTower(choosedTower.get(), boxClicked.getCentralCoordinate());
         boxClicked.setTower(tower);
-        this.shopManager.getShopController().setEmptyLastTower();
+
         this.view.getMapView().setTowerPlacementViewVisible(false);
         this.view.getMapView().reloadTowersView();
+        this.shop.setTowerToBuy(Optional.empty());
+        this.shopLoader.getShopViewManager().setEmptyLastTwClicked();
+  
         //enable all the buttons if round is finished, otherwise just shop and exit
         if (this.isRoundFinished()) {
             this.view.setAllButtonEnable();
@@ -138,7 +141,7 @@ public class GameControllerImpl implements GameController {
             this.view.getTopMenuView().getShopButton().enable();
             //this.view.getChildren().remove(shopManager.getShopView());
             this.view.setShopVisible(false);
-            this.choosedTower = this.shopManager.getShopController().getLastTowerClicked();
+            this.choosedTower = this.shopLoader.getShopViewManager().getLastTowerClicked();
             if (this.choosedTower.isPresent()) {
                 //disabilito tutti i pulsanti
                 //this.view.setAllButtonDisable();
@@ -189,8 +192,8 @@ public class GameControllerImpl implements GameController {
      * */
     private void onDead() {
         this.shop.getWallet().addMoney(DEAD_MONEY);
-        this.shopManager.getShopController().updLblMoney();
-        this.shopManager.getShopController().refreshTowerBtn();
+        this.shopLoader.getShopViewManager().updLblMoney();
+        this.shopLoader.getShopViewManager().refreshTowerBtn();
         this.enemiesOffGame++;
         if (this.isRoundFinished()) {
             this.nextRound();
