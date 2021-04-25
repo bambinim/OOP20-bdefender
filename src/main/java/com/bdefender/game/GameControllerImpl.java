@@ -2,13 +2,12 @@ package com.bdefender.game;
 
 import java.io.IOException;
 import java.util.Optional;
-
 import com.bdefender.enemy.view.EnemiesGraphicMoverImpl;
+import com.bdefender.map.Map;
 import com.bdefender.map.MapLoader;
 import com.bdefender.map.MapType;
-import com.bdefender.map.MapView;
 import com.bdefender.map.TowerBox;
-import com.bdefender.map.Map;
+import com.bdefender.map.view.MapViewImpl;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerName;
 import com.bdefender.event.GameEvent;
@@ -29,7 +28,7 @@ public class GameControllerImpl implements GameController {
     //game GUI
     private final GameView view;
     private final Map map;
-    private final MapView mapView;
+    private final MapViewImpl mapView;
 
     //enemies and tower
     private final TowersController towerController;
@@ -61,7 +60,7 @@ public class GameControllerImpl implements GameController {
         this.statWriter = new StatisticsWriterImpl();
         this.statWriter.gameStarted(mapType);
         this.map = MapLoader.getInstance().loadMap(mapType);
-        this.mapView = new MapView(this.map);
+        this.mapView = new MapViewImpl(this.map);
         this.mapView.getTowerPlacementView().setOnBoxClick(e -> this.addTower(e));
         //shop
         this.shop = new ShopImpl(new WalletImpl(INITIAL_AMOUNT));
@@ -76,8 +75,8 @@ public class GameControllerImpl implements GameController {
             this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT));
         });
         //enemies and tower
-        this.enemies = new EnemiesControllerImpl(this.map, new EnemiesGraphicMoverImpl(this.mapView.getEnemiesPane()));
-        this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.mapView.getTowersPane(), t), enemies.getEnemiesPool());
+        this.enemies = new EnemiesControllerImpl(this.map, new EnemiesGraphicMoverImpl(this.mapView.getEnemiesContainer()));
+        this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.mapView.getTowersContainer(), t), enemies.getEnemiesPool());
         this.mapView.setOnTowerClick(e -> {
             this.shopManager.getShopController().setTowerToUpg(e.getTower());
             this.openShop();

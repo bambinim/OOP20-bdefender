@@ -1,4 +1,4 @@
-package com.bdefender.map;
+package com.bdefender.map.view;
 
 import java.util.stream.Collectors;
 import javafx.scene.image.ImageView;
@@ -11,19 +11,11 @@ import javafx.scene.text.TextAlignment;
 import com.bdefender.tower.view.TowersImageLoader;
 import com.bdefender.component.ImageButton;
 import com.bdefender.event.TowerEvent;
+import com.bdefender.map.Map;
 import com.bdefender.shop.TowerPlacementView;
 import com.bdefender.event.EventHandler;
 
-public class MapView extends AnchorPane {
-
-    /**
-     * Default map width.
-     */
-    public static final int MAP_WIDTH = 1280;
-    /**
-     * Default map height.
-     */
-    public static final int MAP_HEIGHT = 736;
+public class MapViewImpl extends AnchorPane implements MapView {
 
     private static final int TOWER_WIDTH = 60;
     private static final int TOWER_HEIGHT = 60;
@@ -35,7 +27,7 @@ public class MapView extends AnchorPane {
     private final TowerPlacementView towerPlaceView;
     private EventHandler<TowerEvent> onTowerClick;
 
-    public MapView(final Map map) {
+    public MapViewImpl(final Map map) {
         this.map = map;
         this.getChildren().addAll(new ImageView(this.map.getMapImage()), this.enemiesPane, this.towersPane);
         this.towerPlaceView = new TowerPlacementView(this.map.getTowerBoxes());
@@ -49,6 +41,7 @@ public class MapView extends AnchorPane {
      * Show or hide tower placement view.
      * @param visible
      */
+    @Override
     public void setTowerPlacementViewVisible(final boolean visible) {
         if (visible) {
             if (!this.getChildren().contains(this.towerPlaceView)) {
@@ -65,6 +58,7 @@ public class MapView extends AnchorPane {
     /**
      * @return tower placement view
      */
+    @Override
     public TowerPlacementView getTowerPlacementView() {
         return this.towerPlaceView;
     }
@@ -72,6 +66,7 @@ public class MapView extends AnchorPane {
     /**
      * Reload all the towers in the view to display new once.
      */
+    @Override
     public void reloadTowersView() {
         this.towersPane.getChildren().clear();
         this.towersPane.getChildren().addAll(this.map.getTowerBoxes().stream().filter(el -> el.getTower().isPresent()).map(el -> {
@@ -100,14 +95,16 @@ public class MapView extends AnchorPane {
     /**
      * @return AnchorPane where enemies are rendered
      */
-    public Pane getEnemiesPane() {
+    @Override
+    public Pane getEnemiesContainer() {
         return this.enemiesPane;
     }
 
     /**
      * @return AnchorPane where towers are rendered
      */
-    public AnchorPane getTowersPane() {
+    @Override
+    public AnchorPane getTowersContainer() {
         return this.towersPane;
     }
 
@@ -115,6 +112,7 @@ public class MapView extends AnchorPane {
      * Set handler to call when tower is clicked.
      * @param handler
      */
+    @Override
     public void setOnTowerClick(final EventHandler<TowerEvent> handler) {
         this.onTowerClick = handler;
     }
@@ -122,6 +120,7 @@ public class MapView extends AnchorPane {
     /**
      * @return handler called when tower is clicked
      */
+    @Override
     public EventHandler<TowerEvent> getOnTowerClick() {
         return this.onTowerClick;
     }

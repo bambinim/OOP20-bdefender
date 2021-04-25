@@ -4,9 +4,9 @@ import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import com.bdefender.component.ImageButton;
-import com.bdefender.map.MapView;
 import com.bdefender.menu.GameOverMenu;
 import com.bdefender.event.MouseEvent;
+import com.bdefender.map.view.MapViewImpl;
 import com.bdefender.event.EventHandler;
 
 public class GameView extends AnchorPane {
@@ -19,7 +19,7 @@ public class GameView extends AnchorPane {
 
 
 
-    public GameView(final MapView mapView, final Parent shopView) {
+    public GameView(final MapViewImpl mapView, final Parent shopView) {
         this.topMenuView = new TopMenuView();
         this.shopView = shopView;
         mapView.setLayoutY(TopMenuView.HEIGHT);
