@@ -5,9 +5,14 @@ import com.bdefender.tower.Tower;
 
 import java.util.Map;
 
-public class ChooseCloserEnemy implements ChooseTargetMethod{
+public class ChooseCloserEnemy implements ChooseTargetMethod {
+    /**
+     * @param interactor enemies interactor
+     * @param rangeRadius radius of tower's range circle
+     * @param pos tower position
+     */
     @Override
-    public Integer getTargetId(EnemyInteractor interactor, Double rangeRadius, Pair<Double, Double> pos) throws Tower.NoEnemiesAroundException {
+    public Integer getTargetId(final EnemyInteractor interactor, final Double rangeRadius, final Pair<Double, Double> pos) throws Tower.NoEnemiesAroundException {
         Map<Integer, Pair<Double, Double>> enemiesInRange = interactor.getEnemiesInZone(rangeRadius, pos);
 
         if (enemiesInRange.isEmpty()) {

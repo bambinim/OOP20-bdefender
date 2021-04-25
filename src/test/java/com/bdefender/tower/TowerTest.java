@@ -24,15 +24,20 @@ class TowerTest {
         MapInteractor mapInt = new MapInteractorImpl(MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE));
         EnemiesPoolImpl pool = new EnemiesPoolImpl(mapInt);
         EnemyFactory factory = new EnemyFactory();
-        pool.addEnemy(factory.getEnemy(EnemyName.SWORD_OGRE, e -> {}, e -> {}));
-        pool.addEnemy(factory.getEnemy(EnemyName.HAMMER_OGRE, e -> {}, e -> {}));
+        pool.addEnemy(factory.getEnemy(EnemyName.SWORD_OGRE, e -> {
+        }, e -> {
+        }));
+        pool.addEnemy(factory.getEnemy(EnemyName.HAMMER_OGRE, e -> {
+        }, e -> {
+        }));
 
         TowerFactory tFactory = new TowerFactory();
-        Tower tower = tFactory.getTowerDirect(TowerName.FIRE_ARROW, new EnemyInteractorDirectImpl(pool), new Pair<>(11.0, 9.0));
+        Tower tower = tFactory.getTowerDirect(TowerName.FIRE_ARROW, new EnemyInteractorDirectImpl(pool),
+                new Pair<>(11.0, 9.0));
 
         tower.shoot();
 
-        //no enemies around
+        // no enemies around
         assertEquals(35, pool.getEnemies(false).get(0).getLife());
         assertEquals(50, pool.getEnemies(false).get(1).getLife());
 
@@ -40,7 +45,7 @@ class TowerTest {
 
         tower.shoot();
 
-        //enemy 0 in range
+        // enemy 0 in range
         assertEquals(35 - 13, pool.getEnemies(false).get(0).getLife());
         assertEquals(50, pool.getEnemies(false).get(1).getLife());
 
@@ -48,7 +53,7 @@ class TowerTest {
 
         tower.shoot();
 
-        //both in range but 0 is closer
+        // both in range but 0 is closer
         assertEquals(35 - (13 * 2), pool.getEnemies(false).get(0).getLife());
         assertEquals(50, pool.getEnemies(false).get(1).getLife());
 
@@ -57,7 +62,7 @@ class TowerTest {
 
         tower.shoot();
 
-        //both in range but 1 is closer
+        // both in range but 1 is closer
         assertEquals(35 - (13 * 2), pool.getEnemies(false).get(0).getLife());
         assertEquals(50 - 13, pool.getEnemies(false).get(1).getLife());
 
@@ -65,7 +70,7 @@ class TowerTest {
 
         tower.shoot();
 
-        //both the in the same position, tower shoots the last enemy in the array
+        // both the in the same position, tower shoots the last enemy in the array
         assertEquals(35 - (13 * 2), pool.getEnemies(false).get(0).getLife());
         assertEquals(50 - (13 * 2), pool.getEnemies(false).get(1).getLife());
 
