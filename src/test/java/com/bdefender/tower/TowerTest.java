@@ -13,6 +13,7 @@ import com.bdefender.map.MapType;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.TowerName;
+import com.bdefender.tower.interactor.EnemyInteractorDirectImpl;
 import org.junit.jupiter.api.Test;
 
 class TowerTest {
@@ -27,7 +28,7 @@ class TowerTest {
         pool.addEnemy(factory.getEnemy(EnemyName.HAMMER_OGRE, e -> {}, e -> {}));
 
         TowerFactory tFactory = new TowerFactory();
-        Tower tower = tFactory.getTowerDirect(TowerName.FIRE_ARROW,pool, new Pair<>(11.0, 9.0));
+        Tower tower = tFactory.getTowerDirect(TowerName.FIRE_ARROW, new EnemyInteractorDirectImpl(pool), new Pair<>(11.0, 9.0));
 
         tower.shoot();
 

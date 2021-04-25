@@ -1,11 +1,16 @@
 package com.bdefender.tower;
 
 import com.bdefender.Pair;
+import com.bdefender.tower.interactor.ChooseCloserEnemy;
+import com.bdefender.tower.interactor.ChooseTargetMethod;
 import com.bdefender.tower.interactor.EnemyInteractorDirect;
 
-import java.util.Map;
-
 public class TowerFactory {
+
+    @FunctionalInterface
+    interface DamageApplier {
+        void applyDamage(int enemyId, int level);
+    }
 
     private static final double NEXT_LEVEL_MULT = 0.25;
 
@@ -13,18 +18,18 @@ public class TowerFactory {
      * Generate a direct shot tower.
      *
      * @param towerName tower name
-     * @param ctrl
-     * @param pos
+     * @param ctrl enemy interactor
+     * @param pos spawn position
      * @return Tower
      */
     public Tower getTowerDirect(final TowerName towerName, final EnemyInteractorDirect ctrl,
-            final Pair<Double, Double> pos) {
-        return this.towerDirectByParams(towerName.getDamage(), towerName.getRangeRadius(), towerName.getShootSpeed(),
-                ctrl, pos, towerName.getId());
+                                final Pair<Double, Double> pos) {
+        return this.towerByParams(towerName.getDamage(), towerName.getRangeRadius(), towerName.getShootSpeed(),
+                ctrl, pos, towerName.getId(), new ChooseCloserEnemy(), (id,level) -> ctrl.applyDamageById(id, towerName.getDamage() + ((level - 1) * NEXT_LEVEL_MULT)));
     }
 
-    private Tower towerDirectByParams(final Double damage, final Double rangeRadius, final Long shootSpeed,
-            final EnemyInteractorDirect ctrl, final Pair<Double, Double> pos, final int id) {
+    private Tower towerByParams(final Double damage, final Double rangeRadius, final Long shootSpeed,
+                                final EnemyInteractorDirect ctrl, final Pair<Double, Double> pos, final int id, ChooseTargetMethod targetMethod, DamageApplier damageApplier) {
 
         return new Tower() {
 
@@ -34,7 +39,7 @@ public class TowerFactory {
             public Pair<Double, Double> shoot() {
                 try {
                     int targetId = this.getOptimalTarget();
-                    ctrl.applyDamageById(targetId, damage + ((level - 1) * NEXT_LEVEL_MULT));
+                    damageApplier.applyDamage(targetId, this.level);
                     return ctrl.getEnemyPosByID(targetId);
                 } catch (NoEnemiesAroundException ex) {
                     return null;
@@ -47,23 +52,7 @@ public class TowerFactory {
             }
 
             private Integer getOptimalTarget() throws NoEnemiesAroundException {
-                Map<Integer, Pair<Double, Double>> enemiesInRange = ctrl.getEnemiesInZone(rangeRadius + level - 1, pos);
-
-                if (enemiesInRange.isEmpty()) {
-                    throw new NoEnemiesAroundException("No enemies around this tower");
-                }
-
-                Pair<Integer, Double> closerEnemy = new Pair<>(0, rangeRadius + 1);
-
-                for (var enemy : enemiesInRange.entrySet()) {
-                    double distance = Math.sqrt(Math.pow(enemy.getValue().getX() - pos.getX(), 2)
-                            + Math.pow(enemy.getValue().getY() - pos.getY(), 2));
-                    if (distance <= closerEnemy.getY()) {
-                        closerEnemy = new Pair<>(enemy.getKey(), distance);
-                    }
-                }
-
-                return closerEnemy.getX();
+                return targetMethod.getTargetId(ctrl, rangeRadius + level - 1, pos);
             }
 
             @Override
