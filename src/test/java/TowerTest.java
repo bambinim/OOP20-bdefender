@@ -1,4 +1,4 @@
-import static org.junit.jupiter.api.Assertions.*;
+        import static org.junit.jupiter.api.Assertions.*;
 
 import com.bdefender.Pair;
 import com.bdefender.enemy.EnemyFactory;
@@ -21,11 +21,11 @@ class TowerTest {
         MapInteractor mapInt = new MapInteractorImpl(MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE));
         EnemiesPoolImpl pool = new EnemiesPoolImpl(mapInt);
         EnemyFactory factory = new EnemyFactory();
-        pool.addEnemy(factory.getEnemy(EnemyName.SWORD_OGRE, e -> {}, e -> {}));
-        pool.addEnemy(factory.getEnemy(EnemyName.HAMMER_OGRE, e -> {}, e -> {}));
+        pool.addEnemy(factory.getEnemy(EnemyName.SWORD_OGRE, e -> { }, e -> { }));
+        pool.addEnemy(factory.getEnemy(EnemyName.HAMMER_OGRE, e -> { }, e -> { }));
 
         TowerFactory tFactory = new TowerFactory();
-        Tower tower = tFactory.getTowerDirect(TowerName.FIRE_ARROW,pool, new Pair<>(11.0, 9.0));
+        Tower tower = tFactory.getTowerDirect(TowerName.FIRE_ARROW, pool, new Pair<>(11.0, 9.0));
 
         tower.shoot();
 

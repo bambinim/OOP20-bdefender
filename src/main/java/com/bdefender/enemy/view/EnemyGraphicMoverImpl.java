@@ -12,50 +12,47 @@ import java.util.Map;
 
 public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
 
-    //private final GraphicsContext gc;
+    // private final GraphicsContext gc;
     private final Pane container;
     private final Map<Enemy, ImageView> renderedEnemies = new HashMap<>();
     private final Object lock = new Object();
 
     public EnemyGraphicMoverImpl(final Pane pane) {
-        //Canvas canvas = new Canvas(AppView.DEFAULT_WIDTH, com.bdefender.map.MapView.MAP_HEIGHT);
-        //this.gc = canvas.getGraphicsContext2D();
-        //pane.getChildren().add(canvas);
+        // Canvas canvas = new Canvas(AppView.DEFAULT_WIDTH,
+        // com.bdefender.map.MapView.MAP_HEIGHT);
+        // this.gc = canvas.getGraphicsContext2D();
+        // pane.getChildren().add(canvas);
         this.container = pane;
     }
 
     /*
-    @Override
-    public void moveEnemies(final ArrayList<Enemy> enemies) {
-        HashMap<Enemy, Image> enemiesImage = EnemiesViewLoader.getEnemiesImages(enemies);
-        gc.clearRect(0, 0, AppView.DEFAULT_WIDTH, AppView.DEFAULT_HEIGHT);
-        for (Enemy enemy : enemies) {
-            Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 1, enemy.getPosition().getY() - 1);
-            gc.drawImage(enemiesImage.get(enemy), enemyPos.getLeftPixel(), enemyPos.getTopPixel());
-        }
-    }
-    */
+     * @Override public void moveEnemies(final ArrayList<Enemy> enemies) {
+     * HashMap<Enemy, Image> enemiesImage =
+     * EnemiesViewLoader.getEnemiesImages(enemies); gc.clearRect(0, 0,
+     * AppView.DEFAULT_WIDTH, AppView.DEFAULT_HEIGHT); for (Enemy enemy : enemies) {
+     * Coordinates enemyPos = new Coordinates(enemy.getPosition().getX() - 1,
+     * enemy.getPosition().getY() - 1); gc.drawImage(enemiesImage.get(enemy),
+     * enemyPos.getLeftPixel(), enemyPos.getTopPixel()); } }
+     */
 
     public void moveEnemies(final ArrayList<Enemy> enemies) {
         Platform.runLater(() -> {
             synchronized (this.lock) {
-                try {
-                    for (var i : enemies) {
-                        if (!this.renderedEnemies.keySet().contains(i)) {
-                            this.renderedEnemies.put(i, new ImageView(EnemiesViewLoader.getEnemyImage(i)));
-                            this.container.getChildren().add(this.renderedEnemies.get(i));
-                        }
-                        Coordinates enemyPos = new Coordinates(i.getPosition().getX() - 1, i.getPosition().getY() - 1);
-                        this.renderedEnemies.get(i).setX(enemyPos.getLeftPixel());
-                        this.renderedEnemies.get(i).setY(enemyPos.getTopPixel());
+                for (var i : enemies) {
+                    if (!this.renderedEnemies.keySet().contains(i)) {
+                        this.renderedEnemies.put(i, new ImageView(EnemiesViewLoader.getEnemyImage(i)));
+                        this.container.getChildren().add(this.renderedEnemies.get(i));
                     }
-                    this.renderedEnemies.forEach((key, val) -> {
-                        if (!enemies.contains(key)) {
-                            this.renderedEnemies.remove(key);
-                            this.container.getChildren().remove(val);
-                        }
-                    });
-                } catch (ConcurrentModificationException e) {}
+                    Coordinates enemyPos = new Coordinates(i.getPosition().getX() - 1, i.getPosition().getY() - 1);
+                    this.renderedEnemies.get(i).setX(enemyPos.getLeftPixel());
+                    this.renderedEnemies.get(i).setY(enemyPos.getTopPixel());
+                }
+                this.renderedEnemies.forEach((key, val) -> {
+                    if (!enemies.contains(key)) {
+                        this.renderedEnemies.remove(key);
+                        this.container.getChildren().remove(val);
+                    }
+                });
             }
         });
     }

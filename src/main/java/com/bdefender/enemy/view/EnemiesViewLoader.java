@@ -22,9 +22,9 @@ public class EnemiesViewLoader {
         for (int i = 0; i < nEnemies; i++) {
             Image enemyImage;
             try {
-                enemyImage =
-                        new Image(ClassLoader.getSystemResource(String.format("enemies/%d/enemy.png", i)).openStream(),
-                                64, 64, false, false);
+                enemyImage = new Image(
+                        ClassLoader.getSystemResource(String.format("enemies/%d/enemy.png", i)).openStream(), 64, 64,
+                        false, false);
             } catch (Exception e) {
                 enemyImage = null;
             }
@@ -33,7 +33,7 @@ public class EnemiesViewLoader {
     }
 
     public static HashMap<Enemy, Image> getEnemiesImages(final List<Enemy> enemies) {
-        HashMap<Enemy,Image> enemiesImages = new HashMap<>();
+        HashMap<Enemy, Image> enemiesImages = new HashMap<>();
         for (Enemy enemy : enemies) {
             enemiesImages.put(enemy, INSTANCE.enemyImages.get(enemy.getTypeId()));
         }

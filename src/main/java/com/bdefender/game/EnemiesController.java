@@ -23,7 +23,7 @@ public interface EnemiesController {
     EnemiesPoolInteractor getEnemiesPool();
 
     void stopMovingEnemies();
-    
+
     /**
      * Stops enemies spawner thread.
      */

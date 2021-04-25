@@ -18,13 +18,14 @@ public class TowersControllerImpl implements TowersController {
     private final EnemiesPoolInteractor pool;
     private final TowerViewImplementation towerViewImplementation;
 
-    public TowersControllerImpl(final TowerViewImplementation viewImplementation, final EnemiesPoolInteractor enemyPool) {
+    public TowersControllerImpl(final TowerViewImplementation viewImplementation,
+            final EnemiesPoolInteractor enemyPool) {
         this.towerViewImplementation = viewImplementation;
         this.pool = enemyPool;
     }
 
     private Tower getTowerByTypeName(final TowerName name, final Coordinates pos) {
-       return this.factory.getTowerDirect(name, this.pool, pos);
+        return this.factory.getTowerDirect(name, this.pool, pos);
     }
 
     @Override

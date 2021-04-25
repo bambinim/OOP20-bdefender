@@ -2,8 +2,8 @@ package com.bdefender.tower;
 
 import com.bdefender.Pair;
 import com.bdefender.enemy.pool.EnemiesPoolInteractor;
-import com.bdefender.tower.controller.EnemyControllerDirect;
-import com.bdefender.tower.controller.EnemyControllerDirectImpl;
+import com.bdefender.tower.controller.EnemyIntControllerDirect;
+import com.bdefender.tower.controller.EnemyIntControllerDirectImpl;
 
 import java.util.Map;
 
@@ -14,13 +14,15 @@ public class TowerFactory {
     /**
      * Generate a direct shot tower.
      *
-     * @param towerName  tower name
+     * @param towerName tower name
      * @param pool
      * @param pos
      * @return Tower
      */
-    public Tower getTowerDirect(final TowerName towerName, final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
-        return this.towerDirectByParams(towerName.getDamage(), towerName.getRangeRadius(), towerName.getShootSpeed(), pool, pos, towerName.getId());
+    public Tower getTowerDirect(final TowerName towerName, final EnemiesPoolInteractor pool,
+            final Pair<Double, Double> pos) {
+        return this.towerDirectByParams(towerName.getDamage(), towerName.getRangeRadius(), towerName.getShootSpeed(),
+                pool, pos, towerName.getId());
     }
 
     private Tower towerDirectByParams(final Double damage, final Double rangeRadius, final Long shootSpeed,
@@ -28,7 +30,7 @@ public class TowerFactory {
 
         return new Tower() {
 
-            private final EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
+            private final EnemyIntControllerDirect enemiesCtrl = new EnemyIntControllerDirectImpl(pool);
             private int level = 1;
 
             @Override
@@ -85,7 +87,7 @@ public class TowerFactory {
 
             @Override
             public int getLevel() {
-               return this.level;
+                return this.level;
             }
         };
     }

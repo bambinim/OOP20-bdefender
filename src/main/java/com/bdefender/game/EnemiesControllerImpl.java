@@ -12,7 +12,6 @@ import com.bdefender.enemy.view.EnemyGraphicMover;
 import com.bdefender.event.EnemyEvent;
 import com.bdefender.event.EventHandler;
 import com.bdefender.map.Map;
-import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -93,16 +92,10 @@ class EnemySpawnerThread extends Thread {
     @Override
     public void run() {
         /*
-        for (int i = 0; i < totEnemies; i++) {
-            try {
-                sleep(TEN_SEC / intensity);
-                Random random = new Random();
-                Enemy enemy = getEnemyByType(random.nextInt(3));
-                spawner.addEnemy(enemy);
-            } catch (InterruptedException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
+         * for (int i = 0; i < totEnemies; i++) { try { sleep(TEN_SEC / intensity);
+         * Random random = new Random(); Enemy enemy =
+         * getEnemyByType(random.nextInt(3)); spawner.addEnemy(enemy); } catch
+         * (InterruptedException ex) { System.out.println(ex.getMessage()); } }
          */
         int i = 0;
         while (!stop && i < this.totEnemies) {

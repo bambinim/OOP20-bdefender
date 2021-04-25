@@ -24,14 +24,16 @@ public class TowerImageLoader {
             Image towerImage;
             Image towerShootImage;
             try {
-                towerImage = new Image(ClassLoader.getSystemResource(String.format("towers/%d/tower.png", i)).openStream(),
-                        64, 64, false, false);
+                towerImage = new Image(
+                        ClassLoader.getSystemResource(String.format("towers/%d/tower.png", i)).openStream(), 64, 64,
+                        false, false);
             } catch (IOException e) {
                 towerImage = null;
             }
             try {
-                towerShootImage = new Image(ClassLoader.getSystemResource(String.format("towers/%d/shoot.png", i)).openStream(),
-                        32, 32, false, false);
+                towerShootImage = new Image(
+                        ClassLoader.getSystemResource(String.format("towers/%d/shoot.png", i)).openStream(), 32, 32,
+                        false, false);
             } catch (IOException e) {
                 towerShootImage = null;
             }

@@ -4,10 +4,10 @@ import com.bdefender.Pair;
 
 import java.util.Map;
 
-public interface EnemyController {
+public interface EnemyIntController {
 
     /**
-     * @param radius  zone radius
+     * @param radius zone radius
      * @param center zone circle center
      * @return all enemies in the given radius.
      */

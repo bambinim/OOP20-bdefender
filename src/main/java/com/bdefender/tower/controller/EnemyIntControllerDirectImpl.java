@@ -6,11 +6,11 @@ import com.bdefender.enemy.pool.EnemiesPoolInteractor;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class EnemyControllerDirectImpl implements EnemyControllerDirect {
+public class EnemyIntControllerDirectImpl implements EnemyIntControllerDirect {
 
     private final EnemiesPoolInteractor enemiesPool;
 
-    public EnemyControllerDirectImpl(final EnemiesPoolInteractor enemiesPool) {
+    public EnemyIntControllerDirectImpl(final EnemiesPoolInteractor enemiesPool) {
         this.enemiesPool = enemiesPool;
     }
 
