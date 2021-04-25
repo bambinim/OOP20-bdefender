@@ -40,16 +40,17 @@ public class GameControllerImpl implements GameController {
     private final Shop shop;
     private Optional<TowerName> choosedTower = Optional.empty();
     private boolean isShopOpen = true;
-    private static final  int INITIAL_AMOUNT = 1000;
+    private static final  int INITIAL_AMOUNT = 600;
 
     //game Managment 
     private int lifePoint = 100;
     private int round;
     private int enemiesOffGame;
     private int enemiesToSpawn = 10;
+    private int frequencyEnemies = 3;
     private static final int DEAD_MONEY = 20;
-    private static final int FREQUENCY_ENEMIES = 5;
-    private static final int INC_ENEMIES = 2;
+    private static final int INC_ENEMIES = 5;
+    private static final int INC_FREQ = 3;
     private boolean runningState = true;
     private final StatisticsWriter statWriter;
 
@@ -178,7 +179,8 @@ public class GameControllerImpl implements GameController {
      * Increment round and increase the level difficulty.
      * */
     private void nextRound() {
-        this.enemiesToSpawn = this.enemiesToSpawn + this.INC_ENEMIES;
+        this.enemiesToSpawn = this.enemiesToSpawn + GameControllerImpl.INC_ENEMIES;
+        this.frequencyEnemies = this.frequencyEnemies + GameControllerImpl.INC_FREQ;
         this.view.setAllButtonEnable();
         this.enemies.stopMovingEnemies();
     }
@@ -235,7 +237,7 @@ public class GameControllerImpl implements GameController {
         this.view.getTopMenuView().setRoundTextValue(this.round);
         this.enemiesOffGame = 0;
         this.view.getTopMenuView().getPlayButton().disable();
-        enemies.startGenerate(FREQUENCY_ENEMIES, this.enemiesToSpawn, e -> this.onDead(), e -> this.onReachedEnd());
+        enemies.startGenerate(this.frequencyEnemies, this.enemiesToSpawn, e -> this.onDead(), e -> this.onReachedEnd());
     }
 
     /**

@@ -23,7 +23,7 @@ public class ShopControllerImpl implements ShopController {
     private Optional<TowerName> lastTowerClicked = Optional.empty();
     private Tower towerToUpg;
     private final EventHandler<MouseEvent> closeShop;
-
+    private boolean isUpgrading;
     private static final Double DIS_OP = 0.5;
     private static final Double EN_OP = 0.0;
 
@@ -93,13 +93,15 @@ public class ShopControllerImpl implements ShopController {
      * If money are enough let the tower's button enable, othewise disable it.
      */
     public final void refreshTowerBtn() {
-        btnTowerMap.forEach((k, v) -> {
-            if (shop.isTowerBuyable(v)) {
-                enableButton(k);
-            } else {
-                disableButton(k);
-            }
-        });
+        if (!isUpgrading) {
+            btnTowerMap.forEach((k, v) -> {
+                if (shop.isTowerBuyable(v)) {
+                    enableButton(k);
+                } else {
+                    disableButton(k);
+                }
+            });
+        }
     }
 
     /**
@@ -107,6 +109,7 @@ public class ShopControllerImpl implements ShopController {
      */
     public void setBtnUpgradeOn() {
         btnTowerMap.forEach((k, v) -> disableButton(k));
+        this.isUpgrading = true;
         enableButton(btnUpgrade);
     }
 
@@ -119,6 +122,7 @@ public class ShopControllerImpl implements ShopController {
                 enableButton(k);
             }
         });
+        this.isUpgrading = false;
         disableButton(btnUpgrade);
     }
 
