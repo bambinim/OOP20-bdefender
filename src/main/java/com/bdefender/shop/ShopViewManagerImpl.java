@@ -69,8 +69,8 @@ public class ShopViewManagerImpl implements ShopViewManager {
 
         this.initializeButton();
         this.initializeLabel();
-        this.updLblMoney();
-        this.setBtnUpgradeOff();
+        this.updMoney();
+        this.setUpgradeOff();
 
         //add events to tower buttons
         this.btnTowerMap.forEach((k, v) -> {
@@ -83,7 +83,7 @@ public class ShopViewManagerImpl implements ShopViewManager {
         //add event to upgrade button
         btnUpgrade.setOnMouseClicked((e) -> {
             this.buyUpgrade();
-            this.setBtnUpgradeOff();
+            this.setUpgradeOff();
             this.closeShop.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, e.getSource()));
         });
 
@@ -94,7 +94,7 @@ public class ShopViewManagerImpl implements ShopViewManager {
     /**
      * If money are enough let the tower's button enable, othewise disable it.
      */
-    public final void refreshTowerBtn() {
+    public final void refreshTowerChoosable() {
         if (!isUpgrading) {
             btnTowerMap.forEach((k, v) -> {
                 if (shop.isTowerBuyable(v)) {
@@ -109,7 +109,7 @@ public class ShopViewManagerImpl implements ShopViewManager {
     /**
      * Enable all  buttons and set upgradeBtn disabled. 
      */
-    public void setBtnUpgradeOn() {
+    public void setUpgradeOn() {
         btnTowerMap.forEach((k, v) -> disableButton(k));
         this.isUpgrading = true;
         this.towerToUpg = this.shop.getTowerToUpg().get();
@@ -125,7 +125,7 @@ public class ShopViewManagerImpl implements ShopViewManager {
     /**
      * Disable all other buttons and set upgradeBtn enable. 
      */
-    public final void setBtnUpgradeOff() {
+    public final void setUpgradeOff() {
         btnTowerMap.forEach((k, v) -> {
             if (shop.isTowerBuyable(v)) {
                 enableButton(k);
@@ -154,7 +154,7 @@ public class ShopViewManagerImpl implements ShopViewManager {
     /**
      * Keeps updated the money value label.
      */
-    public final void updLblMoney() {
+    public final void updMoney() {
         Platform.runLater(() -> lblMoney.setText(Integer.toString(shop.getWallet().getMoney())));
     }
 
@@ -183,17 +183,17 @@ public class ShopViewManagerImpl implements ShopViewManager {
     private void buyTower(final Button btn) {
         this.shop.setTowerToBuy(Optional.of(this.btnTowerMap.get(btn)));
         shop.buyTower();
-        this.updLblMoney();
+        this.updMoney();
         this.lastTowerClicked = Optional.of(this.btnTowerMap.get(btn));
-        this.refreshTowerBtn();
+        this.refreshTowerChoosable();
     }
 
     /** When the button upgrade is clicked  subctract the money and Upgrade the tower saved to be upgraded.
      */
     private void buyUpgrade() {
         shop.buyUpgrade();
-        this.updLblMoney();
-        this.refreshTowerBtn();
+        this.updMoney();
+        this.refreshTowerChoosable();
     }
 
 
