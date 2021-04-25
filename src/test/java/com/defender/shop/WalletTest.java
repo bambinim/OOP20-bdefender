@@ -2,6 +2,7 @@ package com.defender.shop;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ public class WalletTest {
         wallet.subtractMoney(300);
         assertEquals(350, this.wallet.getMoney());
         wallet.subtractMoney(400);
-        assertEquals(-50, this.wallet.getMoney()); //cant't be negative
+        assertNotEquals(-50, this.wallet.getMoney()); //cant't be negative
         assertFalse(wallet.areMoneyEnough(900)); 
         assertTrue(wallet.areMoneyEnough(350)); //no decrease should have be done
         wallet.subtractMoney(350);

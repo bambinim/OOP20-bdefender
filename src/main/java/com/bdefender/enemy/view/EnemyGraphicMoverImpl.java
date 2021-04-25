@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
@@ -35,24 +36,26 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
      * enemyPos.getLeftPixel(), enemyPos.getTopPixel()); } }
      */
 
-    public void moveEnemies(final ArrayList<Enemy> enemies) {
+    public final void moveEnemies(final List<Enemy> enemies) {
         Platform.runLater(() -> {
             synchronized (this.lock) {
-                for (var i : enemies) {
-                    if (!this.renderedEnemies.keySet().contains(i)) {
-                        this.renderedEnemies.put(i, new ImageView(EnemiesViewLoader.getEnemyImage(i)));
-                        this.container.getChildren().add(this.renderedEnemies.get(i));
+                try {
+                    for (final var i : enemies) {
+                        if (!this.renderedEnemies.keySet().contains(i)) {
+                            this.renderedEnemies.put(i, new ImageView(EnemiesViewLoader.getEnemyImage(i)));
+                            this.container.getChildren().add(this.renderedEnemies.get(i));
+                        }
+                        final Coordinates enemyPos = new Coordinates(i.getPosition().getX() - 1, i.getPosition().getY() - 1);
+                        this.renderedEnemies.get(i).setX(enemyPos.getLeftPixel());
+                        this.renderedEnemies.get(i).setY(enemyPos.getTopPixel());
                     }
-                    Coordinates enemyPos = new Coordinates(i.getPosition().getX() - 1, i.getPosition().getY() - 1);
-                    this.renderedEnemies.get(i).setX(enemyPos.getLeftPixel());
-                    this.renderedEnemies.get(i).setY(enemyPos.getTopPixel());
-                }
-                this.renderedEnemies.forEach((key, val) -> {
-                    if (!enemies.contains(key)) {
-                        this.renderedEnemies.remove(key);
-                        this.container.getChildren().remove(val);
-                    }
-                });
+                    this.renderedEnemies.forEach((key, val) -> {
+                        if (!enemies.contains(key)) {
+                            this.renderedEnemies.remove(key);
+                            this.container.getChildren().remove(val);
+                        }
+                    });
+                } catch (ConcurrentModificationException e) { }
             }
         });
     }

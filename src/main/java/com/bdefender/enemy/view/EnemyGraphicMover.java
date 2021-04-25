@@ -3,6 +3,7 @@ package com.bdefender.enemy.view;
 import com.bdefender.enemy.Enemy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface EnemyGraphicMover {
 
@@ -11,6 +12,6 @@ public interface EnemyGraphicMover {
      *
      * @param enemies list of enemies to move.
      */
-    void moveEnemies(ArrayList<Enemy> enemies);
+    void moveEnemies(List<Enemy> enemies);
 
 }

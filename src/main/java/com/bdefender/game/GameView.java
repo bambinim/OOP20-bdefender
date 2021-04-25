@@ -13,9 +13,9 @@ public class GameView extends AnchorPane {
 
     private final TopMenuView topMenuView;
     private final Parent shopView;
-    private ImageButton btnShop;
-    private ImageButton btnBackToMenu;
-    private ImageButton btnPlay;
+    private final ImageButton btnShop;
+    private final ImageButton btnBackToMenu;
+    private final ImageButton btnPlay;
 
 
 
@@ -27,7 +27,7 @@ public class GameView extends AnchorPane {
         this.btnShop = this.topMenuView.getShopButton();
         this.btnBackToMenu = this.topMenuView.getExitButton();
         this.btnPlay = this.topMenuView.getPlayButton();
-        this.getChildren().addAll(this.topMenuView, mapView, this.shopView);
+        this.getChildren().addAll(mapView, this.topMenuView, this.shopView);
     }
 
     /**
@@ -63,7 +63,7 @@ public class GameView extends AnchorPane {
     }
 
     /**
-     * @param flag true if we need to set all the button Off false if we need to set all the buttons on.
+     * Enables all top menu buttons.
      **/
     public final void setAllButtonEnable() {
        this.btnShop.enable();
@@ -71,6 +71,9 @@ public class GameView extends AnchorPane {
        this.btnPlay.enable();
     }
 
+    /**
+     * Disables all top menu buttons.
+     */
     public void setAllButtonDisable() {
         this.btnShop.disable();
         this.btnBackToMenu.disable();
@@ -83,7 +86,7 @@ public class GameView extends AnchorPane {
     public void setLifePiointsInTopMenu(final Double life) {
         this.topMenuView.setLifeProgressBarValue(life);
     }
-    
+
     /**
      * Set the round level text.
      * @param round

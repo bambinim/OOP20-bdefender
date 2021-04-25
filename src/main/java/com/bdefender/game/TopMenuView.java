@@ -2,9 +2,7 @@ package com.bdefender.game;
 
 import java.io.IOException;
 import java.net.URL;
-
 import com.bdefender.AppView;
-
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -13,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import com.bdefender.component.ImageButton;
 
 public class TopMenuView extends AnchorPane {
@@ -31,7 +28,6 @@ public class TopMenuView extends AnchorPane {
     private final ProgressBar lifeBar;
     private final Text lifeText;
     private final Text roundText;
-
 
     public TopMenuView() {
         final Rectangle rec = new Rectangle();

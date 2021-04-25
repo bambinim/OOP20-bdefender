@@ -16,7 +16,7 @@ public class EnemiesViewLoader {
         INSTANCE = new EnemiesViewLoader(N_ENEMIES);
     }
 
-    private final ArrayList<Image> enemyImages = new ArrayList<>();
+    private final List<Image> enemyImages = new ArrayList<>();
 
     public EnemiesViewLoader(final int nEnemies) {
         for (int i = 0; i < nEnemies; i++) {
