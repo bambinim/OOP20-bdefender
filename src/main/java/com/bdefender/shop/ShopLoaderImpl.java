@@ -9,13 +9,13 @@ import javafx.scene.Parent;
 
 
 
-public class ShopManagerImpl implements ShopManager {
-    private final ShopController shopController;
+public class ShopLoaderImpl implements ShopLoader {
+    private final ShopViewManager shopController;
     private final Parent shopView;
 
 
-    public ShopManagerImpl(final Shop shop, final EventHandler<MouseEvent> closeShop) throws IOException {
-        this.shopController = new ShopControllerImpl(shop, closeShop);
+    public ShopLoaderImpl(final Shop shop, final EventHandler<MouseEvent> closeShop) throws IOException {
+        this.shopController = new ShopViewManagerImpl(shop, closeShop);
         final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("shops/shopView.fxml"));
         loader.setController(this.shopController);
         this.shopView = loader.load();
@@ -28,7 +28,7 @@ public class ShopManagerImpl implements ShopManager {
     }
 
     @Override
-    public final ShopController getShopController() {
+    public final ShopViewManager getShopViewManager() {
         return this.shopController;
     }
 }

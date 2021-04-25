@@ -68,7 +68,7 @@ public final class StatisticsReaderImpl implements StatisticsReader {
     @Override
     public Pair<MapType, Integer> getHigherstRoundEver() {
         //se non ci sono partite
-        if (this.gameList.size() == 0) {
+        if (this.gameList.isEmpty()) {
             return new Pair<>(MapType.COUNTRYSIDE, 0);
         }
         final Game higherstGame = this.gameList.stream()
@@ -80,7 +80,7 @@ public final class StatisticsReaderImpl implements StatisticsReader {
     @Override
     public MapType getMostPlayedMap() {
         //se non ci sono partite
-        if (this.gameList.size() == 0) {
+        if (this.gameList.isEmpty()) {
             return MapType.COUNTRYSIDE;
         }
         final Map<MapType, Integer> counterMap = new HashMap<>();

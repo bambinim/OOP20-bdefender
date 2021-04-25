@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
-public class StatisticsMenuControllerImpl implements Initializable{
+public class StatisticsMenuControllerImpl implements Initializable, StatisticsMenuController {
 
         private final EventHandler<MouseEvent> onBackToMenuClick;
 
@@ -36,6 +36,9 @@ public class StatisticsMenuControllerImpl implements Initializable{
             this.onBackToMenuClick = event;
         }
 
+        /**
+         * initialize the GUI.
+         */
         @Override
         public void initialize(final URL location, final ResourceBundle resources) {
             this.initializeBackToMenu();
@@ -51,11 +54,12 @@ public class StatisticsMenuControllerImpl implements Initializable{
         /**
          * 
          */
+        @Override
         public final void loadStat() {
             final StatisticsReader reader = StatisticsReaderImpl.getInstance();
             this.maxRoundLbl.setText(Integer.toString(reader.getHigherstRoundEver().getY()));
             this.mostPlayedMapLbl.setText(reader.getMostPlayedMap().getMapName());
-            this.totTimeLbl.setText(Integer.toString((int) (reader.getTotTimePlayed() / 1000) / 60 ) + "min");
+            this.totTimeLbl.setText(Integer.toString((int) (reader.getTotTimePlayed() / 1000) / 60) + "min");
             //carica le statistiche nella lbl
         }
 

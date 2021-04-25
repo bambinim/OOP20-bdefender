@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 
-public class ShopControllerImpl implements ShopController {
+public class ShopViewManagerImpl implements ShopViewManager {
 
 
     private final Shop shop;
@@ -60,7 +60,7 @@ public class ShopControllerImpl implements ShopController {
     private Button btnUpgrade;
 
 
-    public ShopControllerImpl(final Shop shop, final EventHandler<MouseEvent> closeShop) {
+    public ShopViewManagerImpl(final Shop shop, final EventHandler<MouseEvent> closeShop) {
         this.shop = shop;
         this.closeShop = closeShop;
     }
@@ -112,6 +112,7 @@ public class ShopControllerImpl implements ShopController {
     public void setBtnUpgradeOn() {
         btnTowerMap.forEach((k, v) -> disableButton(k));
         this.isUpgrading = true;
+        this.towerToUpg = this.shop.getTowerToUpg().get();
         final TowerName  typeToUpg = Stream.of(TowerName.values())
                 .filter((x) -> x.getId() == this.towerToUpg.getTowerTypeId())
                 .findFirst()
@@ -142,18 +143,12 @@ public class ShopControllerImpl implements ShopController {
     }
 
     /**
-     * Set empty the lastTowerClicked.
-     */
-    public final void setEmptyLastTower() {
+     * Set empty lastTowerClicked.
+     * */
+    @Override
+    public void setEmptyLastTwClicked() {
         this.lastTowerClicked = Optional.empty();
-    }
 
-    /**
-     * Set tower to Upgrade.
-     * @param tower we want to upgrade.
-     */
-    public void setTowerToUpg(final Tower tower) {
-        this.towerToUpg = tower;
     }
 
     /**
@@ -186,7 +181,8 @@ public class ShopControllerImpl implements ShopController {
      * @param btn of the tower that has been clicked
      */
     private void buyTower(final Button btn) {
-        shop.buyTower(this.btnTowerMap.get(btn));
+        this.shop.setTowerToBuy(Optional.of(this.btnTowerMap.get(btn)));
+        shop.buyTower();
         this.updLblMoney();
         this.lastTowerClicked = Optional.of(this.btnTowerMap.get(btn));
         this.refreshTowerBtn();
@@ -195,7 +191,7 @@ public class ShopControllerImpl implements ShopController {
     /** When the button upgrade is clicked  subctract the money and Upgrade the tower saved to be upgraded.
      */
     private void buyUpgrade() {
-        shop.buyUpgrade(this.towerToUpg);
+        shop.buyUpgrade();
         this.updLblMoney();
         this.refreshTowerBtn();
     }
@@ -212,6 +208,7 @@ public class ShopControllerImpl implements ShopController {
         Platform.runLater(() -> btn.setText("Disabled"));
         btn.setDisable(true);
     }
+
 
 
 
