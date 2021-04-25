@@ -1,4 +1,4 @@
-package com.bdefender.game;
+package com.bdefender.game.view;
 
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -6,12 +6,15 @@ import javafx.scene.layout.AnchorPane;
 import com.bdefender.component.ImageButton;
 import com.bdefender.menu.GameOverMenu;
 import com.bdefender.event.MouseEvent;
+import com.bdefender.map.Map;
 import com.bdefender.map.view.MapViewImpl;
+import com.bdefender.map.view.MapView;
 import com.bdefender.event.EventHandler;
 
 public class GameView extends AnchorPane {
 
     private final TopMenuView topMenuView;
+    private final MapView mapView;
     private final Parent shopView;
     private final ImageButton btnShop;
     private final ImageButton btnBackToMenu;
@@ -19,10 +22,12 @@ public class GameView extends AnchorPane {
 
 
 
-    public GameView(final MapViewImpl mapView, final Parent shopView) {
+    public GameView(final Map map, final Parent shopView) {
         this.topMenuView = new TopMenuView();
         this.shopView = shopView;
+        var mapView = new MapViewImpl(map);
         mapView.setLayoutY(TopMenuView.HEIGHT);
+        this.mapView = mapView;
         this.shopView.setLayoutY(TopMenuView.HEIGHT);
         this.btnShop = this.topMenuView.getShopButton();
         this.btnBackToMenu = this.topMenuView.getExitButton();
@@ -93,5 +98,32 @@ public class GameView extends AnchorPane {
      */
     public void setRoundText(final int round) {
         this.topMenuView.setRoundTextValue(round);
+    }
+
+    /**
+     * Return the map view.
+     * @return map view
+     */
+    public MapView getMapView() {
+        return this.mapView;
+    }
+
+    /**
+     * Show or hide shop view.
+     * @param visible
+     */
+    public void setShopVisible(final boolean visible) {
+        if (visible && !this.getChildren().contains(this.shopView)) {
+            this.getChildren().add(this.shopView);
+        } else if (!visible && this.getChildren().contains(this.shopView)) {
+            this.getChildren().remove(this.shopView);
+        }
+    }
+
+    /**
+     * @return true if shop is visible, false else
+     */
+    public boolean isShopVisible() {
+        return this.getChildren().contains(this.shopView);
     }
 }

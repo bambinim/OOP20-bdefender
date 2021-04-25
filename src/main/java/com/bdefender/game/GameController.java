@@ -1,6 +1,7 @@
 package com.bdefender.game;
 
 import com.bdefender.event.GameEvent;
+import com.bdefender.game.view.GameView;
 import com.bdefender.event.EventHandler;
 
 public interface GameController {
