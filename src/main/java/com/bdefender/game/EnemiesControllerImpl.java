@@ -12,7 +12,6 @@ import com.bdefender.enemy.view.EnemyGraphicMover;
 import com.bdefender.event.EnemyEvent;
 import com.bdefender.event.EventHandler;
 import com.bdefender.map.Map;
-import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Random;
