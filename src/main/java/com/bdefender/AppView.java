@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import java.io.IOException;
 import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
+import com.bdefender.game.view.GameViewImpl;
 import com.bdefender.menu.LaunchMenuLoader;
 import com.bdefender.menu.LaunchMenuLoaderImpl;
 import javafx.stage.Screen;
@@ -66,7 +67,7 @@ public class AppView extends Application {
                 this.gameController.closeAllThread();
             }
         });
-        this.setContent(this.gameController.getView());
+        this.setContent(this.gameController.getView().getView());
     }
 
     /**

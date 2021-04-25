@@ -14,6 +14,7 @@ import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.WalletImpl;
 import com.bdefender.event.MouseEvent;
 import com.bdefender.game.view.GameView;
+import com.bdefender.game.view.GameViewImpl;
 import com.bdefender.event.EventHandler;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
@@ -31,7 +32,7 @@ public class GameControllerImpl implements GameController {
 
     //enemies and tower
     private final TowersController towerController;
-    private EnemiesController enemies;
+    private final EnemiesController enemies;
 
     //economy and shop
     private final ShopLoader shopLoader;
@@ -61,7 +62,7 @@ public class GameControllerImpl implements GameController {
         //shop
         this.shop = new ShopImpl(new WalletImpl(INITIAL_AMOUNT));
         this.shopLoader = new ShopLoaderImpl(shop, (e) -> this.closeShop());
-        this.view = new GameView(this.map, this.shopLoader.getShopView());
+        this.view = new GameViewImpl(this.map, this.shopLoader.getShopView());
         this.view.getMapView().getTowerPlacementView().setOnBoxClick(e -> this.addTower(e));
         //topBar
         //this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(0));
