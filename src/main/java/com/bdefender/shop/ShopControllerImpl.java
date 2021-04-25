@@ -4,6 +4,8 @@ package com.bdefender.shop;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 import com.bdefender.event.EventHandler;
 import com.bdefender.event.MouseEvent;
 import com.bdefender.tower.Tower;
@@ -110,7 +112,13 @@ public class ShopControllerImpl implements ShopController {
     public void setBtnUpgradeOn() {
         btnTowerMap.forEach((k, v) -> disableButton(k));
         this.isUpgrading = true;
-        enableButton(btnUpgrade);
+        final TowerName  typeToUpg = Stream.of(TowerName.values())
+                .filter((x) -> x.getId() == this.towerToUpg.getTowerTypeId())
+                .findFirst()
+                .get();
+        if (this.shop.getWallet().areMoneyEnough(typeToUpg.getUpgCost())) {
+            enableButton(btnUpgrade);
+        }
     }
 
     /**
