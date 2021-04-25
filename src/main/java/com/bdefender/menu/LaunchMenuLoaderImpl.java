@@ -11,14 +11,14 @@ import javafx.scene.layout.AnchorPane;
 
 
 public class LaunchMenuLoaderImpl implements LaunchMenuLoader {
-    private final MenuController menuController;
+    private final MenuViewManager menuController;
     private final AnchorPane pane = new AnchorPane();
     private final Parent menuContent;
     private Parent statisticContent = null;
-    private final StatisticsMenuControllerImpl statController;
+    private final StatisticsMenuController statController;
 
     public LaunchMenuLoaderImpl(final EventHandler<MouseEvent> playEvent) throws IOException {
-        menuController = new MenuControllerImpl(playEvent, (e) -> {
+        menuController = new MenuViewManagerImpl(playEvent, (e) -> {
             this.setParentToShow(this.statisticContent);
             });
         final FXMLLoader menuLoader = new FXMLLoader(ClassLoader.getSystemResource("menu/launchMenu.fxml"));
@@ -49,7 +49,7 @@ public class LaunchMenuLoaderImpl implements LaunchMenuLoader {
      * Get the controller of the loaded GUI.
      * @return menuController
      */
-    public MenuController getController() {
+    public MenuViewManager getViewManager() {
         return this.menuController;
     }
 

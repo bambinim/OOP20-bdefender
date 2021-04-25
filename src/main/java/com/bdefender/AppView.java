@@ -56,7 +56,7 @@ public class AppView extends Application {
     }
 
     private void startGame() throws IOException {
-        this.gameController = new GameControllerImpl(menuLoader.getController().getSelectedMap());
+        this.gameController = new GameControllerImpl(menuLoader.getViewManager().getSelectedMap());
         this.gameController.setOnGameFinish((e) -> {
             this.startMenu();
         });
@@ -104,7 +104,7 @@ public class AppView extends Application {
      * Set window content. Every time it creates a new scene.
      * @param parent - Content
      */
-    public void setContent(final Parent parent) {
+    private void setContent(final Parent parent) {
         this.root.getChildren().clear();
         this.root.getChildren().add(parent);
     }
