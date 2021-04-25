@@ -6,6 +6,7 @@ import com.bdefender.map.Coordinates;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.TowerName;
+import com.bdefender.tower.interactor.EnemyInteractorDirectImpl;
 import com.bdefender.tower.view.TowerView;
 
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class TowersControllerImpl implements TowersController {
     }
 
     private Tower getTowerByTypeName(final TowerName name, final Coordinates pos) {
-       return this.factory.getTowerDirect(name, this.pool, pos);
+       return this.factory.getTowerDirect(name, new EnemyInteractorDirectImpl(pool), pos);
     }
 
     /**
