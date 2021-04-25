@@ -78,7 +78,7 @@ public class GameControllerImpl implements GameController {
         this.view.getMapView().setOnTowerClick(e -> {
             this.shop.setTowerToUpg(e.getTower());
             this.openShop();
-            shopLoader.getShopViewManager().setBtnUpgradeOn();
+            shopLoader.getShopViewManager().setUpgradeOn();
         });
 
     }
@@ -193,8 +193,8 @@ public class GameControllerImpl implements GameController {
      * */
     private void onDead() {
         this.shop.getWallet().addMoney(DEAD_MONEY);
-        this.shopLoader.getShopViewManager().updLblMoney();
-        this.shopLoader.getShopViewManager().refreshTowerBtn();
+        this.shopLoader.getShopViewManager().updMoney();
+        this.shopLoader.getShopViewManager().refreshTowerChoosable();
         this.enemiesOffGame++;
         if (this.isRoundFinished()) {
             this.nextRound();
