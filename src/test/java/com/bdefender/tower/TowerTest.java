@@ -1,3 +1,5 @@
+package com.bdefender.tower;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.bdefender.Pair;
