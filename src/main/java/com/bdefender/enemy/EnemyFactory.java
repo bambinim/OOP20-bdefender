@@ -6,7 +6,7 @@ import com.bdefender.event.EventHandler;
 
 public class EnemyFactory {
 
-    public Enemy getEnemy(EnemyName enemy, final EventHandler<EnemyEvent> onDeath,
+    public final Enemy getEnemy(final EnemyName enemy, final EventHandler<EnemyEvent> onDeath,
             final EventHandler<EnemyEvent> onReachedEnd) {
         return this.enemyFromParams(enemy.getLife(), enemy.getSpeed(), enemy.getDamage(), enemy.getId(), onDeath,
                 onReachedEnd);

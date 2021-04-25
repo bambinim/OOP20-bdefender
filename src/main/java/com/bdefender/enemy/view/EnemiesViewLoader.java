@@ -16,7 +16,7 @@ public class EnemiesViewLoader {
         INSTANCE = new EnemiesViewLoader(N_ENEMIES);
     }
 
-    private final ArrayList<Image> enemyImages = new ArrayList<>();
+    private final List<Image> enemyImages = new ArrayList<>();
 
     public EnemiesViewLoader(final int nEnemies) {
         for (int i = 0; i < nEnemies; i++) {
@@ -33,7 +33,7 @@ public class EnemiesViewLoader {
     }
 
     public static HashMap<Enemy, Image> getEnemiesImages(final List<Enemy> enemies) {
-        HashMap<Enemy,Image> enemiesImages = new HashMap<>();
+        HashMap<Enemy, Image> enemiesImages = new HashMap<>();
         for (Enemy enemy : enemies) {
             enemiesImages.put(enemy, INSTANCE.enemyImages.get(enemy.getTypeId()));
         }
