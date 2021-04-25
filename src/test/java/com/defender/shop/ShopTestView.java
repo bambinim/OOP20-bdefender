@@ -2,6 +2,7 @@ package com.defender.shop;
 
 import java.io.IOException;
 
+import com.bdefender.tower.view.TowersImageLoader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,13 +22,11 @@ import com.bdefender.shop.ShopManagerImpl;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.TowerName;
-import com.bdefender.tower.view.TowerImageLoader;
 import com.bdefender.wallet.Wallet;
 import com.bdefender.wallet.WalletImpl;
 
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.robot.Robot;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
@@ -73,19 +72,19 @@ public class ShopTestView {
         TowerName towerName = this.shopmanager.getShopController().getLastTowerClicked().get();
         Tower towerShop = tf.getTowerDirect(towerName, pool, new Pair<Double, Double>(0.0, 0.0));
         Tower towerCorrect = tf.getTowerDirect(TowerName.FIRE_ARROW, pool, new Pair<Double, Double>(0.0, 0.0));
-        Assertions.assertEquals(TowerImageLoader.getTowerImage(towerCorrect), TowerImageLoader.getTowerImage(towerShop));
+        Assertions.assertEquals(TowersImageLoader.getTowerImage(towerCorrect), TowersImageLoader.getTowerImage(towerShop));
 
         robot.clickOn("#btnThunderbolt");
         towerName = this.shopmanager.getShopController().getLastTowerClicked().get();
         towerShop = tf.getTowerDirect(towerName, pool, new Pair<Double, Double>(0.0, 0.0));
         towerCorrect = tf.getTowerDirect(TowerName.THUNDERBOLT, pool, new Pair<Double, Double>(0.0, 0.0));
 
-        Assertions.assertEquals(TowerImageLoader.getTowerImage(towerCorrect), TowerImageLoader.getTowerImage(towerShop));
+        Assertions.assertEquals(TowersImageLoader.getTowerImage(towerCorrect), TowersImageLoader.getTowerImage(towerShop));
         robot.clickOn("#btnFireBall");
         towerName = this.shopmanager.getShopController().getLastTowerClicked().get();
         towerShop = tf.getTowerDirect(towerName, pool, new Pair<Double, Double>(0.0, 0.0));
         towerCorrect = tf.getTowerDirect(TowerName.FIRE_BALL, pool, new Pair<Double, Double>(0.0, 0.0));
-        Assertions.assertEquals(TowerImageLoader.getTowerImage(towerCorrect), TowerImageLoader.getTowerImage(towerShop));
+        Assertions.assertEquals(TowersImageLoader.getTowerImage(towerCorrect), TowersImageLoader.getTowerImage(towerShop));
 
     }
 }

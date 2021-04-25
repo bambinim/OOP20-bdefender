@@ -2,7 +2,7 @@ package com.bdefender.enemy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.bdefender.enemy.view.EnemiesViewLoader;
+import com.bdefender.enemy.view.EnemiesImageLoader;
 import javafx.scene.image.Image;
 import org.junit.jupiter.api.Test;
 
@@ -98,7 +98,7 @@ class EnemiesTest {
         EnemyFactory factory = new EnemyFactory();
         List<Enemy> enemies = new ArrayList<>(List.of(factory.getEnemy(EnemyName.SWORD_OGRE, e ->{}, e -> {}), factory.getEnemy(EnemyName.AXE_OGRE, e ->{}, e -> {}), factory.getEnemy(EnemyName.HAMMER_OGRE, e ->{}, e -> {})));
 
-        ArrayList<Image> enemiesImages = new ArrayList<>(EnemiesViewLoader.getEnemiesImages(enemies).values());
+        ArrayList<Image> enemiesImages = new ArrayList<>(EnemiesImageLoader.getEnemiesImages(enemies).values());
 
         for (Image image : enemiesImages) {
             assertNotNull(image);

@@ -2,7 +2,6 @@ package com.bdefender.enemy.pool;
 
 import com.bdefender.Pair;
 import com.bdefender.enemy.Enemy;
-import com.bdefender.enemy.view.EnemyGraphicMover;
 
 import java.util.ArrayList;
 import java.util.HashMap;

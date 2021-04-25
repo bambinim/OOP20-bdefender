@@ -1,6 +1,6 @@
-package com.bdefender.tower.controller;
+package com.bdefender.tower.interactor;
 
-public interface EnemyControllerDirect extends EnemyController {
+public interface EnemyInteractorDirect extends EnemyInteractor {
 
     /**
      * Takes life from the enemy specified by id.

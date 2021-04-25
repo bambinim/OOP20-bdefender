@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class EnemiesViewLoader {
+public class EnemiesImageLoader {
 
-    private static final EnemiesViewLoader INSTANCE;
+    private static final EnemiesImageLoader INSTANCE;
     private static final int N_ENEMIES = 3;
 
     static {
-        INSTANCE = new EnemiesViewLoader(N_ENEMIES);
+        INSTANCE = new EnemiesImageLoader(N_ENEMIES);
     }
 
     private final List<Image> enemyImages = new ArrayList<>();
 
-    public EnemiesViewLoader(final int nEnemies) {
+    public EnemiesImageLoader(final int nEnemies) {
         for (int i = 0; i < nEnemies; i++) {
             Image enemyImage;
             try {

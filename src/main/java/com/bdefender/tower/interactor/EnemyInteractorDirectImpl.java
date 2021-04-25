@@ -1,4 +1,4 @@
-package com.bdefender.tower.controller;
+package com.bdefender.tower.interactor;
 
 import com.bdefender.Pair;
 import com.bdefender.enemy.pool.EnemiesPoolInteractor;
@@ -6,11 +6,11 @@ import com.bdefender.enemy.pool.EnemiesPoolInteractor;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class EnemyControllerDirectImpl implements EnemyControllerDirect {
+public class EnemyInteractorDirectImpl implements EnemyInteractorDirect {
 
     private final EnemiesPoolInteractor enemiesPool;
 
-    public EnemyControllerDirectImpl(final EnemiesPoolInteractor enemiesPool) {
+    public EnemyInteractorDirectImpl(final EnemiesPoolInteractor enemiesPool) {
         this.enemiesPool = enemiesPool;
     }
 

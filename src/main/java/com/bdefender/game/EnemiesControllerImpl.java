@@ -8,7 +8,7 @@ import com.bdefender.enemy.pool.EnemiesPoolInteractor;
 import com.bdefender.enemy.pool.EnemiesPoolMover;
 import com.bdefender.enemy.pool.EnemiesPoolSpawner;
 import com.bdefender.enemy.pool.MapInteractorImpl;
-import com.bdefender.enemy.view.EnemyGraphicMover;
+import com.bdefender.enemy.view.EnemiesGraphicMover;
 import com.bdefender.event.EnemyEvent;
 import com.bdefender.event.EventHandler;
 import com.bdefender.map.Map;
@@ -20,10 +20,10 @@ public class EnemiesControllerImpl implements EnemiesController {
 
     private final EnemiesPoolImpl pool;
     private EnemyMoverThread moverThread;
-    private final EnemyGraphicMover gMover;
+    private final EnemiesGraphicMover gMover;
     private EnemySpawnerThread spawnerThread;
 
-    public EnemiesControllerImpl(final Map map, final EnemyGraphicMover graphicMover) {
+    public EnemiesControllerImpl(final Map map, final EnemiesGraphicMover graphicMover) {
         this.pool = new EnemiesPoolImpl(new MapInteractorImpl(map));
         this.gMover = graphicMover;
         this.moverThread = new EnemyMoverThread(this.pool, this.gMover);
@@ -126,12 +126,12 @@ class EnemySpawnerThread extends Thread {
 class EnemyMoverThread extends Thread {
 
     private final EnemiesPoolMover mover;
-    private final EnemyGraphicMover gMover;
+    private final EnemiesGraphicMover gMover;
     private boolean alive = true;
     private static final long SPEED_DIV = 1000;
     private static final long TEN_SEC = 10000;
 
-    EnemyMoverThread(final EnemiesPoolMover mover, final EnemyGraphicMover gMover) {
+    EnemyMoverThread(final EnemiesPoolMover mover, final EnemiesGraphicMover gMover) {
         this.mover = mover;
         this.gMover = gMover;
         this.setName("Enemy-Mover-Thread");

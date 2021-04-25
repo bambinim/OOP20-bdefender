@@ -2,8 +2,8 @@ package com.bdefender.tower;
 
 import com.bdefender.Pair;
 import com.bdefender.enemy.pool.EnemiesPoolInteractor;
-import com.bdefender.tower.controller.EnemyControllerDirect;
-import com.bdefender.tower.controller.EnemyControllerDirectImpl;
+import com.bdefender.tower.interactor.EnemyInteractorDirect;
+import com.bdefender.tower.interactor.EnemyInteractorDirectImpl;
 
 import java.util.Map;
 
@@ -28,7 +28,7 @@ public class TowerFactory {
 
         return new Tower() {
 
-            private final EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
+            private final EnemyInteractorDirect enemiesCtrl = new EnemyInteractorDirectImpl(pool);
             private int level = 1;
 
             @Override

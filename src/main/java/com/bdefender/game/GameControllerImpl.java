@@ -3,6 +3,7 @@ package com.bdefender.game;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.bdefender.enemy.view.EnemiesGraphicMoverImpl;
 import com.bdefender.map.MapLoader;
 import com.bdefender.map.MapType;
 import com.bdefender.map.MapView;
@@ -10,7 +11,6 @@ import com.bdefender.map.TowerBox;
 import com.bdefender.map.Map;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerName;
-import com.bdefender.enemy.view.EnemyGraphicMoverImpl;
 import com.bdefender.event.GameEvent;
 import com.bdefender.tower.view.TowerViewImpl;
 import com.bdefender.wallet.WalletImpl;
@@ -76,7 +76,7 @@ public class GameControllerImpl implements GameController {
             this.onGameFinish.handle(new GameEvent(GameEvent.GAME_QUIT));
         });
         //enemies and tower
-        this.enemies = new EnemiesControllerImpl(this.map, new EnemyGraphicMoverImpl(this.mapView.getEnemiesPane()));
+        this.enemies = new EnemiesControllerImpl(this.map, new EnemiesGraphicMoverImpl(this.mapView.getEnemiesPane()));
         this.towerController = new TowersControllerImpl((t) -> new TowerViewImpl(this.mapView.getTowersPane(), t), enemies.getEnemiesPool());
         this.mapView.setOnTowerClick(e -> {
             this.shopManager.getShopController().setTowerToUpg(e.getTower());

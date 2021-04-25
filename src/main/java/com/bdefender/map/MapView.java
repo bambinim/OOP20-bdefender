@@ -8,7 +8,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-import com.bdefender.tower.view.TowerImageLoader;
+import com.bdefender.tower.view.TowersImageLoader;
 import com.bdefender.component.ImageButton;
 import com.bdefender.event.TowerEvent;
 import com.bdefender.shop.TowerPlacementView;
@@ -75,7 +75,7 @@ public class MapView extends AnchorPane {
     public void reloadTowersView() {
         this.towersPane.getChildren().clear();
         this.towersPane.getChildren().addAll(this.map.getTowerBoxes().stream().filter(el -> el.getTower().isPresent()).map(el -> {
-            final ImageButton tmp = new ImageButton(TowerImageLoader.getTowerImage(el.getTower().get()));
+            final ImageButton tmp = new ImageButton(TowersImageLoader.getTowerImage(el.getTower().get()));
             tmp.setX(el.getCentralCoordinate().getCenterPixelX());
             tmp.setY(el.getCentralCoordinate().getCenterPixelY());
             tmp.setWidth(TOWER_WIDTH);
