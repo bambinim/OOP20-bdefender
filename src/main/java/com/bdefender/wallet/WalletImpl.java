@@ -4,8 +4,7 @@ public class WalletImpl implements Wallet {
     private static final int NEG_LIMIT = -1;
     private int userMoney;
 	
-    /**
-	 *Set the initial value of the user money.
+	 /**Set the initial value of the user money.
 	 *@param initValue the initial amount of money.
 	 */
 	public WalletImpl(final int initValue) {

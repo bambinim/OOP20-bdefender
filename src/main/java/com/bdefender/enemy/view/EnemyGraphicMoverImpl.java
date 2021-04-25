@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
@@ -36,16 +37,16 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
     }
     */
 
-    public void moveEnemies(final ArrayList<Enemy> enemies) {
+    public final void moveEnemies(final List<Enemy> enemies) {
         Platform.runLater(() -> {
             synchronized (this.lock) {
                 try {
-                    for (var i : enemies) {
+                    for (final var i : enemies) {
                         if (!this.renderedEnemies.keySet().contains(i)) {
                             this.renderedEnemies.put(i, new ImageView(EnemiesViewLoader.getEnemyImage(i)));
                             this.container.getChildren().add(this.renderedEnemies.get(i));
                         }
-                        Coordinates enemyPos = new Coordinates(i.getPosition().getX() - 1, i.getPosition().getY() - 1);
+                        final Coordinates enemyPos = new Coordinates(i.getPosition().getX() - 1, i.getPosition().getY() - 1);
                         this.renderedEnemies.get(i).setX(enemyPos.getLeftPixel());
                         this.renderedEnemies.get(i).setY(enemyPos.getTopPixel());
                     }
@@ -55,7 +56,7 @@ public class EnemyGraphicMoverImpl implements EnemyGraphicMover {
                             this.container.getChildren().remove(val);
                         }
                     });
-                } catch (ConcurrentModificationException e) {}
+                } catch (ConcurrentModificationException e) { }
             }
         });
     }

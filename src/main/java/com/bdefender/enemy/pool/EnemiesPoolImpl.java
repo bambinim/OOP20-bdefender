@@ -11,29 +11,28 @@ import java.util.stream.Collectors;
 
 public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover, EnemiesPoolSpawner {
 
-    static class EnemyReachedEndException extends Exception {
-        private static final long serialVersionUID = 1L;
-    }
-
     private final Map<Integer, Enemy> enemies = new HashMap<>();
     private int counter = 0;
     private final MapInteractor mapInteractor;
+    static class EnemyReachedEndException extends Exception {
+        private static final long serialVersionUID = 1L;
+    }
 
     public EnemiesPoolImpl(final MapInteractor mapInteractor) {
         this.mapInteractor = mapInteractor;
     }
 
     @Override
-    public Map<Integer, Enemy> getEnemies(final boolean alive) {
+    public final Map<Integer, Enemy> getEnemies(final boolean alive) {
         return alive ? this.getAliveEnemies() : this.enemies;
     }
 
-    public void clearPool() {
+    public final void clearPool() {
         this.enemies.clear();
     }
 
     @Override
-    public Map<Integer, Enemy> getAliveEnemies() {
+    public final Map<Integer, Enemy> getAliveEnemies() {
         synchronized (this.enemies) {
             return this.enemies.entrySet().stream().filter(e -> e.getValue().isAlive() && !e.getValue().isArrived())
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -41,7 +40,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     @Override
-    public void addEnemy(final Enemy enemy) {
+    public final void addEnemy(final Enemy enemy) {
         synchronized (this.enemies) {
             enemy.moveTo(mapInteractor.getSpawnPoint());
             enemy.setDirection(this.mapInteractor.getStartingDirection());
@@ -50,7 +49,7 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     @Override
-    public void applyDamageById(final int id, final Double damage) {
+    public final void applyDamageById(final int id, final Double damage) {
         synchronized (this.enemies) {
             this.enemies.get(id).takeDamage(damage);
         }
@@ -58,8 +57,8 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
     private Pair<Double, Double> getNextPos(final Pair<Integer, Integer> dir, final Pair<Double, Double> currPos,
             final Pair<Double, Double> distance) {
-        double newX = currPos.getX() + (distance.getX() * dir.getX());
-        double newY = currPos.getY() + (distance.getY() * dir.getY());
+        final double newX = currPos.getX() + (distance.getX() * dir.getX());
+        final double newY = currPos.getY() + (distance.getY() * dir.getY());
         return new Pair<>(newX, newY);
     }
 
@@ -76,18 +75,18 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
 
     private Pair<Double, Double> getNextValidPos(final Pair<Double, Double> nextPosSimple, final Enemy enemy)
             throws EnemyReachedEndException {
-        ArrayList<Pair<Double, Double>> keyPoints = new ArrayList<>(this.mapInteractor.getKeyPoints());
-        Pair<Integer, Integer> dir = enemy.getDirection();
-        Pair<Double, Double> currPos = enemy.getPosition();
+        final ArrayList<Pair<Double, Double>> keyPoints = new ArrayList<>(this.mapInteractor.getKeyPoints());
+        final Pair<Integer, Integer> dir = enemy.getDirection();
+        final Pair<Double, Double> currPos = enemy.getPosition();
         Pair<Double, Double> nxtPos = nextPosSimple;
-        for (Pair<Double, Double> keyPoint : keyPoints) {
+        for (final Pair<Double, Double> keyPoint : keyPoints) {
             if (keyPointIsAfter(keyPoint, currPos, dir) && isAfterKeyPoint(nxtPos, keyPoint, dir)) {
-                int nextXDir = dir.getX() == 0 ? 1 : 0;
+                final int nextXDir = dir.getX() == 0 ? 1 : 0;
                 int nextYDir = 0;
                 if (keyPoints.indexOf(keyPoint) + 1 == keyPoints.size()) {
                     throw new EnemyReachedEndException();
                 } else {
-                    Double nextKeyPointY = keyPoints.get(keyPoints.indexOf(keyPoint) + 1).getY();
+                    final Double nextKeyPointY = keyPoints.get(keyPoints.indexOf(keyPoint) + 1).getY();
                     if (!nextKeyPointY.equals(keyPoint.getY())) {
                         nextYDir = nextKeyPointY > keyPoint.getY() ? 1 : -1;
                     }
@@ -102,9 +101,9 @@ public class EnemiesPoolImpl implements EnemiesPoolInteractor, EnemiesPoolMover,
     }
 
     @Override
-    public void moveEnemies(final long speedDiv) {
+    public final void moveEnemies(final long speedDiv) {
         synchronized (this.enemies) {
-            for (Enemy enemy : this.enemies.values()) {
+            for (final Enemy enemy : this.enemies.values()) {
                 if (enemy.isAlive() && !enemy.isArrived()) {
                     try {
                         enemy.moveTo(getNextValidPos(getNextPos(enemy.getDirection(), enemy.getPosition(),
