@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EnemiesGraphicMoverImpl implements EnemiesGraphicMover {
-    
+
     private final Pane container;
     private final Map<Enemy, ImageView> renderedEnemies = new HashMap<>();
     private final Object lock = new Object();
@@ -27,7 +27,7 @@ public class EnemiesGraphicMoverImpl implements EnemiesGraphicMover {
             synchronized (this.lock) {
                 try {
                     for (final var i : enemies) {
-                        if (!this.renderedEnemies.keySet().contains(i)) {
+                        if (!this.renderedEnemies.containsKey(i)) {
                             this.renderedEnemies.put(i, new ImageView(EnemiesImageLoader.getEnemyImage(i)));
                             this.container.getChildren().add(this.renderedEnemies.get(i));
                         }

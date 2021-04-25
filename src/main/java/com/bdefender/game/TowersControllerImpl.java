@@ -27,6 +27,13 @@ public class TowersControllerImpl implements TowersController {
        return this.factory.getTowerDirect(name, this.pool, pos);
     }
 
+    /**
+     * adds a tower to the game field .
+     * 
+     * @param name the type of tower to add
+     * @param pos tower spawn position
+     * @return created tower
+     */
     @Override
     public Tower addTower(final TowerName name, final Coordinates pos) {
         Tower tower = getTowerByTypeName(name, pos);
@@ -37,12 +44,21 @@ public class TowersControllerImpl implements TowersController {
         return tower;
     }
 
+    /**
+     * remove a tower from the game field.
+     * 
+     * @param tower tower to remove from the game field
+     */
     @Override
     public void removeTower(final Tower tower) {
         this.towersData.get(tower).getThread().killTower();
         this.towersData.remove(tower);
     }
 
+    /**
+     * @param tower tower to upgrade
+     * @return level after the upgrade
+     */
     @Override
     public Integer upgradeTower(final Tower tower) {
         return tower.upgradeLevel();

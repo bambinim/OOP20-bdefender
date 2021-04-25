@@ -10,6 +10,7 @@ public interface TowersController {
      * Creates the tower threads and add its view to the game panel.
      *
      * @param towerName tower type identification code.
+     * @param pos tower spawn position
      * @return created tower ID.
      */
     Tower addTower(TowerName towerName, Coordinates pos);

@@ -29,6 +29,13 @@ public class EnemiesControllerImpl implements EnemiesController {
         this.moverThread = new EnemyMoverThread(this.pool, this.gMover);
     }
 
+    /**
+     * @param intensity number of enemies spawned every 10 seconds
+     * @param totEnemies the number of enemies to spawn
+     * @param onDead enemy's death handler
+     * @param onReachedEnd handler for enemy reached end event
+     * starts enemy generation.
+     */
     @Override
     public void startGenerate(final int intensity, final int totEnemies, final EventHandler<EnemyEvent> onDead,
             final EventHandler<EnemyEvent> onReachedEnd) {
@@ -40,16 +47,25 @@ public class EnemiesControllerImpl implements EnemiesController {
         spawnerThread.start();
     }
 
+    /**
+     * @return enemies pool interactor.
+     */
     @Override
     public EnemiesPoolInteractor getEnemiesPool() {
         return pool;
     }
 
+    /**
+     * stops enemies movement thread.
+     */
     @Override
     public void stopMovingEnemies() {
         this.moverThread.killMover();
     }
 
+    /**
+     * stop enemies spawner thread.
+     */
     @Override
     public void stopSpawner() {
         this.spawnerThread.shutdown();
@@ -92,18 +108,6 @@ class EnemySpawnerThread extends Thread {
 
     @Override
     public void run() {
-        /*
-        for (int i = 0; i < totEnemies; i++) {
-            try {
-                sleep(TEN_SEC / intensity);
-                Random random = new Random();
-                Enemy enemy = getEnemyByType(random.nextInt(3));
-                spawner.addEnemy(enemy);
-            } catch (InterruptedException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-         */
         int i = 0;
         while (!stop && i < this.totEnemies) {
             try {

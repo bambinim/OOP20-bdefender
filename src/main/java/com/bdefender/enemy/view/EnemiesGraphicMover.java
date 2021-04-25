@@ -1,8 +1,6 @@
 package com.bdefender.enemy.view;
 
 import com.bdefender.enemy.Enemy;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public interface EnemiesGraphicMover {
