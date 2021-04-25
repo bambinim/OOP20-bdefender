@@ -22,17 +22,21 @@ public class TowerViewImpl implements TowerView {
     public TowerViewImpl(final AnchorPane panel, final Tower tower) {
         this.tower = tower;
         this.panel = panel;
-        ImageView towerImage = new ImageView(TowerImageLoader.getTowerImage(this.tower));
-        Coordinates towerPos = new Coordinates(this.tower.getPosition().getX(), this.tower.getPosition().getY());
+        final ImageView towerImage = new ImageView(TowerImageLoader.getTowerImage(this.tower));
+        final Coordinates towerPos = new Coordinates(this.tower.getPosition().getX(), this.tower.getPosition().getY());
         towerImage.setX(towerPos.getLeftPixel());
         towerImage.setY(towerPos.getTopPixel());
     }
 
+    /**
+     * Starts shoot animation.
+     * @param target
+     */
     @Override
     public void startShootAnimation(final Pair<Double, Double> target) {
-        ImageView towerShoot = new ImageView(TowerImageLoader.getTowerShootImage(tower));
+        final ImageView towerShoot = new ImageView(TowerImageLoader.getTowerShootImage(tower));
         Platform.runLater(() -> {
-            var shootAnimation = createTransition(towerShoot, new Coordinates(target.getX(), target.getY()));
+            final var shootAnimation = createTransition(towerShoot, new Coordinates(target.getX(), target.getY()));
             shootAnimation.setOnFinished(e -> panel.getChildren().remove(towerShoot));
             panel.getChildren().add(towerShoot);
             shootAnimation.play();
@@ -46,7 +50,7 @@ public class TowerViewImpl implements TowerView {
     private PathTransition createTransition(final Node node, final Coordinates target) {
         final PathTransition pathTransition = new PathTransition();
         final Path path = new Path();
-        var towerPos = getTowerCoordinates();
+        final var towerPos = getTowerCoordinates();
         path.getElements().add(new MoveTo(towerPos.getLeftPixel(), towerPos.getTopPixel()));
         path.getElements().add(new LineTo(target.getLeftPixel(), target.getTopPixel()));
         pathTransition.setPath(path);
