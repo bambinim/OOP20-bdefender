@@ -1,112 +1,106 @@
 package com.bdefender.game;
 
-import com.bdefender.enemies.pool.EnemiesPoolInteractor;
+import com.bdefender.Pair;
+import com.bdefender.enemy.pool.EnemiesPoolInteractor;
 import com.bdefender.map.Coordinates;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
+import com.bdefender.tower.TowerName;
 import com.bdefender.tower.view.TowerView;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class TowersControllerImpl implements TowersController{
+public class TowersControllerImpl implements TowersController {
 
-    private final Map<Integer, TowerData> towersData = new HashMap<>();
-    private int towerCounter = 0;
+    private final Map<Tower, TowerData> towersData = new HashMap<>();
     private final TowerFactory factory = new TowerFactory();
     private final EnemiesPoolInteractor pool;
     private final TowerViewImplementation towerViewImplementation;
 
-    public TowersControllerImpl(TowerViewImplementation viewImplementation, EnemiesPoolInteractor enemyPool) {
+    public TowersControllerImpl(final TowerViewImplementation viewImplementation, final EnemiesPoolInteractor enemyPool) {
         this.towerViewImplementation = viewImplementation;
         this.pool = enemyPool;
     }
 
-    private Tower getTowerByTypeName(TowerName name, Coordinates pos){
-        switch (name) {
-            case ROCK: return factory.getTowerDirect1(this.pool,pos);
-            case FIRE_BALL: factory.getTowerDirect1(this.pool,pos);
-            case FIRE_ARROW: factory.getTowerDirect1(this.pool,pos);
-            case THUNDERBOLT: factory.getTowerDirect1(this.pool,pos);
-        }
-        return null;
+    private Tower getTowerByTypeName(final TowerName name, final Coordinates pos) {
+       return this.factory.getTowerDirect(name, this.pool, pos);
     }
 
     @Override
-    public Integer addTower(TowerName name, Coordinates pos) {
+    public Tower addTower(final TowerName name, final Coordinates pos) {
         Tower tower = getTowerByTypeName(name, pos);
         TowerView view = towerViewImplementation.getView(tower);
-        TowerThread thread = new TowerThread(tower,view);
-        towersData.put(++towerCounter,new TowerData(view,thread));
+        TowerThread thread = new TowerThread(tower, view);
+        towersData.put(tower, new TowerData(view, thread));
         thread.start();
-        view.addTowerToGameField();
-        return towerCounter;
+        return tower;
     }
 
     @Override
-    public void removeTower(Integer towerId) {
-        this.towersData.get(towerId).getThread().killTower();
-        this.towersData.get(towerId).getView().removeTowerFromGameField();
-        this.towersData.remove(towerId);
+    public void removeTower(final Tower tower) {
+        this.towersData.get(tower).getThread().killTower();
+        this.towersData.remove(tower);
     }
 
     @Override
-    public Integer upgradeTower(Integer towerId) {
-        return null;
+    public Integer upgradeTower(final Tower tower) {
+        return tower.upgradeLevel();
+    }
+
+    @FunctionalInterface
+    public interface TowerViewImplementation {
+        TowerView getView(Tower tower);
     }
 }
 
 class TowerData {
     private final TowerView towerView;
     private final TowerThread thread;
-    public TowerData(TowerView view,TowerThread thread){
+
+    TowerData(final TowerView view, final TowerThread thread) {
         this.towerView = view;
         this.thread = thread;
     }
 
-    public TowerView getView(){
+    public TowerView getView() {
         return this.towerView;
     }
 
-    public TowerThread getThread(){
+    public TowerThread getThread() {
         return this.thread;
     }
 
 }
 
-@FunctionalInterface
-interface TowerViewImplementation {
-    TowerView getView(Tower tower);
-}
-
 class TowerThread extends Thread {
-    private final  TowerView view;
+    private static final long TEN_SECONDS = 10000;
+    private final TowerView view;
     private final Tower tower;
-    private boolean alive;
+    private boolean alive = true;
 
-    public TowerThread(Tower tower, TowerView view){
+    TowerThread(final Tower tower, final TowerView view) {
         this.view = view;
         this.tower = tower;
     }
 
-    public void killTower(){
+    public void killTower() {
         this.alive = false;
     }
 
     @Override
     public void run() {
-        while(alive){
+        while (alive) {
             try {
-                sleep(1000L * tower.getShootSpeed());
-                var shootTargetPos = tower.shoot();
-                if (shootTargetPos == null) {
-                    System.out.println("No more enemies around...");
-                } else {
-                    view.startShootAnimation(shootTargetPos);
+                sleep(TEN_SECONDS / tower.getShootSpeed());
+                Pair<Double, Double> shootTargetPos;
+                shootTargetPos = tower.shoot();
+                if (shootTargetPos != null) {
+                    view.startShootAnimation(new Pair<>(shootTargetPos.getX(), shootTargetPos.getY()));
                 }
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         }
     }
-
 }

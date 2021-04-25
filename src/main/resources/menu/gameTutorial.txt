@@ -1,8 +1,17 @@
-Lo scopo del gioco e' impedire ai nemici di percorrere tutta la mappa per evitare l'assedio. 
-Compra le torri da posizionare nello shop e posizionale in punti strategici sulla mappa. 
+Lo scopo del gioco e' impedire a più nemici possibile di mettere in atto un assedio completando il percorso.
+Compra le torri dallo shop e posizionale in punti strategici sulla mappa. 
 Ogni torre sparera' ai nemici nel proorio raggio d'azione, ogni uccisione ti ricompensera' con delle monete che potrai spendere per potenziare le torri gia' presenti o comprarne di nuove.
 Ogni nemico che sopravvive all'intero percorso ti sottrae dei punti vita.
-Il gioco termina quando la tua vita arriva a 0.
+Il gioco terminerà all'esaurimento di tutti i punti vita.
 
-Soppravvivi il maggior numero di turni!
+Soppravvivi il maggior numero di turni possibile!
+
+Come giocare:
+Seleziona la mappa con la quale vuoi giocare e premi il bottone inizia partita!
+Nella schermata di gioco potrai distinguere tre componenti principali : la Mappa, lo Shop e la Barra del menù, quest'ultima presenta tre bottoni con i quali potrai rispettivamente Iniziare la partita, Aprire lo Shop e Tornare al Menu Principale.
+
+Per combattere i nemici avrai bisogno di costruire torri e posizionarle sulla mappa, per farlo ti basterà selezionare una torre dallo Shop e cliccare sul punto in cui preferisci collocarla.
+Se vorrai potenziare le tue torri in modo che infliggano danno maggiore ai nemici potrai semplicemente sceglierne una tra quelle già posizionate e cliccare l'ultimo bottone dello Shop (upgrade).
+Una volta inizata la partita (cliccando il bottone nella barra del menu) in base al round in cui ti trovi  i nemici inizieranno l'attacco!
+
 Buona Fortuna.

@@ -6,3 +6,4 @@ public interface LaunchMenuLoader {
     Parent getParent();
     MenuController getController();
 }
+

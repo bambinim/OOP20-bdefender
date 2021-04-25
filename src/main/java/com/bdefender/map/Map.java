@@ -3,9 +3,7 @@ package com.bdefender.map;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 
 public class Map {
@@ -46,10 +44,11 @@ public class Map {
     }
 
     /**
-     * @return number of empty boxes
+     * Return tower boxes with towers inside.
+     * @return list of tower boxes
      */
-    public final int countEmpyTowerBoxes() {
-        return (int) this.towerBoxes.stream().filter(el -> el.getTower().isEmpty()).count();
+    public final List<TowerBox> getOccupiedTowerBoxes() {
+        return this.towerBoxes.stream().filter((tb) -> tb.getTower().isPresent()).collect(Collectors.toList());
     }
 
     /**
@@ -59,6 +58,5 @@ public class Map {
     public Image getMapImage() {
         return this.mapImage;
     }
-    }
-
+}
 

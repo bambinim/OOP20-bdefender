@@ -1,7 +1,7 @@
 package com.bdefender.game;
 
-import javafx.event.EventHandler;
-import com.bdefender.game.event.GameEvent;
+import com.bdefender.event.GameEvent;
+import com.bdefender.event.EventHandler;
 
 public interface GameController {
 
@@ -22,4 +22,8 @@ public interface GameController {
      * @return handler
      */
     EventHandler<GameEvent> getOnGameFinish();
+
+    void closeAllThread();
+
+    boolean isRunning();
 }

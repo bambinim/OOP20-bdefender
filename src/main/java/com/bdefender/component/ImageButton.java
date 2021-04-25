@@ -1,29 +1,74 @@
 package com.bdefender.component;
 
 import java.util.Optional;
-
-import javafx.event.EventHandler;
+import com.bdefender.event.EventHandler;
+import com.bdefender.event.MouseEvent;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
-public class ImageButton extends ImageView {
+public class ImageButton extends StackPane {
 
-    private Image image;
+    private final Image image;
+    private final ImageView imageView;
+    private final Label label = new Label();
     private Optional<Image> disabledImage = Optional.empty();
     private boolean enabled = true;
     private EventHandler<MouseEvent> onMouseClick;
 
     public ImageButton(final Image image) {
-        super(image);
         this.image = image;
+        this.imageView = new ImageView(this.image);
         this.setCursor(Cursor.HAND);
-        super.setOnMouseClicked(event -> {
+        this.setOnMouseClicked(event -> {
             if (this.enabled) {
-                this.onMouseClick.handle(event.copyFor(this, event.getTarget()));
+                this.onMouseClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, event.getSource()));
             }
         });
+        this.getChildren().addAll(this.imageView, this.label);
+    }
+
+    public ImageButton(final Image image, final String label) {
+        this(image);
+        this.label.setText(label);
+    }
+
+    /**
+     * Set button's width.
+     * @param value
+     */
+    public void setWidth(final double value) {
+        //this.setMinWidth(value);
+        //this.setMaxWidth(value);
+        this.imageView.setFitWidth(value);
+    }
+
+    /**
+     * Set button's height.
+     * @param value
+     */
+    public void setHeight(final double value) {
+        //this.setMinHeight(value);
+        //this.setMaxHeight(value);
+        this.imageView.setFitHeight(value);
+    }
+
+    /**
+     * Set button's X position.
+     * @param value
+     */
+    public void setX(final double value) {
+        this.setLayoutX(value);
+    }
+
+    /**
+     * Set button's Y position.
+     * @param value
+     */
+    public void setY(final double value) {
+        this.setLayoutY(value);
     }
 
     /**
@@ -32,7 +77,7 @@ public class ImageButton extends ImageView {
     public void enable() {
         this.enabled = true;
         this.setCursor(Cursor.HAND);
-        this.setImage(this.image);
+        this.imageView.setImage(this.image);
     }
 
     /**
@@ -42,7 +87,7 @@ public class ImageButton extends ImageView {
         this.enabled = false;
         this.setCursor(Cursor.DEFAULT);
         if (this.disabledImage.isPresent()) {
-            this.setImage(this.disabledImage.get());
+            this.imageView.setImage(this.disabledImage.get());
         }
     }
 
@@ -52,6 +97,13 @@ public class ImageButton extends ImageView {
      */
     public void setDisabledImage(final Image image) {
         this.disabledImage = Optional.of(image);
+    }
+
+    /**
+     * @return image label text
+     */
+    public Label getLabel() {
+        return this.label;
     }
 
     /**

@@ -6,7 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 import com.bdefender.map.MapType;
-import javafx.event.EventHandler;
+import com.bdefender.event.EventHandler;
+import com.bdefender.event.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -15,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -23,8 +23,10 @@ import javafx.stage.Stage;
 
 public class MenuControllerImpl implements Initializable, MenuController {
     //Countryside default loaded 
-    private int selectedMap = MapType.COUNTRYSIDE.getMapNumber(); 
+    private MapType selectedMap = MapType.COUNTRYSIDE; 
     private final EventHandler<MouseEvent> onPlayClick;
+    private final EventHandler<MouseEvent> onStatisticsClick;
+
     @FXML
     private Button startPlayBtn;
 
@@ -33,13 +35,17 @@ public class MenuControllerImpl implements Initializable, MenuController {
 
 
     @FXML
-    private Label titleLable;
+    private Label titleLabel;
 
     @FXML
     private ChoiceBox<String> mapChoiceBox;
 
-    public MenuControllerImpl(final EventHandler<MouseEvent> handler) {
-        this.onPlayClick = handler;
+    @FXML
+    private Button statisticsBtn;
+
+    public MenuControllerImpl(final EventHandler<MouseEvent> playEvent, final EventHandler<MouseEvent> statisticsEvent) {
+        this.onPlayClick = playEvent;
+        this.onStatisticsClick = statisticsEvent;
     }
 
     /**
@@ -49,10 +55,26 @@ public class MenuControllerImpl implements Initializable, MenuController {
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        //Play Action
-        startPlayBtn.setOnMouseClicked(this.onPlayClick);
-        onMouseOverHandler(this.startPlayBtn, Color.BLACK, Color.BROWN);
+        initializePlayBtn();
+        initializeChoiceBox();
+        initializeTutorialBtn();
+        initializeStatisticsBtn();
 
+    }
+
+    private void initializeStatisticsBtn() {
+        this.statisticsBtn.setOnMouseClicked((event) -> 
+            this.onStatisticsClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, event.getSource())));
+        onMouseOverHandler(this.statisticsBtn, Color.BLACK, Color.BROWN);
+    }
+
+    private void initializeTutorialBtn() {
+        //tutorial action
+        this.tutorialBtn.setOnMouseClicked((e) -> this.popup());
+        onMouseOverHandler(this.tutorialBtn, Color.BLACK, Color.BROWN);
+    }
+
+    private void initializeChoiceBox() {
         //choiceBox
         boolean firstIteration = true;
         //load all map name in the choiceBox 
@@ -65,14 +87,16 @@ public class MenuControllerImpl implements Initializable, MenuController {
         }
 
         mapChoiceBox.setOnAction((event) -> {
-            this.selectedMap = mapIDbyName(mapChoiceBox.getSelectionModel().getSelectedItem());
+            this.selectedMap = getMapByName(mapChoiceBox.getSelectionModel().getSelectedItem());
             System.out.println("Ora vale = " + this.selectedMap);
         });
+    }
 
-        //tutorial action
-        this.tutorialBtn.setOnMouseClicked((e) -> this.popup());
-        onMouseOverHandler(this.tutorialBtn, Color.BLACK, Color.BROWN);
-
+    private void initializePlayBtn() {
+        //Play Action
+        startPlayBtn.setOnMouseClicked((event) -> 
+            this.onPlayClick.handle(new MouseEvent(MouseEvent.MOUSE_CLICKED, event.getSource())));
+        onMouseOverHandler(this.startPlayBtn, Color.BLACK, Color.BROWN);
     }
 
     private void popup() {
@@ -110,18 +134,18 @@ public class MenuControllerImpl implements Initializable, MenuController {
      * @return intMapNumber
      */
     @Override
-    public int getSelectedMap() {
+    public MapType getSelectedMap() {
         return this.selectedMap;
     }
 
 
-    private int mapIDbyName(final String mapName) {
+    private MapType getMapByName(final String mapName) {
         for (final MapType mapType : MapType.values()) {
             if (mapType.getMapName().equals(mapName)) {
-                return mapType.getMapNumber();
+                return mapType;
             }
         }
-        return -1;
+        return MapType.COUNTRYSIDE;
     }
 
 

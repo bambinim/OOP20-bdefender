@@ -1,10 +1,12 @@
 package com.bdefender.menu;
 
+import com.bdefender.map.MapType;
+
 public interface MenuController {
 
     /**
      * @return intMapNumber
      */
-    int getSelectedMap();
+    MapType getSelectedMap();
 
 }

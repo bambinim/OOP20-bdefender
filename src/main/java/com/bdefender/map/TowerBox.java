@@ -46,12 +46,25 @@ public class TowerBox {
         this.tower = Optional.of(tower);
     }
 
+    /**
+     * Returns a string representation of the object.
+     * @return string 
+     */
     @Override
     public boolean equals(final Object object) {
         if (object instanceof TowerBox) {
-            TowerBox tmp = (TowerBox) object;
+            final TowerBox tmp = (TowerBox) object;
             return tmp.getTopLeftCoord().equals(this.getTopLeftCoord()) && tmp.getTower().equals(this.getTower());
         }
         return false;
+    }
+
+    /**
+     * Returns a hash code value for the object.
+     * @return hash
+     */
+    @Override
+    public int hashCode() {
+        return this.topLeftCoord.hashCode() + this.tower.hashCode();
     }
 }
