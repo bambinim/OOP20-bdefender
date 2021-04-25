@@ -7,7 +7,6 @@ import com.bdefender.AppView;
 import com.bdefender.component.ImageButton;
 import com.bdefender.event.EventHandler;
 import com.bdefender.event.MouseEvent;
-
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
