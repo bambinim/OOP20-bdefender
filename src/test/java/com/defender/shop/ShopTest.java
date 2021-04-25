@@ -8,6 +8,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.framework.junit5.ApplicationExtension;
 
+import com.bdefender.Pair;
+import com.bdefender.enemy.pool.EnemiesPoolImpl;
+import com.bdefender.enemy.pool.MapInteractor;
+import com.bdefender.enemy.pool.MapInteractorImpl;
+import com.bdefender.enemy.view.EnemiesGraphicMoverImpl;
+import com.bdefender.game.EnemiesController;
+import com.bdefender.game.EnemiesControllerImpl;
+import com.bdefender.map.MapImpl;
+import com.bdefender.map.MapLoader;
+import com.bdefender.map.MapType;
+import com.bdefender.map.view.MapViewImpl;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopManager;
