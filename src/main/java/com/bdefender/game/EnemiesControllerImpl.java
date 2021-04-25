@@ -75,6 +75,7 @@ class EnemySpawnerThread extends Thread {
         this.spawner = spawner;
         this.onDead = onDead;
         this.onReachedEnd = onReachedEnd;
+        this.setName("Enemies-Spawner-Thread");
     }
 
     public Enemy getEnemyByType(final int enemyCod) {
@@ -134,6 +135,7 @@ class EnemyMoverThread extends Thread {
     EnemyMoverThread(final EnemiesPoolMover mover, final EnemyGraphicMover gMover) {
         this.mover = mover;
         this.gMover = gMover;
+        this.setName("Enemy-Mover-Thread");
     }
 
     public void killMover() {
