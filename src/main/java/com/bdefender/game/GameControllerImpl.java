@@ -25,7 +25,7 @@ import com.bdefender.statistics.StatisticsWriterImpl;
 
 public class GameControllerImpl implements GameController {
 
-    private static final int DAMAGE_ON_REACHED_END = 50;
+    private static final int DAMAGE_ON_REACHED_END = 7;
     //game GUI
     private final GameView view;
     private final Map map;

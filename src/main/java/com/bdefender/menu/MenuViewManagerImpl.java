@@ -88,7 +88,6 @@ public class MenuViewManagerImpl implements Initializable, MenuViewManager {
 
         mapChoiceBox.setOnAction((event) -> {
             this.selectedMap = getMapByName(mapChoiceBox.getSelectionModel().getSelectedItem());
-            System.out.println("Ora vale = " + this.selectedMap);
         });
     }
 
