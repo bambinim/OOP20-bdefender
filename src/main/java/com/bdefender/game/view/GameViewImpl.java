@@ -25,7 +25,7 @@ public class GameViewImpl extends AnchorPane implements GameView {
     public GameViewImpl(final Map map, final Parent shopView) {
         this.topMenuView = new TopMenuView();
         this.shopView = shopView;
-        var mapView = new MapViewImpl(map);
+        final var mapView = new MapViewImpl(map);
         mapView.setLayoutY(TopMenuView.HEIGHT);
         this.mapView = mapView;
         this.shopView.setLayoutY(TopMenuView.HEIGHT);

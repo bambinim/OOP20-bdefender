@@ -3,8 +3,6 @@ package com.bdefender.map.view;
 import com.bdefender.event.EventHandler;
 import com.bdefender.event.TowerEvent;
 import com.bdefender.shop.TowerPlacementView;
-
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public interface MapView {
@@ -42,7 +40,7 @@ public interface MapView {
     /**
      * @return AnchorPane where towers are rendered
      */
-    AnchorPane getTowersContainer();
+    Pane getTowersContainer();
 
     /**
      * Set handler to call when tower is clicked.
