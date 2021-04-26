@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import com.bdefender.component.ImageButton;
 import com.bdefender.menu.GameOverMenu;
+import com.bdefender.shop.ShopLoader;
 import com.bdefender.event.MouseEvent;
 import com.bdefender.map.Map;
 import com.bdefender.map.view.MapViewImpl;
@@ -22,9 +23,9 @@ public class GameViewImpl extends AnchorPane implements GameView {
 
 
 
-    public GameViewImpl(final Map map, final Parent shopView) {
+    public GameViewImpl(final Map map, final ShopLoader shopLoader) {
         this.topMenuView = new TopMenuView();
-        this.shopView = shopView;
+        this.shopView = shopLoader.getShopView();
         var mapView = new MapViewImpl(map);
         mapView.setLayoutY(TopMenuView.HEIGHT);
         this.mapView = mapView;

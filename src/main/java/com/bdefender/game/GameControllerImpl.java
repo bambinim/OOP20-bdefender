@@ -20,6 +20,8 @@ import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
 import com.bdefender.shop.ShopLoader;
 import com.bdefender.shop.ShopLoaderImpl;
+import com.bdefender.shop.ShopViewManager;
+import com.bdefender.shop.ShopViewManagerImpl;
 import com.bdefender.statistics.StatisticsWriter;
 import com.bdefender.statistics.StatisticsWriterImpl;
 
@@ -35,7 +37,7 @@ public class GameControllerImpl implements GameController {
     private final EnemiesController enemies;
 
     //economy and shop
-    private final ShopLoader shopLoader;
+    private final ShopViewManager shopViewManager;
     private final Shop shop;
     private Optional<TowerName> choosedTower = Optional.empty();
     private static final  int INITIAL_AMOUNT = 600;
@@ -56,13 +58,16 @@ public class GameControllerImpl implements GameController {
     private EventHandler<GameEvent> onGameFinish;
 
     public GameControllerImpl(final MapType mapType) throws IOException {
+
         this.statWriter = new StatisticsWriterImpl();
         this.statWriter.gameStarted(mapType);
         this.map = MapLoader.getInstance().loadMap(mapType);
         //shop
+        final ShopLoader shopLoader;
         this.shop = new ShopImpl(new WalletImpl(INITIAL_AMOUNT));
-        this.shopLoader = new ShopLoaderImpl(shop, (e) -> this.closeShop());
-        this.view = new GameViewImpl(this.map, this.shopLoader.getShopView());
+        this.shopViewManager = new ShopViewManagerImpl(shop, (e) -> this.closeShop());
+        shopLoader = new ShopLoaderImpl(shopViewManager);
+        this.view = new GameViewImpl(this.map, shopLoader);
         this.view.getMapView().getTowerPlacementView().setOnBoxClick(e -> this.addTower(e));
         //topBar
         //this.view.setActionTopM((e) -> this.openShop(), (e) -> this.startGame(), (e) -> System.exit(0));
@@ -78,7 +83,7 @@ public class GameControllerImpl implements GameController {
         this.view.getMapView().setOnTowerClick(e -> {
             this.shop.setTowerToUpg(e.getTower());
             this.openShop();
-            shopLoader.getShopViewManager().setUpgradeOn();
+            this.shopViewManager.setUpgradeOn();
         });
 
     }
@@ -122,8 +127,7 @@ public class GameControllerImpl implements GameController {
         this.view.getMapView().setTowerPlacementViewVisible(false);
         this.view.getMapView().reloadTowersView();
         this.shop.setTowerToBuy(Optional.empty());
-        this.shopLoader.getShopViewManager().setEmptyLastTwClicked();
-  
+        this.shopViewManager.setEmptyLastTwClicked();
         //enable all the buttons if round is finished, otherwise just shop and exit
         if (this.isRoundFinished()) {
             this.view.setAllButtonEnable();
@@ -142,7 +146,7 @@ public class GameControllerImpl implements GameController {
             this.view.getTopMenuView().getShopButton().enable();
             //this.view.getChildren().remove(shopManager.getShopView());
             this.view.setShopVisible(false);
-            this.choosedTower = this.shopLoader.getShopViewManager().getLastTowerClicked();
+            this.choosedTower = this.shopViewManager.getLastTowerClicked();
             if (this.choosedTower.isPresent()) {
                 //disabilito tutti i pulsanti
                 //this.view.setAllButtonDisable();
@@ -158,11 +162,8 @@ public class GameControllerImpl implements GameController {
      */
     private void openShop() {
         if (!this.view.isShopVisible()) {
-            //this.isShopOpen = true;
             this.view.getTopMenuView().getShopButton().disable();
             this.view.setShopVisible(true);
-            //this.view.getChildren().add(this.shopManager.getShopView());
-            //this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
             //toglie la griglia di posizionamento
             this.view.getMapView().setTowerPlacementViewVisible(false);
         }
@@ -193,8 +194,8 @@ public class GameControllerImpl implements GameController {
      * */
     private void onDead() {
         this.shop.getWallet().addMoney(DEAD_MONEY);
-        this.shopLoader.getShopViewManager().updMoney();
-        this.shopLoader.getShopViewManager().refreshTowerChoosable();
+        this.shopViewManager.updMoney();
+        this.shopViewManager.refreshTowerChoosable();
         this.enemiesOffGame++;
         if (this.isRoundFinished()) {
             this.nextRound();
