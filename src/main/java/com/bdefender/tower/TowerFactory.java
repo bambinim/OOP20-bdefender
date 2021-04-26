@@ -24,12 +24,12 @@ public class TowerFactory {
      */
     public Tower getTowerDirect(final TowerName towerName, final EnemyInteractorDirect ctrl,
             final Pair<Double, Double> pos) {
-        return this.towerByParams(towerName.getDamage(), towerName.getRangeRadius(), towerName.getShootSpeed(), ctrl,
+        return this.towerByParams(towerName.getRangeRadius(), towerName.getShootSpeed(), ctrl,
                 pos, towerName.getId(), new ChooseCloserEnemy(),
                 (id, level) -> ctrl.applyDamageById(id, towerName.getDamage() + ((level - 1) * NEXT_LEVEL_MULT)));
     }
 
-    private Tower towerByParams(final Double damage, final Double rangeRadius, final Long shootSpeed,
+    private Tower towerByParams(final Double rangeRadius, final Long shootSpeed,
             final EnemyInteractorDirect ctrl, final Pair<Double, Double> pos, final int id,
             final ChooseTargetMethod targetMethod, final DamageApplier damageApplier) {
 
