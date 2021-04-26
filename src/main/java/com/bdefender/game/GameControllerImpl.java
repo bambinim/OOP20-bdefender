@@ -152,7 +152,6 @@ public class GameControllerImpl implements GameController {
                 this.view.getTopMenuView().getShopButton().disable();
                 this.view.getMapView().setTowerPlacementViewVisible(true);
             }
-
             if (this.shop.getTowerToUpg().isPresent()) {
                 this.shopViewManager.setUpgradeOff();
                 this.shopViewManager.refreshTowerChoosable();
