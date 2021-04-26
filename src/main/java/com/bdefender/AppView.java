@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import java.io.IOException;
 import com.bdefender.game.GameController;
 import com.bdefender.game.GameControllerImpl;
+import com.bdefender.game.view.GameViewImpl;
 import com.bdefender.menu.LaunchMenuLoader;
 import com.bdefender.menu.LaunchMenuLoaderImpl;
 import javafx.stage.Screen;
@@ -56,17 +57,17 @@ public class AppView extends Application {
     }
 
     private void startGame() throws IOException {
-        this.gameController = new GameControllerImpl(menuLoader.getController().getSelectedMap());
+        this.gameController = new GameControllerImpl(menuLoader.getViewManager().getSelectedMap());
         this.gameController.setOnGameFinish((e) -> {
             this.startMenu();
         });
         //kill all thread before close the windows
-          primaryStage.setOnCloseRequest((e) -> {
-              if (this.gameController.isRunning()) {
-                  this.gameController.closeAllThread();
-              }
-          });
-        this.setContent(this.gameController.getView());
+        primaryStage.setOnCloseRequest((e) -> {
+            if (this.gameController.isRunning()) {
+                this.gameController.closeAllThread();
+            }
+        });
+        this.setContent(this.gameController.getView().getView());
     }
 
     /**
@@ -104,7 +105,7 @@ public class AppView extends Application {
      * Set window content. Every time it creates a new scene.
      * @param parent - Content
      */
-    public void setContent(final Parent parent) {
+    private void setContent(final Parent parent) {
         this.root.getChildren().clear();
         this.root.getChildren().add(parent);
     }

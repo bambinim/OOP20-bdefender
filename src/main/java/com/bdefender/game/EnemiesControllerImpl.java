@@ -8,11 +8,10 @@ import com.bdefender.enemy.pool.EnemiesPoolInteractor;
 import com.bdefender.enemy.pool.EnemiesPoolMover;
 import com.bdefender.enemy.pool.EnemiesPoolSpawner;
 import com.bdefender.enemy.pool.MapInteractorImpl;
-import com.bdefender.enemy.view.EnemyGraphicMover;
+import com.bdefender.enemy.view.EnemiesGraphicMover;
 import com.bdefender.event.EnemyEvent;
 import com.bdefender.event.EventHandler;
 import com.bdefender.map.Map;
-import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,15 +20,22 @@ public class EnemiesControllerImpl implements EnemiesController {
 
     private final EnemiesPoolImpl pool;
     private EnemyMoverThread moverThread;
-    private final EnemyGraphicMover gMover;
+    private final EnemiesGraphicMover gMover;
     private EnemySpawnerThread spawnerThread;
 
-    public EnemiesControllerImpl(final Map map, final EnemyGraphicMover graphicMover) {
+    public EnemiesControllerImpl(final Map map, final EnemiesGraphicMover graphicMover) {
         this.pool = new EnemiesPoolImpl(new MapInteractorImpl(map));
         this.gMover = graphicMover;
         this.moverThread = new EnemyMoverThread(this.pool, this.gMover);
     }
 
+    /**
+     * @param intensity number of enemies spawned every 10 seconds
+     * @param totEnemies the number of enemies to spawn
+     * @param onDead enemy's death handler
+     * @param onReachedEnd handler for enemy reached end event
+     * starts enemy generation.
+     */
     @Override
     public void startGenerate(final int intensity, final int totEnemies, final EventHandler<EnemyEvent> onDead,
             final EventHandler<EnemyEvent> onReachedEnd) {
@@ -41,16 +47,25 @@ public class EnemiesControllerImpl implements EnemiesController {
         spawnerThread.start();
     }
 
+    /**
+     * @return enemies pool interactor.
+     */
     @Override
     public EnemiesPoolInteractor getEnemiesPool() {
         return pool;
     }
 
+    /**
+     * stops enemies movement thread.
+     */
     @Override
     public void stopMovingEnemies() {
         this.moverThread.killMover();
     }
 
+    /**
+     * stop enemies spawner thread.
+     */
     @Override
     public void stopSpawner() {
         this.spawnerThread.shutdown();
@@ -75,6 +90,7 @@ class EnemySpawnerThread extends Thread {
         this.spawner = spawner;
         this.onDead = onDead;
         this.onReachedEnd = onReachedEnd;
+        this.setName("Enemies-Spawner-Thread");
     }
 
     public Enemy getEnemyByType(final int enemyCod) {
@@ -92,18 +108,6 @@ class EnemySpawnerThread extends Thread {
 
     @Override
     public void run() {
-        /*
-        for (int i = 0; i < totEnemies; i++) {
-            try {
-                sleep(TEN_SEC / intensity);
-                Random random = new Random();
-                Enemy enemy = getEnemyByType(random.nextInt(3));
-                spawner.addEnemy(enemy);
-            } catch (InterruptedException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-         */
         int i = 0;
         while (!stop && i < this.totEnemies) {
             try {
@@ -126,14 +130,15 @@ class EnemySpawnerThread extends Thread {
 class EnemyMoverThread extends Thread {
 
     private final EnemiesPoolMover mover;
-    private final EnemyGraphicMover gMover;
+    private final EnemiesGraphicMover gMover;
     private boolean alive = true;
     private static final long SPEED_DIV = 1000;
     private static final long TEN_SEC = 10000;
 
-    EnemyMoverThread(final EnemiesPoolMover mover, final EnemyGraphicMover gMover) {
+    EnemyMoverThread(final EnemiesPoolMover mover, final EnemiesGraphicMover gMover) {
         this.mover = mover;
         this.gMover = gMover;
+        this.setName("Enemy-Mover-Thread");
     }
 
     public void killMover() {

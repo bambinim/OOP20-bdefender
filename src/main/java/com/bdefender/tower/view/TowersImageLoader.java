@@ -7,19 +7,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TowerImageLoader {
+public class TowersImageLoader {
 
-    private static final TowerImageLoader INSTANCE;
+    private static final TowersImageLoader INSTANCE;
     private static final int N_TOWERS = 3;
 
     static {
-        INSTANCE = new TowerImageLoader(N_TOWERS);
+        INSTANCE = new TowersImageLoader(N_TOWERS);
     }
 
     private final List<Image> towerImages = new ArrayList<>();
     private final List<Image> towerShootImages = new ArrayList<>();
 
-    public TowerImageLoader(final int nTowers) {
+    public TowersImageLoader(final int nTowers) {
         for (int i = 0; i < nTowers; i++) {
             Image towerImage;
             Image towerShootImage;

@@ -1,42 +1,48 @@
 package com.bdefender.tower;
 
 import com.bdefender.Pair;
-import com.bdefender.enemy.pool.EnemiesPoolInteractor;
-import com.bdefender.tower.controller.EnemyControllerDirect;
-import com.bdefender.tower.controller.EnemyControllerDirectImpl;
-
-import java.util.Map;
+import com.bdefender.tower.interactor.ChooseCloserEnemy;
+import com.bdefender.tower.interactor.ChooseTargetMethod;
+import com.bdefender.tower.interactor.EnemyInteractorDirect;
 
 public class TowerFactory {
+
+    @FunctionalInterface
+    interface DamageApplier {
+        void applyDamage(int enemyId, int level);
+    }
 
     private static final double NEXT_LEVEL_MULT = 0.25;
 
     /**
      * Generate a direct shot tower.
      *
-     * @param towerName  tower name
-     * @param pool
-     * @param pos
+     * @param towerName tower name
+     * @param ctrl      enemy interactor
+     * @param pos       spawn position
      * @return Tower
      */
-    public Tower getTowerDirect(final TowerName towerName, final EnemiesPoolInteractor pool, final Pair<Double, Double> pos) {
-        return this.towerDirectByParams(towerName.getDamage(), towerName.getRangeRadius(), towerName.getShootSpeed(), pool, pos, towerName.getId());
+    public Tower getTowerDirect(final TowerName towerName, final EnemyInteractorDirect ctrl,
+            final Pair<Double, Double> pos) {
+        return this.towerByParams(towerName.getRangeRadius(), towerName.getShootSpeed(), ctrl,
+                pos, towerName.getId(), new ChooseCloserEnemy(),
+                (id, level) -> ctrl.applyDamageById(id, towerName.getDamage() + ((level - 1) * NEXT_LEVEL_MULT)));
     }
 
-    private Tower towerDirectByParams(final Double damage, final Double rangeRadius, final Long shootSpeed,
-            final EnemiesPoolInteractor pool, final Pair<Double, Double> pos, final int id) {
+    private Tower towerByParams(final Double rangeRadius, final Long shootSpeed,
+            final EnemyInteractorDirect ctrl, final Pair<Double, Double> pos, final int id,
+            final ChooseTargetMethod targetMethod, final DamageApplier damageApplier) {
 
         return new Tower() {
 
-            private final EnemyControllerDirect enemiesCtrl = new EnemyControllerDirectImpl(pool);
             private int level = 1;
 
             @Override
             public Pair<Double, Double> shoot() {
                 try {
                     int targetId = this.getOptimalTarget();
-                    this.enemiesCtrl.applyDamageById(targetId, damage + ((level - 1) * NEXT_LEVEL_MULT));
-                    return this.enemiesCtrl.getEnemyPosByID(targetId);
+                    damageApplier.applyDamage(targetId, this.level);
+                    return ctrl.getEnemyPosByID(targetId);
                 } catch (NoEnemiesAroundException ex) {
                     return null;
                 }
@@ -48,24 +54,7 @@ public class TowerFactory {
             }
 
             private Integer getOptimalTarget() throws NoEnemiesAroundException {
-                Map<Integer, Pair<Double, Double>> enemiesInRange = this.enemiesCtrl
-                        .getEnemiesInZone(rangeRadius + level - 1, pos);
-
-                if (enemiesInRange.isEmpty()) {
-                    throw new NoEnemiesAroundException("No enemies around this tower");
-                }
-
-                Pair<Integer, Double> closerEnemy = new Pair<>(0, rangeRadius + 1);
-
-                for (var enemy : enemiesInRange.entrySet()) {
-                    double distance = Math.sqrt(Math.pow(enemy.getValue().getX() - pos.getX(), 2)
-                            + Math.pow(enemy.getValue().getY() - pos.getY(), 2));
-                    if (distance <= closerEnemy.getY()) {
-                        closerEnemy = new Pair<>(enemy.getKey(), distance);
-                    }
-                }
-
-                return closerEnemy.getX();
+                return targetMethod.getTargetId(ctrl, rangeRadius + level - 1, pos);
             }
 
             @Override
@@ -85,7 +74,7 @@ public class TowerFactory {
 
             @Override
             public int getLevel() {
-               return this.level;
+                return this.level;
             }
         };
     }

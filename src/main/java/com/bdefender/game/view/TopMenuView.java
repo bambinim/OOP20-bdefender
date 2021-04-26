@@ -1,4 +1,4 @@
-package com.bdefender.game;
+package com.bdefender.game.view;
 
 import java.io.IOException;
 import java.net.URL;

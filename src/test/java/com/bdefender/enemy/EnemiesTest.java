@@ -2,7 +2,7 @@ package com.bdefender.enemy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.bdefender.enemy.view.EnemiesViewLoader;
+import com.bdefender.enemy.view.EnemiesImageLoader;
 import javafx.scene.image.Image;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,6 @@ import com.bdefender.map.MapType;
 import java.util.ArrayList;
 import java.util.List;
 
-
 class EnemiesTest {
 
     @Test
@@ -23,7 +22,8 @@ class EnemiesTest {
         MapInteractor mapInt = new MapInteractorImpl(MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE));
         EnemiesPoolImpl pool = new EnemiesPoolImpl(mapInt);
         EnemyFactory factory = new EnemyFactory();
-        pool.addEnemy(factory.getEnemy(EnemyName.AXE_OGRE, e -> System.out.println("dead"), e -> System.out.println("reached end")));
+        pool.addEnemy(factory.getEnemy(EnemyName.AXE_OGRE, e -> System.out.println("dead"),
+                e -> System.out.println("reached end")));
 
         Enemy enemy = pool.getEnemies(false).get(0);
 
@@ -40,11 +40,11 @@ class EnemiesTest {
         assertEquals(7.0, enemy.getPosition().getX());
         assertEquals(10.0, enemy.getPosition().getY());
 
-
-        pool.addEnemy(factory.getEnemy(EnemyName.SWORD_OGRE, e -> System.out.println("dead"), e -> System.out.println("reached end")));
+        pool.addEnemy(factory.getEnemy(EnemyName.SWORD_OGRE, e -> System.out.println("dead"),
+                e -> System.out.println("reached end")));
         enemy = pool.getEnemies(false).get(1);
 
-        for (int i = 0; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
             pool.moveEnemies(10);
         }
 
@@ -54,37 +54,40 @@ class EnemiesTest {
     }
 
     @Test
-    void testReachEnd(){
+    void testReachEnd() {
         MapInteractor mapInt = new MapInteractorImpl(MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE));
         EnemiesPoolImpl pool = new EnemiesPoolImpl(mapInt);
         EnemyFactory factory = new EnemyFactory();
-        pool.addEnemy(factory.getEnemy(EnemyName.SWORD_OGRE, e -> System.out.println("dead"), e -> System.out.println("reached end")));
+        pool.addEnemy(factory.getEnemy(EnemyName.SWORD_OGRE, e -> System.out.println("dead"),
+                e -> System.out.println("reached end")));
 
         Enemy enemy = pool.getEnemies(false).get(0);
 
-        for (int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             assertFalse(enemy.isArrived());
             pool.moveEnemies(10);
         }
 
         assertTrue(enemy.isArrived());
 
-        pool.addEnemy(factory.getEnemy(EnemyName.AXE_OGRE, e -> System.out.println("dead"), e -> System.out.println("reached end")));
+        pool.addEnemy(factory.getEnemy(EnemyName.AXE_OGRE, e -> System.out.println("dead"),
+                e -> System.out.println("reached end")));
 
         enemy = pool.getEnemies(false).get(1);
 
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             assertFalse(enemy.isArrived());
             pool.moveEnemies(10);
         }
 
         assertTrue(enemy.isArrived());
 
-        pool.addEnemy(factory.getEnemy(EnemyName.HAMMER_OGRE, e -> System.out.println("dead"), e -> System.out.println("reached end")));
+        pool.addEnemy(factory.getEnemy(EnemyName.HAMMER_OGRE, e -> System.out.println("dead"),
+                e -> System.out.println("reached end")));
 
         enemy = pool.getEnemies(false).get(2);
 
-        for (int i = 0; i < 13; i++){
+        for (int i = 0; i < 13; i++) {
             assertFalse(enemy.isArrived());
             pool.moveEnemies(10);
         }
@@ -94,11 +97,17 @@ class EnemiesTest {
     }
 
     @Test
-    void testResourcesLoad(){
+    void testResourcesLoad() {
         EnemyFactory factory = new EnemyFactory();
-        List<Enemy> enemies = new ArrayList<>(List.of(factory.getEnemy(EnemyName.SWORD_OGRE, e ->{}, e -> {}), factory.getEnemy(EnemyName.AXE_OGRE, e ->{}, e -> {}), factory.getEnemy(EnemyName.HAMMER_OGRE, e ->{}, e -> {})));
+        List<Enemy> enemies = new ArrayList<>(List.of(factory.getEnemy(EnemyName.SWORD_OGRE, e -> {
+        }, e -> {
+        }), factory.getEnemy(EnemyName.AXE_OGRE, e -> {
+        }, e -> {
+        }), factory.getEnemy(EnemyName.HAMMER_OGRE, e -> {
+        }, e -> {
+        })));
 
-        ArrayList<Image> enemiesImages = new ArrayList<>(EnemiesViewLoader.getEnemiesImages(enemies).values());
+        ArrayList<Image> enemiesImages = new ArrayList<>(EnemiesImageLoader.getEnemiesImages(enemies).values());
 
         for (Image image : enemiesImages) {
             assertNotNull(image);

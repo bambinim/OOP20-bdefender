@@ -26,7 +26,6 @@ public class StatisticsReaderTest {
             fw.write("");
             fw.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

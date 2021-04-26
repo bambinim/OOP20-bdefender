@@ -1,11 +1,9 @@
 package com.bdefender.enemy.view;
 
 import com.bdefender.enemy.Enemy;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public interface EnemyGraphicMover {
+public interface EnemiesGraphicMover {
 
     /**
      * moves all the enemies on the view.

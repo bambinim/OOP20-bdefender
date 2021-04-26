@@ -1,10 +1,10 @@
-package com.bdefender.tower.controller;
+package com.bdefender.tower.interactor;
 
 import com.bdefender.Pair;
 
 import java.util.Map;
 
-public interface EnemyController {
+public interface EnemyInteractor {
 
     /**
      * @param radius  zone radius

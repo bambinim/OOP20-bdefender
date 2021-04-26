@@ -2,6 +2,9 @@ package com.defender.shop;
 
 import java.io.IOException;
 
+import com.bdefender.tower.interactor.EnemyInteractorDirect;
+import com.bdefender.tower.interactor.EnemyInteractorDirectImpl;
+import com.bdefender.tower.view.TowersImageLoader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,24 +19,25 @@ import com.bdefender.map.MapLoader;
 import com.bdefender.map.MapType;
 import com.bdefender.shop.Shop;
 import com.bdefender.shop.ShopImpl;
-import com.bdefender.shop.ShopManager;
-import com.bdefender.shop.ShopManagerImpl;
+import com.bdefender.shop.ShopLoader;
+import com.bdefender.shop.ShopLoaderImpl;
+import com.bdefender.shop.ShopViewManager;
+import com.bdefender.shop.ShopViewManagerImpl;
 import com.bdefender.tower.Tower;
 import com.bdefender.tower.TowerFactory;
 import com.bdefender.tower.TowerName;
-import com.bdefender.tower.view.TowerImageLoader;
 import com.bdefender.wallet.Wallet;
 import com.bdefender.wallet.WalletImpl;
 
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.robot.Robot;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
 public class ShopTestView {
-    private ShopManager shopmanager;
+    private ShopLoader shopLoader;
     private Shop shop;
+    private ShopViewManager shopViewManager;
     private Wallet wallet;
     private static final int INIT_AMOUNT = 900;
     private static final int HEIGHT = 736;
@@ -42,17 +46,18 @@ public class ShopTestView {
     @Start
     private void start(final Stage stage) {
         Platform.runLater(() -> {
+            this.wallet = new WalletImpl(INIT_AMOUNT);
+            this.shop = new ShopImpl(wallet);
+            this.shopViewManager = new ShopViewManagerImpl(this.shop, (e) -> System.out.println("test"));
             try {
-                this.wallet = new WalletImpl(INIT_AMOUNT);
-                this.shop = new ShopImpl(wallet);
-                this.shopmanager = new ShopManagerImpl(shop, (e) -> System.out.println("test"));
-            } catch (IOException e) {
+                this.shopLoader = new ShopLoaderImpl(this.shopViewManager);
+            } catch (IOException e1) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                e1.printStackTrace();
             }
             stage.setWidth(ShopTestView.WEIGHT);
             stage.setHeight(ShopTestView.HEIGHT);
-            final Scene scene = new Scene(this.shopmanager.getShopView());
+            final Scene scene = new Scene(this.shopLoader.getShopView());
             stage.setScene(scene);
             stage.show();
         });
@@ -67,25 +72,25 @@ public class ShopTestView {
 
         final TowerFactory tf = new TowerFactory();
         final MapInteractor mapInt = new MapInteractorImpl(MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE));
-        final EnemiesPoolImpl pool = new EnemiesPoolImpl(mapInt);
+        final EnemyInteractorDirect ctrl = new EnemyInteractorDirectImpl(new EnemiesPoolImpl(mapInt));
 
         robot.clickOn("#btnFireArrow");
-        TowerName towerName = this.shopmanager.getShopController().getLastTowerClicked().get();
-        Tower towerShop = tf.getTowerDirect(towerName, pool, new Pair<Double, Double>(0.0, 0.0));
-        Tower towerCorrect = tf.getTowerDirect(TowerName.FIRE_ARROW, pool, new Pair<Double, Double>(0.0, 0.0));
-        Assertions.assertEquals(TowerImageLoader.getTowerImage(towerCorrect), TowerImageLoader.getTowerImage(towerShop));
+        TowerName towerName = this.shopViewManager.getLastTowerClicked().get();
+        Tower towerShop = tf.getTowerDirect(towerName, ctrl, new Pair<Double, Double>(0.0, 0.0));
+        Tower towerCorrect = tf.getTowerDirect(TowerName.FIRE_ARROW, ctrl, new Pair<Double, Double>(0.0, 0.0));
+        Assertions.assertEquals(TowersImageLoader.getTowerImage(towerCorrect), TowersImageLoader.getTowerImage(towerShop));
 
         robot.clickOn("#btnThunderbolt");
-        towerName = this.shopmanager.getShopController().getLastTowerClicked().get();
-        towerShop = tf.getTowerDirect(towerName, pool, new Pair<Double, Double>(0.0, 0.0));
-        towerCorrect = tf.getTowerDirect(TowerName.THUNDERBOLT, pool, new Pair<Double, Double>(0.0, 0.0));
+        towerName = this.shopViewManager.getLastTowerClicked().get();
+        towerShop = tf.getTowerDirect(towerName, ctrl, new Pair<Double, Double>(0.0, 0.0));
+        towerCorrect = tf.getTowerDirect(TowerName.THUNDERBOLT, ctrl, new Pair<Double, Double>(0.0, 0.0));
 
-        Assertions.assertEquals(TowerImageLoader.getTowerImage(towerCorrect), TowerImageLoader.getTowerImage(towerShop));
+        Assertions.assertEquals(TowersImageLoader.getTowerImage(towerCorrect), TowersImageLoader.getTowerImage(towerShop));
         robot.clickOn("#btnFireBall");
-        towerName = this.shopmanager.getShopController().getLastTowerClicked().get();
-        towerShop = tf.getTowerDirect(towerName, pool, new Pair<Double, Double>(0.0, 0.0));
-        towerCorrect = tf.getTowerDirect(TowerName.FIRE_BALL, pool, new Pair<Double, Double>(0.0, 0.0));
-        Assertions.assertEquals(TowerImageLoader.getTowerImage(towerCorrect), TowerImageLoader.getTowerImage(towerShop));
+        towerName = this.shopViewManager.getLastTowerClicked().get();
+        towerShop = tf.getTowerDirect(towerName, ctrl, new Pair<Double, Double>(0.0, 0.0));
+        towerCorrect = tf.getTowerDirect(TowerName.FIRE_BALL, ctrl, new Pair<Double, Double>(0.0, 0.0));
+        Assertions.assertEquals(TowersImageLoader.getTowerImage(towerCorrect), TowersImageLoader.getTowerImage(towerShop));
 
     }
 }

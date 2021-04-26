@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.Start;
+
+import com.bdefender.map.view.MapView;
+import com.bdefender.map.view.MapViewImpl;
+
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class MapTest {
 
     private Map map;
-    private MapView mapView;
+    private MapViewImpl mapView;
 
     @Start
     private void start(final Stage stage) {
         Platform.runLater(() -> {
             this.map = MapLoader.getInstance().loadMap(MapType.COUNTRYSIDE);
-            this.mapView = new MapView(map);
+            this.mapView = new MapViewImpl(map);
             stage.setWidth(MapView.MAP_WIDTH);
             stage.setHeight(MapView.MAP_WIDTH);
             stage.setScene(new Scene(mapView));

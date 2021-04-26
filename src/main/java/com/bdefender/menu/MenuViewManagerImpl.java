@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class MenuControllerImpl implements Initializable, MenuController {
+public class MenuViewManagerImpl implements Initializable, MenuViewManager {
     //Countryside default loaded 
     private MapType selectedMap = MapType.COUNTRYSIDE; 
     private final EventHandler<MouseEvent> onPlayClick;
@@ -43,7 +43,7 @@ public class MenuControllerImpl implements Initializable, MenuController {
     @FXML
     private Button statisticsBtn;
 
-    public MenuControllerImpl(final EventHandler<MouseEvent> playEvent, final EventHandler<MouseEvent> statisticsEvent) {
+    public MenuViewManagerImpl(final EventHandler<MouseEvent> playEvent, final EventHandler<MouseEvent> statisticsEvent) {
         this.onPlayClick = playEvent;
         this.onStatisticsClick = statisticsEvent;
     }
@@ -88,7 +88,6 @@ public class MenuControllerImpl implements Initializable, MenuController {
 
         mapChoiceBox.setOnAction((event) -> {
             this.selectedMap = getMapByName(mapChoiceBox.getSelectionModel().getSelectedItem());
-            System.out.println("Ora vale = " + this.selectedMap);
         });
     }
 

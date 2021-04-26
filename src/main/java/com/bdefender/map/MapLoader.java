@@ -21,11 +21,11 @@ public final class MapLoader {
 
     /**
      * Loads specified map.
-     * @param map
+     * @param map - map type
      * @return loaded map
      */
     public Map loadMap(final MapType map) {
-        return new Map(this.loadMapImage(ClassLoader.getSystemResource(String.format("maps/%d/map.png", map.getMapNumber()))),
+        return new MapImpl(this.loadMapImage(ClassLoader.getSystemResource(String.format("maps/%d/map.png", map.getMapNumber()))),
                 this.loadPath(ClassLoader.getSystemResource(String.format("maps/%d/path.txt", map.getMapNumber()))),
                 this.loadTowerBoxes(ClassLoader.getSystemResource(String.format("maps/%d/towerboxes.txt", map.getMapNumber()))));
     }
