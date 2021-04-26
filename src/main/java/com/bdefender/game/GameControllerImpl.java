@@ -162,11 +162,8 @@ public class GameControllerImpl implements GameController {
      */
     private void openShop() {
         if (!this.view.isShopVisible()) {
-            //this.isShopOpen = true;
             this.view.getTopMenuView().getShopButton().disable();
             this.view.setShopVisible(true);
-            //this.view.getChildren().add(this.shopManager.getShopView());
-            //this.view.setBottomAnchor(this.shopManager.getShopView(), 0.0);
             //toglie la griglia di posizionamento
             this.view.getMapView().setTowerPlacementViewVisible(false);
         }

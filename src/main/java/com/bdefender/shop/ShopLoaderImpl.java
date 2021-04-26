@@ -7,16 +7,13 @@ import javafx.scene.Parent;
 
 
 public class ShopLoaderImpl implements ShopLoader {
-    private final ShopViewManager shopViewManager;
-    private final Parent shopView;
+        private final Parent shopView;
 
 
     public ShopLoaderImpl(final ShopViewManager shopViewManager) throws IOException {
-        this.shopViewManager = shopViewManager;
         final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("shops/shopView.fxml"));
-        loader.setController(this.shopViewManager);
+        loader.setController(shopViewManager);
         this.shopView = loader.load();
-       // this.shopView.setView(loader.load());
     }
 
     @Override
@@ -24,9 +21,5 @@ public class ShopLoaderImpl implements ShopLoader {
         return this.shopView;
     }
 
-    @Override
-    public final ShopViewManager getShopViewManager() {
-        return this.shopViewManager;
-    }
 }
 

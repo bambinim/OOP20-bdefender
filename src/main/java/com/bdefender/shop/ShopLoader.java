@@ -6,6 +6,5 @@ public interface ShopLoader {
 
     Parent getShopView();
 
-    ShopViewManager getShopViewManager();
 
 }
