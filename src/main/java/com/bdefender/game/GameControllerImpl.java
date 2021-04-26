@@ -148,11 +148,13 @@ public class GameControllerImpl implements GameController {
             this.view.setShopVisible(false);
             this.choosedTower = this.shopViewManager.getLastTowerClicked();
             if (this.choosedTower.isPresent()) {
-                //disabilito tutti i pulsanti
-                //this.view.setAllButtonDisable();
                 this.view.getTopMenuView().getExitButton().disable();
                 this.view.getTopMenuView().getShopButton().disable();
                 this.view.getMapView().setTowerPlacementViewVisible(true);
+            }
+            if (this.shop.getTowerToUpg().isPresent()) {
+                this.shopViewManager.setUpgradeOff();
+                this.shopViewManager.refreshTowerChoosable();
             }
         }
     }
