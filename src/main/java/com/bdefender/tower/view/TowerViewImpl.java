@@ -19,7 +19,7 @@ public class TowerViewImpl implements TowerView {
     private final Pane panel;
     private final Tower tower;
 
-    public TowerViewImpl(final AnchorPane panel, final Tower tower) {
+    public TowerViewImpl(final Pane panel, final Tower tower) {
         this.tower = tower;
         this.panel = panel;
         final ImageView towerImage = new ImageView(TowersImageLoader.getTowerImage(this.tower));
